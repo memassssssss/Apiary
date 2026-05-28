@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiarySMP — Официальный сайт</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="hero-section">
+        <div class="hero-content scroll-anim">
+            <h1 class="hero-title">ApiarySMP <span class="highlight">Жужжим вместе</span></h1>
+            <p class="hero-text">
+                Сервер с развивающимся сообществом — это не просто ванилла. 
+                Увлекательные ивенты, внутренние суды и качественная модерация. 
+                Присоединяйся к нам прямо сейчас!
+            </p>
+            
+            <div class="hero-actions">
+                <button class="hero-btn" onclick="openModal()">Присоединиться</button>
+                
+                <div class="ip-copy-block" onclick="copyIP()">
+                    <span id="ipText">play.apiarysmp.ru</span>
+                    <span id="ipHint" class="ip-hint">Нажми, чтобы скопировать</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-decor scroll-anim">
+            <img src="./img/NeonMain.svg" class="neon-glow" alt="">
+            <img src="./img/буэно3 1.svg" class="bee-float" alt="Bee">
+        </div>
+    </main>
+
+    <!-- СЕКЦИЯ РЕЖИМОВ (С расширенной информацией) -->
+    <section id="modes-carousel" class="scroll-anim transition-bg">
+        <h2 class="carousel-section-title">Выбери свой режим игры</h2>
+        <div class="carousel-container">
+            <button id="prevBtn" class="nav-btn">&larr;</button>
+            
+            <div class="carousel-content">
+                <div class="character-render">
+                    <img id="renderImg" src="./img/main_render.png" alt="Character Render" class="animate-target">
+                </div>
+                
+                <div class="mode-info animate-target">
+                    <div class="mode-header">
+                        <h3 id="modeTitle">Apiary SMP</h3>
+                        <div id="modeBadges" class="mode-badges"></div>
+                    </div>
+                    
+                    <p id="modeDesc">Загрузка описания...</p>
+                    
+                    <div class="mode-details">
+                        <div class="details-column">
+                            <h4>Особенности:</h4>
+                            <ul id="modeFeatures" class="details-list"></ul>
+                        </div>
+                        <div class="details-column">
+                            <h4>Ключевые плагины:</h4>
+                            <ul id="modePlugins" class="details-list"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mode-actions-row">
+                        <div id="modeActionContainer"></div>
+                        <a href="#" id="modeRulesLink" class="rules-link" target="_blank">Читать правила сервера →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="nextBtn" class="nav-btn">&rarr;</button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ ОТЗЫВОВ (JS Слайдер) -->
+    <section class="reviews-section scroll-anim">
+        <h2 class="carousel-section-title">Отзывы наших пчелок</h2>
+        <div class="slider-window" id="reviewsSlider">
+            <div class="slider-track" id="reviewsTrack">
+                <div class="review-card"><img src="./img/skin-avatar 2.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">barnetyz</h4><p class="review-text">комьюнити поможет даже с тяжелыми наркотиками</p></div></div>
+                <div class="review-card admin-card"><img src="./img/Rectangle 4.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">ToXi4eK14 (Adm)</h4><p class="review-text">Ну просто жужащая хуйня!</p></div></div>
+                <div class="review-card"><img src="./img/skin-avatar (1) 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">Astat_121</h4><p class="review-text">Спасибо серверу мой парализованый дед не мог ходить 10 лет но когда я начал играть на сервере он втсал на ноги чтобы вьебать мне</p></div></div>
+                <div class="review-card"><img src="./img/skin-avatar 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">HoldDog</h4><p class="review-text">Объективно, сервер подходит для игры: коммуникация с игроками, ивенты, торговля, города и т.д. позволяют провести время с наслаждением.</p></div></div>
+                <div class="review-card"><img src="./img/skin-avatar (2) 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">NesquickWithBeer</h4><p class="review-text">Клевый ванильный сервер!</p></div></div>
+                <div class="review-card"><img src="./img/Rectangle 5.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">stazhr</h4><p class="review-text">Прикольный сервер со своим вайбом пчел 🐝</p></div></div>
+                <div class="review-card"><img src="./img/skin-avatar (4) 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">timofokerr</h4><p class="review-text">Интересные ивенты и средний онлайн, жить не смогу...</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ FAQ (JS Аккордеон) -->
+    <section class="faq-section scroll-anim">
+        <h2 class="carousel-section-title">Частые вопросы</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-header">
+                    <h3>В чём уникальность ApiarySMP?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-content-wrapper">
+                    <div class="faq-content">
+                        <p>Наш сервер выделяется по-настоящему масштабными ивентами и живой экономикой. У нас нет скуки — мы регулярно проводим события, которые меняют ход игры, а комьюнити настолько дружелюбное, что поможет освоиться любому новичку.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header">
+                    <h3>Как администрация относится к игрокам?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-content-wrapper">
+                    <div class="faq-content">
+                        <p>Никакого пафоса и ЧСВ. Наша администрация общается с игроками на равных, играет вместе с вами и решает проблемы быстро и прозрачно. У нас даже есть внутренние суды для решения конфликтов.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header">
+                    <h3>Будут ли лаги на сервере?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-content-wrapper">
+                    <div class="faq-content">
+                        <p>Сервер стоит на собственном мощном хостинге, который работает 24/7 без перебоев. Мы тщательно оптимизируем сборку, чтобы TPS всегда держался на уровне 20, даже при массовых ивентах.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header">
+                    <h3>Как работает донат и есть ли P2W?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-content-wrapper">
+                    <div class="faq-content">
+                        <p>На основном сервере доната, влияющего на баланс (Pay-To-Win), нет в принципе. Есть только платная проходка. На мини-сервере присутствует небольшой донат для поддержки проекта, который осуществляется удобно через нашего Telegram-бота.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header">
+                    <h3>Что с безопасностью и грифом?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-content-wrapper">
+                    <div class="faq-content">
+                        <p>На основном и мини-сервере гриф строго запрещен! Все действия логируются. Если что-то пойдет не так, админы откатят урон за секунды. (На сервере Hard гриф разрешен — но это для любителей боли).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ФУТЕР И МОДАЛКИ -->
+    <footer class="footer scroll-anim">
+        <div class="footer-content">
+            <div class="footer-block">
+                <h3>Контакты</h3>
+                <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
+            </div>
+            <div class="footer-block">
+                <h3>Реквизиты</h3>
+                <p>Самозанятый</p>
+                <p>Бризицкий Михаил Романович</p>
+                <p>ИНН: 253609705426</p>
+            </div>
+            <div class="footer-block">
+                <h3>Документы</h3>
+                <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
+                <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
+                <a href="#" class="footer-link" data-modal="deliveryModal">Получение услуги</a>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="overlay" id="offerModal">
+        <div class="modal large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Публичная оферта</h2>
+            <p class="modal-text">Настоящий документ является официальным предложением самозанятого Бризицкого Михаила Романовича...</p>
+        </div>
+    </div>
+    <div class="overlay" id="termsModal">
+        <div class="modal large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Пользовательское соглашение</h2>
+            <p class="modal-text">Оплачивая услугу, пользователь подтверждает, что ознакомлен с правилами сервера ApiarySMP...</p>
+        </div>
+    </div>
+    <div class="overlay" id="deliveryModal">
+        <div class="modal large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Получение услуги</h2>
+            <p class="modal-text">После успешной оплаты доступ к серверу предоставляется автоматически...</p>
+        </div>
+    </div>
+    
+    <div id="modalOverlay" class="overlay">
+        <div class="modal">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2 class="modal-title">Вход на сервер</h2>
+            <p class="modal-price">Стоимость: <span id="itemPrice">125₽</span></p>
+            <form id="paymentForm">
+                <input type="hidden" name="item_type" id="itemType" value="pass">
+                <input type="text" name="nickname" class="modal-input" placeholder="Введите ваш ник" required>
+                <input type="text" name="promocode" class="modal-input" placeholder="Код автора (если есть)">
+                <button type="submit" class="modal-pay-button">Оплатить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

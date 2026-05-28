@@ -1,0 +1,388 @@
+/* --- СБРОС И БАЗОВЫЕ НАСТРОЙКИ --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #0f0f0f 0%, #000000 100%);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- МИКРО-АНИМАЦИИ ПРИ СКРОЛЛЕ --- */
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.scroll-anim.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- ШАПКА --- */
+header {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+}
+#Logo a {
+    font-size: 32px;
+    text-decoration: none;
+    color: #FFC300;
+    font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -1px;
+}
+
+/* --- ГЛАВНЫЙ ЭКРАН (HERO) --- */
+.hero-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+.hero-content {
+    max-width: 600px;
+}
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+.hero-title .highlight {
+    display: block;
+    color: #FFC300;
+    text-shadow: 0 0 30px rgba(255, 195, 0, 0.3);
+}
+.hero-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.hero-btn {
+    background-color: #FFC300;
+    color: #000000;
+    border: none;
+    padding: 22px 60px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255, 195, 0, 0.3);
+}
+.hero-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(255, 195, 0, 0.5);
+}
+
+.ip-copy-block {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease;
+}
+.ip-copy-block:hover { background: rgba(255, 255, 255, 0.08); }
+#ipText { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; }
+.ip-hint { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-top: 4px; transition: color 0.3s ease; }
+
+.hero-decor { position: relative; width: 45%; display: flex; justify-content: center; align-items: center; }
+.neon-glow { position: absolute; width: 110%; z-index: 1; opacity: 0.8; }
+.bee-float { position: relative; width: 85%; z-index: 2; animation: floatingBee 5s ease-in-out infinite; }
+
+@keyframes floatingBee {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(-3deg); }
+}
+
+/* --- СЕКЦИЯ КАРУСЕЛИ РЕЖИМОВ (Обновленная) --- */
+#modes-carousel { padding: 120px 0; transition: background 0.5s ease-in-out; }
+.carousel-section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; margin-bottom: 60px; color: #fff; }
+
+.carousel-container { max-width: 1300px; /* Сделали шире */ margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; gap: 20px; }
+
+.carousel-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 50px;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.character-render { flex: 0.8; display: flex; justify-content: center; }
+.character-render img { max-height: 480px; object-fit: contain; } /* Сделали рендер чуть больше */
+
+.mode-info { flex: 1.5; } /* Дали больше места тексту */
+.mode-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+#modeTitle { font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 900; color: #FFC300; }
+.mode-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+.badge { padding: 6px 16px; background: rgba(255, 255, 255, 0.06); border-radius: 30px; font-size: 0.85rem; font-weight: 600; color: #e0e0e0; }
+.highlight-badge { background: rgba(255, 195, 0, 0.15); color: #FFC300; border: 1px solid rgba(255, 195, 0, 0.3); }
+
+#modeDesc { font-size: 1.1rem; line-height: 1.6; color: #b3b3b3; margin-bottom: 25px; }
+
+/* Блок со списками */
+.mode-details {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 35px;
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.03);
+}
+.details-column h4 { color: #fff; margin-bottom: 12px; font-size: 1rem; font-weight: 700; opacity: 0.9;}
+.details-list { list-style: none; padding: 0; }
+.details-list li {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+.details-list li::before {
+    content: "•";
+    color: #FFC300;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.mode-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.mode-cta-btn {
+    background: #FFC300; color: #000; border: none; padding: 16px 40px; font-size: 1.1rem;
+    font-weight: 700; border-radius: 30px; cursor: pointer; text-decoration: none; display: inline-block;
+    transition: all 0.3s ease;
+}
+.mode-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255, 195, 0, 0.4); }
+.bot-btn { background: #24A1DE; color: #fff; }
+.bot-btn:hover { box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4); }
+
+.rules-link {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+.rules-link:hover { color: #FFC300; text-decoration: underline; }
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white;
+    width: 60px; height: 60px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.nav-btn:hover { border-color: #FFC300; color: #FFC300; background: rgba(255, 195, 0, 0.05); transform: scale(1.08); }
+
+.animate-target { transition: opacity 0.3s ease, transform 0.3s ease; }
+.fade-hidden { opacity: 0; transform: translateY(10px); }
+
+
+/* --- СЕКЦИЯ ОТЗЫВОВ (JS Слайдер со свайпом) --- */
+
+.slider-track {
+    display: flex;
+    gap: 40px;
+    padding: 25px 0;
+    width: max-content;
+    will-change: transform; /* Подсказываем браузеру рендерить через видеокарту */
+}
+.reviews-section { padding: 100px 0; overflow: hidden; background: #000; }
+.slider-window {
+    width: 100%;
+    cursor: grab;
+    overflow: hidden; /* Скрываем скроллбар */
+}
+.slider-window:active { cursor: grabbing; }
+.slider-track {
+    display: flex;
+    gap: 40px;
+    padding: 25px 0;
+    width: max-content;
+    overflow-x: auto; /* Для JS логики scrollLeft */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.slider-track::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.slider-track.active-grab { cursor: grabbing; }
+
+.review-card {
+    display: flex; align-items: center; gap: 15px; background: #0d0d0d;
+    width: 450px; height: 100px; padding: 0 30px 0 12px; border-radius: 25px;
+    border: 1px solid #FFC300; box-shadow: 0 0 15px rgba(255, 195, 0, 0.15);
+    flex-shrink: 0; box-sizing: border-box; user-select: none;
+}
+.card-avatar { width: 75px; height: 75px; border-radius: 50%; pointer-events: none; }
+.card-body { display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.username { color: #FFC300; font-size: 18px; font-weight: 800; margin-bottom: 5px; pointer-events: none; }
+.review-text { color: #ccc; font-size: 14px; font-weight: 500; pointer-events: none; }
+
+/* --- СЕКЦИЯ FAQ (JS Аккордеон) --- */
+.faq-section { padding: 100px 0; max-width: 900px; margin: 0 auto; }
+.faq-container { display: flex; flex-direction: column; gap: 20px; padding: 0 20px; }
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+.faq-item:hover { background: rgba(255, 255, 255, 0.06); }
+
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    cursor: pointer;
+}
+.faq-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+.faq-icon {
+    font-size: 2rem;
+    color: #FFC300;
+    font-weight: 300;
+    transition: transform 0.4s ease;
+}
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-content-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out; /* Плавное выпадание */
+}
+.faq-content {
+    padding: 0 25px 25px 25px;
+    color: #ccc;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 5px;
+    padding-top: 20px;
+}
+
+/* --- ОРИГИНАЛЬНЫЙ ФУТЕР И МОДАЛКИ --- */
+footer.footer { margin-top: 100px; padding: 60px 0; background: #000000; border-top: 1px solid #111111; }
+.footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px; }
+.footer-block h3 { color: #FFC300; font-family: "Inter", sans-serif; margin-bottom: 15px; font-weight: 700; }
+.footer-block p, .footer-block a { color: #ffffff; font-family: "Inter", sans-serif; font-size: 16px; text-decoration: none; display: block; margin-bottom: 8px; }
+.footer-link:hover { color: #FFC300; }
+
+.overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
+.modal { background: #1E1E1E; border: 2px solid #FFC300; padding: 40px; border-radius: 25px; width: 420px; text-align: center; position: relative; box-shadow: 0px 0px 40px rgba(255, 195, 0, 0.15); }
+.modal.large { width: 700px; text-align: left; }
+.modal-title { color: #FFC300; font-family: "Inter", sans-serif; margin-bottom: 20px; font-size: 28px; font-weight: 700; }
+.modal-price { color: #ffffff; font-family: "Inter", sans-serif; margin-bottom: 25px; font-size: 1.1rem; }
+.modal-price span { color: #FFC300; font-weight: bold; }
+.modal-input { width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 12px; border: 1px solid #333333; background: #000000; color: #ffffff; font-size: 18px; outline: none; transition: border-color 0.3s; }
+.modal-input:focus { border-color: #FFC300; }
+.modal-pay-button { background-color: #FFC300; color: #000000; border: none; padding: 16px 40px; font-size: 20px; font-weight: 700; border-radius: 50px; cursor: pointer; transition: 0.3s; width: 100%; }
+.modal-pay-button:hover { filter: drop-shadow(0px 0px 10px #FFC300); }
+.close-button { position: absolute; top: 15px; right: 20px; color: #ffffff; font-size: 32px; cursor: pointer; }
+.modal-text { color: #ffffff; font-family: "Inter", sans-serif; font-size: 18px; line-height: 1.6; }
+
+/* --- МОБИЛЬНЫЙ АДАПТИВ --- */
+/* --- МОБИЛЬНЫЙ АДАПТИВ --- */
+@media (max-width: 992px) {
+    .hero-section { 
+        flex-direction: column-reverse; 
+        text-align: center; 
+        padding: 40px 20px; 
+        min-height: auto; 
+        gap: 40px; 
+    }
+    .hero-title { font-size: 2.8rem; }
+    .hero-actions { flex-direction: column; gap: 15px; align-items: stretch; }
+    .hero-decor { width: 70%; }
+    
+    /* Убираем картинку пчелы на телефонах */
+    .bee-float { display: none; }
+
+    .carousel-container { padding: 0 10px; position: relative; }
+    .carousel-content { flex-direction: column; padding: 30px 20px; text-align: center; gap: 30px; }
+
+    .character-render img { max-height: 280px; }
+    #modeTitle { font-size: 2.2rem; }
+    .mode-badges { justify-content: center; }
+
+    .mode-details { flex-direction: column; gap: 20px; text-align: left; }
+    .mode-actions-row { flex-direction: column; }
+
+    /* Делаем стрелки для листания серверов поменьше */
+    .nav-btn { 
+        position: absolute; 
+        top: 40%; 
+        transform: translateY(-50%); 
+        z-index: 10; 
+        background: rgba(0,0,0,0.85); 
+        width: 42px; 
+        height: 42px; 
+        font-size: 1.1rem; 
+    }
+    #prevBtn { left: 5px; } 
+    #nextBtn { right: 5px; }
+
+    .footer-content { flex-direction: column; gap: 40px; text-align: center; }
+    .modal.large { width: 90%; margin: 20px; max-height: 90vh; overflow-y: auto; }
+    
+    /* Исправляем карточки отзывов, чтобы текст любой длины полностью помещался */
+    .review-card { 
+        width: 330px; 
+        height: auto; /* Высота теперь подстраивается под текст */
+        min-height: 110px; 
+        padding: 15px 20px 15px 12px; 
+    }
+    .review-text {
+        white-space: normal;
+        word-break: break-word; /* Защита от слишком длинных слов */
+    }
+
+    /* Добавляем безопасный отступ от краёв экрана для всех секционных заголовков (включая FAQ) */
+    .carousel-section-title {
+        padding: 0 15px;
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+}
