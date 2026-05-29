@@ -38,7 +38,7 @@ if (payForm) {
         payButton.disabled = true;
 
         try {
-            const response = await fetch('https://pay.apiarysmp.ru/create', {
+            const response = await fetch('https://pay.apiarysmp.online/create', {
                 method: 'POST',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/json' },
