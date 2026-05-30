@@ -247,7 +247,7 @@ header {
     border: 1px solid #FFC300; box-shadow: 0 0 15px rgba(255, 195, 0, 0.15);
     flex-shrink: 0; box-sizing: border-box; user-select: none;
 }
-.card-avatar { width: 75px; height: 75px; border-radius: 50%; pointer-events: none; }
+.card-avatar { width: 75px; height: 75px; border-radius: 20%; pointer-events: none; }
 .card-body { display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
 .username { color: #FFC300; font-size: 18px; font-weight: 800; margin-bottom: 5px; pointer-events: none; }
 .review-text { color: #ccc; font-size: 14px; font-weight: 500; pointer-events: none; }
@@ -339,6 +339,7 @@ footer.footer { margin-top: 100px; padding: 60px 0; background: #000000; border-
     
     /* Убираем картинку пчелы на телефонах */
     .bee-float { display: none; }
+    .neon-glow { display: none; }
 
     .carousel-container { padding: 0 10px; position: relative; }
     .carousel-content { flex-direction: column; padding: 30px 20px; text-align: center; gap: 30px; }

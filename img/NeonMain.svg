@@ -1,0 +1,21 @@
+<svg width="708" height="682" viewBox="0 0 708 682" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_9_21)">
+<circle cx="433.3" cy="407.3" r="230" fill="#FFC400"/>
+<circle cx="208.3" cy="208.3" r="164" fill="#FFC400"/>
+<path d="M217.3 485.3C185.3 403.3 119.8 388.3 61.3 280.3L217.3 324.3V485.3Z" fill="#FFC400"/>
+<path d="M552.3 210.8C500.3 181.3 448.577 166.123 399.8 140.3C365.756 122.277 334.3 95.8 296.8 70.8L357.3 220.3L552.3 210.8Z" fill="#FFC400"/>
+<path d="M562.3 220.8C510.3 191.3 458.577 176.123 409.8 150.3C375.756 132.277 344.3 105.8 306.8 80.8L367.3 230.3L562.3 220.8Z" fill="#FFC400"/>
+</g>
+<circle cx="433.3" cy="407.3" r="230" fill="#FFC400"/>
+<circle cx="208.3" cy="208.3" r="164" fill="#FFC400"/>
+<path d="M217.3 485.3C185.3 403.3 119.8 388.3 61.3 280.3L217.3 324.3V485.3Z" fill="#FFC400"/>
+<path d="M552.3 210.8C500.3 181.3 448.577 166.123 399.8 140.3C365.756 122.277 334.3 95.8 296.8 70.8L357.3 220.3L552.3 210.8Z" fill="#FFC400"/>
+<path d="M562.3 220.8C510.3 191.3 458.577 176.123 409.8 150.3C375.756 132.277 344.3 105.8 306.8 80.8L367.3 230.3L562.3 220.8Z" fill="#FFC400"/>
+<defs>
+<filter id="filter0_f_9_21" x="4.95911e-05" y="3.8147e-06" width="707.6" height="681.6" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="22.15" result="effect1_foregroundBlur_9_21"/>
+</filter>
+</defs>
+</svg>
