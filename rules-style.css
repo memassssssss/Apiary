@@ -1,0 +1,225 @@
+/* Делаем обнуление стандартных отступов, чтобы браузер ничего не ломал */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Настройки для всей страницы с живым фоном */
+/* --- ОСНОВНОЙ ФОН --- */
+body {
+    background-color: #0a0a0a; /* Очень темный, почти черный фон */
+    color: #ffffff;            
+    font-family: 'Inter', sans-serif; 
+    line-height: 1.6;          
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden; /* Блокируем появление горизонтального скролла от шариков */
+}
+
+/* --- КОНТЕЙНЕР АНИМАЦИИ --- */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Отправляем на самый задний план */
+    overflow: hidden;
+}
+
+/* --- ОБЩИЕ СТИЛИ СВЕТЯЩИХСЯ СФЕР --- */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px); /* Сильное размытие создает эффект свечения */
+    opacity: 0.6;
+    animation: float infinite alternate ease-in-out;
+}
+
+/* Индивидуальные настройки каждого шарика (цвета, размер, позиция) */
+.orb-1 {
+    width: 450px;
+    height: 450px;
+    background: #FFC300; /* Твой фирменный желтый */
+    top: -10%;
+    left: -10%;
+    animation-duration: 14s;
+}
+
+.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: #e67e22; /* Янтарный/оранжевый */
+    top: 40%;
+    right: -10%;
+    animation-duration: 18s;
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 550px;
+    height: 550px;
+    background: #8b6b00; /* Темно-золотой */
+    bottom: -20%;
+    left: 20%;
+    animation-duration: 22s;
+    animation-delay: -7s;
+}
+
+.orb-4 {
+    width: 250px;
+    height: 250px;
+    background: #f1c40f; /* Яркий светлячок */
+    top: 20%;
+    left: 50%;
+    animation-duration: 12s;
+    animation-delay: -5s;
+}
+
+/* --- АНИМАЦИЯ ПЛАВНОГО ПОЛЕТА --- */
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(15vw, 15vh) scale(1.3); /* Шарики немного растут и смещаются */
+    }
+    100% {
+        transform: translate(-10vw, -10vh) scale(0.9); /* Шарики уменьшаются и летят обратно */
+    }
+}
+
+/* --- ЭФФЕКТ МАТОВОГО СТЕКЛА ДЛЯ ТЕКСТА --- */
+/* (Замени свой старый .rules-container на этот) */
+.rules-container {
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 50px;
+    
+    /* Делаем плашку под текстом полупрозрачной */
+    background: rgba(20, 20, 20, 0.4); 
+    
+    /* Главная магия — размытие того, что находится ПОД контейнером */
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px); 
+    
+    /* Красивые границы и тени */
+    border: 1px solid rgba(255, 195, 0, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+/* Адаптив матового стекла под мобилки */
+@media (max-width: 768px) {
+    .rules-container {
+        padding: 30px 20px;
+        margin: 20px;
+        border-radius: 16px;
+    }
+}
+
+/* Настраиваем шапку страницы */
+.rules-header {
+    background-color: #1a1a1a; /* Чуть светлее фона */
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 2px solid #FFC300; /* Твоя фирменная желтая полоска */
+    margin-bottom: 40px;
+    position: relative;
+}
+
+/* Кнопка "Назад" в левом верхнем углу */
+.back-button {
+    position: absolute;
+    left: 40px;
+    top: 45px;
+    color: #FFC300;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: 0.3s; /* Плавность для ховера */
+}
+
+/* Эффект при наведении на кнопку "Назад" */
+.back-button:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #FFC300; /* Легкое свечение */
+}
+
+/* Заголовок в шапке */
+.rules-header h1 {
+    font-size: 36px;
+    color: #FFC300;
+}
+
+/* Контейнер по центру, чтобы текст не растягивался на весь широкий монитор */
+.rules-container {
+    max-width: 900px; /* Ограничиваем ширину */
+    margin: 0 auto;   /* Центрируем блок на странице */
+    padding: 0 20px 60px 20px; /* Отступы по бокам и снизу */
+}
+
+/* Заголовки категорий (Общие, Территории и т.д.) */
+.category-title {
+    font-size: 28px;
+    color: #FFC300;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333333; /* Тонкая линия под заголовком */
+}
+
+/* Настройки для самого списка правил */
+.rules-list {
+    margin-left: 20px; /* Отступ слева, чтобы цифры влезли */
+}
+
+/* Настройки для каждого пункта правила */
+.rules-list li {
+    font-size: 18px;
+    margin-bottom: 15px; /* Отступ между правилами, чтобы они не были одной кашей */
+    color: #cccccc;      /* Слегка серый текст, чтобы глаза не уставали */
+    padding-left: 10px;
+}
+
+/* Делаем сами цифры желтыми, чтобы было красиво */
+.rules-list li::marker {
+    color: #FFC300;
+    font-weight: 600;
+}
+
+/* Адаптация под мобильные телефоны */
+@media (max-width: 768px) {
+    .rules-header h1 {
+        font-size: 24px;
+        margin-top: 40px; /* Сдвигаем вниз, чтобы не налезло на кнопку */
+    }
+    
+    .back-button {
+        left: 20px;
+        top: 20px;
+        font-size: 16px;
+    }
+    
+    .category-title {
+        font-size: 24px;
+    }
+    
+    .rules-list li {
+        font-size: 16px;
+    }
+}
+/* Анимация для живого фона */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
