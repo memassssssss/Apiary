@@ -94,25 +94,26 @@ const modesData = [
         bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(30, 20, 0, 0.6) 50%, rgba(0,0,0,0) 100%)"
     },
     {
-        title: "Apiary Mini",
-        desc: "Сервер для всех желающих! Здесь разрешено ПВП, но классический гриф запрещен. Идеально для того, что бы впервые прочувствовать сервер :)",
+        title: "Apiary Sky",
+        desc: "Классический OneBlock режим! Ты начинаешь на одном-единственном блоке над бездной. Разрушай его, получай ресурсы, расширяй остров и создавай с друзьями собственное небесное царство.",
         render: "./img/mini_render.png", 
-        badges: ["1.21.11", "Бесплатный", "Вайт-лист"],
-        features: ["Большой онлайн", "ПВП разрешено", "Донат через ТГ-бота", "Активная модерация"],
-        plugins: ["Новые зачарования", "/tpa и /spawn", "Лучший анти-чит", "Simple Voice Chat"],
-        rulesLink: "/rules-mini.html",
-        actionType: "bot",
+        badges: ["1.21.11", "OneBlock", "Бесплатный"],
+        features: ["Бесконечный блок", "Система островов", "Развитая экономика", "Интересные квесты"],
+        plugins: ["Острова игроков", "Собственные плагины", "Система скилов", "Simple Voice Chat"],
+        rulesLink: "/rules-sky.html",
+        actionType: "ip", // заменено с "bot" на прямое получение IP/вход
         bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0, 20, 40, 0.6) 50%, rgba(0,0,0,0) 100%)"
     },
     {
         title: "Apiary Hard",
         desc: "Настоящее испытание для хардкорных игроков. Режим Hardcore: жестокие убийства, тотальный гриф и полное отсутствие жалости. Выживет сильнейший.",
         render: "./img/hard_render.png",
-        badges: ["1.21.11", "Хардкор", "Гриф разрешен"],
+        badges: ["1.21.11", "Хардкор", "Гриф разрешен", "Открытие 31 июля!"],
         features: ["Полный хаос", "Разрешен гриф", "Разрешено ПВП", "Нет ограничений"],
         plugins: ["Только ванильные механики", "Жесткий анти-чит", "Ограничения карты"],
         rulesLink: "/rules-hard.html",
-        actionType: "bot",
+        actionType: "soon", // заменено с "bot" (обозначает, что сервер скоро откроется)
+        timer: "До открытия: 12 дней",
         bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(40, 5, 5, 0.6) 50%, rgba(0,0,0,0) 100%)"
     }
 ];
@@ -144,8 +145,10 @@ const updateCarousel = (index) => {
         const actionContainer = document.getElementById('modeActionContainer');
         if (data.actionType === "pay") {
             actionContainer.innerHTML = `<button class="mode-cta-btn" onclick="openModal()">Купить проходку</button>`;
-        } else {
-            actionContainer.innerHTML = `<a href="https://t.me/apiary_shop_bot" target="_blank" class="mode-cta-btn bot-btn">Подать заявку в боте</a>`;
+        } else if (data.actionType === "ip") {
+            actionContainer.innerHTML = `<button class="mode-cta-btn" onclick="copyIP()">Скопировать IP</button>`;
+        } else if (data.actionType === "soon") {
+            actionContainer.innerHTML = `<div class="mode-cta-btn disabled">${data.timer || 'Скоро открытие'}</div>`;
         }
         
         document.querySelectorAll('.animate-target').forEach(el => el.classList.remove('fade-hidden'));

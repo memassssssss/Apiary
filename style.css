@@ -98,8 +98,37 @@ header {
     box-shadow: 0 15px 40px rgba(255, 195, 0, 0.5);
 }
 
+/* Кнопка-ссылка под основной кнопкой оплаты */
+.free-pass-block {
+    text-align: center;
+}
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирует ссылку относительно кнопки */
+    gap: 8px;            /* Отступ между кнопкой и ссылкой */
+}
+
+.free-pass-link {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.free-pass-link:hover {
+    color: #ffc300; /* Фирменный жёлтый акцент */
+    background: rgba(255, 195, 0, 0.08);
+    text-decoration: none;
+}
+
 .ip-copy-block {
     display: flex;
+    margin-bottom: 50px;
     flex-direction: column;
     cursor: pointer;
     padding: 10px 20px;

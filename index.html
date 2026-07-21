@@ -20,13 +20,25 @@
             </p>
             
             <div class="hero-actions">
-                <button class="hero-btn" onclick="openModal()">Присоединиться</button>
-                
-                <div class="ip-copy-block" onclick="copyIP()">
-                    <span id="ipText">play.apiarysmp.online</span>
-                    <span id="ipHint" class="ip-hint">Нажми, чтобы скопировать</span>
-                </div>
-            </div>
+    <!-- Обертка для кнопки и ссылки под ней -->
+    <div class="btn-group">
+        <button class="hero-btn" onclick="openModal()">Присоединиться</button>
+        
+        <div class="free-pass-block">
+            <a href="https://forms.gle/uPsuiS9zt6TvfPBy9" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="free-pass-link">
+                Хочу играть бесплатно (Заполнить анкету) →
+            </a>
+        </div>
+    </div>
+
+    <div class="ip-copy-block" onclick="copyIP()">
+        <span id="ipText">play.apiarysmp.online</span>
+        <span id="ipHint" class="ip-hint">Нажми, чтобы скопировать</span>
+    </div>
+</div>
         </div>
         
         <div class="hero-decor scroll-anim">
@@ -36,45 +48,46 @@
     </main>
 
     <!-- СЕКЦИЯ РЕЖИМОВ (С расширенной информацией) -->
-    <section id="modes-carousel" class="scroll-anim transition-bg">
-        <h2 class="carousel-section-title">Выбери свой режим игры</h2>
-        <div class="carousel-container">
-            <button id="prevBtn" class="nav-btn">&larr;</button>
-            
-            <div class="carousel-content">
-                <div class="character-render">
-                    <img id="renderImg" src="./img/main_render.png" alt="Character Render" class="animate-target">
-                </div>
-                
-                <div class="mode-info animate-target">
-                    <div class="mode-header">
-                        <h3 id="modeTitle">Apiary SMP</h3>
-                        <div id="modeBadges" class="mode-badges"></div>
-                    </div>
-                    
-                    <p id="modeDesc">Загрузка описания...</p>
-                    
-                    <div class="mode-details">
-                        <div class="details-column">
-                            <h4>Особенности:</h4>
-                            <ul id="modeFeatures" class="details-list"></ul>
-                        </div>
-                        <div class="details-column">
-                            <h4>Ключевые плагины:</h4>
-                            <ul id="modePlugins" class="details-list"></ul>
-                        </div>
-                    </div>
-                    
-                    <div class="mode-actions-row">
-                        <div id="modeActionContainer"></div>
-                        <a href="#" id="modeRulesLink" class="rules-link" target="_blank">Читать правила сервера →</a>
-                    </div>
-                </div>
+<section id="modes-carousel" class="scroll-anim transition-bg">
+    <h2 class="carousel-section-title">Выбери свой режим игры</h2>
+    <div class="carousel-container">
+        <button id="prevBtn" class="nav-btn">&larr;</button>
+        
+        <div class="carousel-content">
+            <div class="character-render">
+                <img id="renderImg" src="./img/main_render.png" alt="Character Render" class="animate-target">
             </div>
             
-            <button id="nextBtn" class="nav-btn">&rarr;</button>
+            <div class="mode-info animate-target">
+                <div class="mode-header">
+                    <h3 id="modeTitle">Apiary SMP</h3>
+                    <div id="modeBadges" class="mode-badges"></div>
+                </div>
+                
+                <p id="modeDesc">Загрузка описания...</p>
+                
+                <div class="mode-details">
+                    <div class="details-column">
+                        <h4>Особенности:</h4>
+                        <ul id="modeFeatures" class="details-list"></ul>
+                    </div>
+                    <div class="details-column">
+                        <h4>Ключевые плагины:</h4>
+                        <ul id="modePlugins" class="details-list"></ul>
+                    </div>
+                </div>
+                
+                <div class="mode-actions-row">
+                    <!-- Сюда JS будет подставлять либо кнопку "Купить", либо "Скопировать IP", либо Таймер/Анонс -->
+                    <div id="modeActionContainer"></div>
+                    <a href="#" id="modeRulesLink" class="rules-link" target="_blank">Читать правила сервера →</a>
+                </div>
+            </div>
         </div>
-    </section>
+        
+        <button id="nextBtn" class="nav-btn">&rarr;</button>
+    </div>
+</section>
 
     <!-- СЕКЦИЯ ОТЗЫВОВ (JS Слайдер) -->
     <section class="reviews-section scroll-anim">
@@ -213,7 +226,7 @@
         <div class="modal">
             <span class="close-button" id="closeModal">&times;</span>
             <h2 class="modal-title">Вход на сервер</h2>
-            <p class="modal-price">Стоимость: <span id="itemPrice">175₽</span></p>
+            <p class="modal-price">Стоимость: <span id="itemPrice">85₽ (скидка 50%)</span></p>
             <form id="paymentForm">
                 <input type="hidden" name="item_type" id="itemType" value="pass">
                 <input type="text" name="nickname" class="modal-input" placeholder="Введите ваш ник" required>
