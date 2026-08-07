@@ -150,97 +150,215 @@ header {
     50% { transform: translateY(-30px) rotate(-3deg); }
 }
 
-/* --- СЕКЦИЯ КАРУСЕЛИ РЕЖИМОВ (Обновленная) --- */
-#modes-carousel { padding: 120px 0; transition: background 0.5s ease-in-out; }
-.carousel-section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; margin-bottom: 60px; color: #fff; }
+/* --- ОБЩИЕ ЗАГОЛОВКИ СЕКЦИЙ --- */
+.carousel-section-title { 
+    text-align: center; 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 2.5rem; 
+    font-weight: 900; 
+    margin-bottom: 60px; 
+    color: #fff; 
+}
 
-.carousel-container { max-width: 1300px; /* Сделали шире */ margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; gap: 20px; }
+/* --- СЕКЦИЯ РЕЖИМОВ (ПОРТАЛЫ) --- */
+.servers-portals {
+    padding: 100px 0;
+    transition: background-color 0.5s ease-in-out; /* Плавная смена фона из твоего JS */
+}
 
-.carousel-content {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    flex: 1;
-    background: rgba(255, 255, 255, 0.02);
+.portals-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.portals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.portal-card {
+    background: rgba(20, 20, 20, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 50px;
-    border-radius: 40px;
-    backdrop-filter: blur(10px);
-}
-
-.character-render { flex: 0.8; display: flex; justify-content: center; }
-.character-render img { max-height: 480px; object-fit: contain; } /* Сделали рендер чуть больше */
-
-.mode-info { flex: 1.5; } /* Дали больше места тексту */
-.mode-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-#modeTitle { font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 900; color: #FFC300; }
-.mode-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-.badge { padding: 6px 16px; background: rgba(255, 255, 255, 0.06); border-radius: 30px; font-size: 0.85rem; font-weight: 600; color: #e0e0e0; }
-.highlight-badge { background: rgba(255, 195, 0, 0.15); color: #FFC300; border: 1px solid rgba(255, 195, 0, 0.3); }
-
-#modeDesc { font-size: 1.1rem; line-height: 1.6; color: #b3b3b3; margin-bottom: 25px; }
-
-/* Блок со списками */
-.mode-details {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 35px;
-    background: rgba(0,0,0,0.2);
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.03);
-}
-.details-column h4 { color: #fff; margin-bottom: 12px; font-size: 1rem; font-weight: 700; opacity: 0.9;}
-.details-list { list-style: none; padding: 0; }
-.details-list li {
-    color: #a0a0a0;
-    font-size: 0.95rem;
-    margin-bottom: 8px;
+    border-radius: 24px;
+    padding: 30px 20px;
     position: relative;
-    padding-left: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.details-list li::before {
-    content: "•";
+
+.portal-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 195, 0, 0.2);
+}
+
+/* Свечение на заднем фоне внутри карточки */
+.card-glow {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,195,0,0.15) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.smp-card .card-glow { background: radial-gradient(circle, rgba(255,195,0,0.15) 0%, rgba(0,0,0,0) 70%); }
+.sky-card .card-glow { background: radial-gradient(circle, rgba(41,182,246,0.15) 0%, rgba(0,0,0,0) 70%); }
+.hard-card .card-glow { background: radial-gradient(circle, rgba(255,82,82,0.15) 0%, rgba(0,0,0,0) 70%); }
+
+.portal-render {
+    height: 220px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    z-index: 1;
+    position: relative;
+    transition: transform 0.4s ease;
+}
+
+.portal-card:hover .portal-render {
+    transform: scale(1.08) translateY(-5px);
+}
+
+.portal-content {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.portal-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+}
+
+/* Цвета бейджиков */
+.badge-gold { background: rgba(255, 195, 0, 0.15); color: #FFC300; border: 1px solid rgba(255, 195, 0, 0.3); }
+.badge-green { background: rgba(0, 200, 83, 0.15); color: #00e676; border: 1px solid rgba(0, 200, 83, 0.3); }
+.badge-blue { background: rgba(41, 182, 246, 0.15); color: #29b6f6; border: 1px solid rgba(41, 182, 246, 0.3); }
+.badge-red { background: rgba(255, 82, 82, 0.15); color: #ff5252; border: 1px solid rgba(255, 82, 82, 0.3); }
+.badge-dark { background: rgba(150, 150, 150, 0.1); color: #9e9e9e; border: 1px solid rgba(150, 150, 150, 0.2); }
+
+.portal-desc {
+    font-size: 14px;
+    color: #b3b3b3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.features-list {
+    list-style: none;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.features-list li {
+    font-size: 13px;
+    color: #cccccc;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.features-list li:last-child {
+    margin-bottom: 0;
+}
+
+.features-list li::before {
+    content: '•';
     color: #FFC300;
     position: absolute;
-    left: 0;
-    font-weight: bold;
+    left: 5px;
+    font-size: 18px;
+    line-height: 13px;
 }
 
-.mode-actions-row {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-
-.mode-cta-btn {
-    background: #FFC300; color: #000; border: none; padding: 16px 40px; font-size: 1.1rem;
-    font-weight: 700; border-radius: 30px; cursor: pointer; text-decoration: none; display: inline-block;
+/* Кнопки карточек */
+.portal-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
     transition: all 0.3s ease;
+    margin-bottom: 12px;
 }
-.mode-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255, 195, 0, 0.4); }
-.bot-btn { background: #24A1DE; color: #fff; }
-.bot-btn:hover { box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4); }
+
+.btn-smp { background: #FFC300; color: #000; box-shadow: 0 4px 15px rgba(255, 195, 0, 0.2); }
+.btn-smp:hover { background: #ffcc33; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 195, 0, 0.4); }
+
+.btn-sky { background: transparent; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+.btn-sky:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); }
+
+.btn-hard { background: rgba(255, 82, 82, 0.1); color: #ff5252; border: 1px solid rgba(255, 82, 82, 0.3); }
+.btn-hard.disabled { cursor: not-allowed; opacity: 0.6; }
+.btn-hard.disabled:hover { transform: none; }
 
 .rules-link {
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: color 0.3s ease;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: underline;
+    transition: color 0.2s ease;
 }
-.rules-link:hover { color: #FFC300; text-decoration: underline; }
-
-.nav-btn {
-    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white;
-    width: 60px; height: 60px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+.rules-link:hover {
+    color: #FFC300;
 }
-.nav-btn:hover { border-color: #FFC300; color: #FFC300; background: rgba(255, 195, 0, 0.05); transform: scale(1.08); }
 
-.animate-target { transition: opacity 0.3s ease, transform 0.3s ease; }
-.fade-hidden { opacity: 0; transform: translateY(10px); }
+/* --- ИЗОЛИРОВАННЫЙ АДАПТИВ (Чтоб не ломался десктоп) --- */
+@media (max-width: 1024px) {
+    .portals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
+@media (max-width: 768px) {
+    .portals-grid {
+        grid-template-columns: 1fr;
+    }
+    .portals-wrapper {
+        padding: 0 20px;
+    }
+}
 
 /* --- СЕКЦИЯ ОТЗЫВОВ (JS Слайдер со свайпом) --- */
 
@@ -415,4 +533,622 @@ footer.footer { margin-top: 100px; padding: 60px 0; background: #000000; border-
         font-size: 2rem;
         margin-bottom: 40px;
     }
+}
+
+/* --- СЕКЦИЯ РЕЖИМОВ (ПОРТАЛЫ) --- */
+.servers-portals {
+    padding: 100px 0;
+    /* Базовый цвет секции. JS будет его плавно менять */
+    background-color: #0a0a0a; 
+    transition: background-color 0.6s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.portals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.portal-card {
+    background: rgba(25, 25, 25, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 40px 25px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Эффект фокуса: приглушаем неактивные карточки */
+.portals-grid:hover .portal-card:not(:hover) {
+    opacity: 0.4;
+    transform: scale(0.96);
+}
+
+/* Стилизация при наведении на конкретную карточку */
+.portal-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    z-index: 2;
+}
+
+.smp-card:hover { border-color: rgba(255, 170, 0, 0.4); box-shadow: 0 20px 40px rgba(255, 170, 0, 0.15); }
+.sky-card:hover { border-color: rgba(0, 170, 255, 0.4); box-shadow: 0 20px 40px rgba(0, 170, 255, 0.15); }
+.hard-card:hover { border-color: rgba(255, 50, 50, 0.4); box-shadow: 0 20px 40px rgba(255, 50, 50, 0.15); }
+
+/* Рендеры внутри карточек */
+.portal-render {
+    height: 180px;
+    object-fit: contain;
+    margin-top: -80px; /* Выдвигаем персонажа за пределы карточки вверх */
+    margin-bottom: 20px;
+    transition: transform 0.5s ease;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.portal-card:hover .portal-render {
+    transform: scale(1.15) translateY(-10px);
+}
+
+.portal-content h3 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Бейджи */
+.badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ddd;
+}
+.badge-gold { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.3); }
+.badge-green { background: rgba(0, 200, 80, 0.2); color: #00ff66; border: 1px solid rgba(0, 200, 80, 0.3); }
+.badge-blue { background: rgba(0, 170, 255, 0.2); color: #00aaff; border: 1px solid rgba(0, 170, 255, 0.3); }
+.badge-red { background: rgba(255, 50, 50, 0.2); color: #ff3333; border: 1px solid rgba(255, 50, 50, 0.3); }
+.badge-dark { background: rgba(0, 0, 0, 0.5); color: #aaa; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.portal-desc {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Чтобы кнопки всегда были на одном уровне снизу */
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+    text-align: left;
+    width: 100%;
+}
+.features-list li {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #ffaa00;
+    font-weight: bold;
+}
+
+/* Кнопки */
+.portal-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    color: #fff;
+}
+.btn-smp { background: linear-gradient(135deg, #ffaa00, #ff6a00); box-shadow: 0 5px 15px rgba(255, 170, 0, 0.3); }
+.btn-smp:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 170, 0, 0.5); }
+.btn-sky { background: linear-gradient(135deg, #00aaff, #0055ff); box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3); }
+.btn-sky:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 170, 255, 0.5); }
+.btn-hard { background: #333; color: #888; cursor: not-allowed; }
+
+.rules-link {
+    font-size: 13px;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1px dashed #888;
+}
+.rules-link:hover { color: #fff; border-bottom-color: #fff; }
+
+/* Адаптив для мобилок и планшетов */
+@media (max-width: 992px) {
+    .portals-grid {
+        grid-template-columns: 1fr;
+        gap: 60px; /* Увеличил отступ, чтобы рендеры (которые вылезают вверх) не перекрывали соседние карточки */
+        margin-top: 80px;
+    }
+    .portals-grid:hover .portal-card:not(:hover) {
+        opacity: 1; /* Отключаем затухание соседей на мобилках, там это бесит */
+        transform: none;
+    }
+}
+
+/* --- СЕКЦИЯ РЕЖИМОВ (ПОРТАЛЫ) --- */
+.servers-portals {
+    padding: 100px 0;
+    /* Базовый цвет секции. JS будет его плавно менять */
+    background-color: #0a0a0a; 
+    transition: background-color 0.6s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.portals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.portal-card {
+    background: rgba(25, 25, 25, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 40px 25px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Эффект фокуса: приглушаем неактивные карточки */
+.portals-grid:hover .portal-card:not(:hover) {
+    opacity: 0.4;
+    transform: scale(0.96);
+}
+
+/* Стилизация при наведении на конкретную карточку */
+.portal-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    z-index: 2;
+}
+
+.smp-card:hover { border-color: rgba(255, 170, 0, 0.4); box-shadow: 0 20px 40px rgba(255, 170, 0, 0.15); }
+.sky-card:hover { border-color: rgba(0, 170, 255, 0.4); box-shadow: 0 20px 40px rgba(0, 170, 255, 0.15); }
+.hard-card:hover { border-color: rgba(255, 50, 50, 0.4); box-shadow: 0 20px 40px rgba(255, 50, 50, 0.15); }
+
+/* Рендеры внутри карточек */
+.portal-render {
+    height: 180px;
+    object-fit: contain;
+    margin-top: -80px; /* Выдвигаем персонажа за пределы карточки вверх */
+    margin-bottom: 20px;
+    transition: transform 0.5s ease;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.portal-card:hover .portal-render {
+    transform: scale(1.15) translateY(-10px);
+}
+
+.portal-content h3 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Бейджи */
+.badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ddd;
+}
+.badge-gold { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.3); }
+.badge-green { background: rgba(0, 200, 80, 0.2); color: #00ff66; border: 1px solid rgba(0, 200, 80, 0.3); }
+.badge-blue { background: rgba(0, 170, 255, 0.2); color: #00aaff; border: 1px solid rgba(0, 170, 255, 0.3); }
+.badge-red { background: rgba(255, 50, 50, 0.2); color: #ff3333; border: 1px solid rgba(255, 50, 50, 0.3); }
+.badge-dark { background: rgba(0, 0, 0, 0.5); color: #aaa; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.portal-desc {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Чтобы кнопки всегда были на одном уровне снизу */
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+    text-align: left;
+    width: 100%;
+}
+.features-list li {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #ffaa00;
+    font-weight: bold;
+}
+
+/* Кнопки */
+.portal-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    color: #fff;
+}
+.btn-smp { background: linear-gradient(135deg, #ffaa00, #ff6a00); box-shadow: 0 5px 15px rgba(255, 170, 0, 0.3); }
+.btn-smp:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 170, 0, 0.5); }
+.btn-sky { background: linear-gradient(135deg, #00aaff, #0055ff); box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3); }
+.btn-sky:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 170, 255, 0.5); }
+.btn-hard { background: #333; color: #888; cursor: not-allowed; }
+
+.rules-link {
+    font-size: 13px;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1px dashed #888;
+}
+.rules-link:hover { color: #fff; border-bottom-color: #fff; }
+
+/* Адаптив для мобилок и планшетов */
+@media (max-width: 992px) {
+    .portals-grid {
+        grid-template-columns: 1fr;
+        gap: 60px; /* Увеличил отступ, чтобы рендеры (которые вылезают вверх) не перекрывали соседние карточки */
+        margin-top: 80px;
+    }
+    .portals-grid:hover .portal-card:not(:hover) {
+        opacity: 1; /* Отключаем затухание соседей на мобилках, там это бесит */
+        transform: none;
+    }
+}
+
+/* Баннер Хаба */
+
+.hub-banner h3 {
+    color: #ffaa00;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+.hub-banner p {
+    color: #fff;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+.hub-subtext {
+    color: #aaa !important;
+    font-size: 0.9rem !important;
+}
+
+/* Кнопка "Подробнее" на карточках */
+.btn-more {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    width: 100%;
+    transition: 0.2s;
+}
+.btn-more:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Модалка описания режимов */
+.mode-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+.mode-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.mode-modal-content {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: 0.3s;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.mode-modal-overlay.active .mode-modal-content {
+    transform: translateY(0);
+}
+.mode-modal-header h2 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+.mode-modal-body {
+    margin-top: 20px;
+    color: #ccc;
+    line-height: 1.6;
+}
+.mode-modal-body h4 {
+    color: #fff;
+    margin-top: 15px;
+}
+.mode-modal-body ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+/* --- СТИЛИ ДЛЯ БАННЕРА ХАБА --- */
+.hub-banner {
+    max-width: 900px;
+    margin: 80px auto 1px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.hub-banner-content {
+    background: linear-gradient(135deg, rgba(255, 195, 0, 0.08) 0%, rgba(20, 20, 20, 0.7) 100%);
+    border: 1px solid rgba(255, 195, 0, 0.25);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.hub-banner-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 195, 0, 0.15);
+    border-color: rgba(255, 195, 0, 0.4);
+}
+
+.hub-banner-content h3 {
+    color: #FFC300;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.hub-banner-content p {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.hub-banner-content strong {
+    color: #FFC300;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.hub-subtext {
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .hub-banner-content {
+        padding: 30px 20px;
+    }
+    .hub-banner-content h3 {
+        font-size: 22px;
+    }
+    .hub-banner-content p {
+        font-size: 16px;
+    }
+}
+
+/* --- ОБНОВЛЕНИЕ БЛОКА IP (Отключение подчеркивания и переключатель текста) --- */
+.ip-copy-block {
+    text-decoration: none; 
+}
+.m-text {
+    display: none;
+}
+@media (max-width: 992px) {
+    .d-text { display: none; }
+    .m-text { display: inline; }
+}
+.portal-card {
+    position: relative;
+}
+
+.card-overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.portal-content {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-details {
+    display: none;
+    text-decoration: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-details:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 992px) {
+    .mobile-only-btn {
+        display: block;
+    }
+}
+/* --- КЛИКАБЕЛЬНЫЕ КАРТОЧКИ И МОБИЛЬНЫЕ КНОПКИ --- */
+.portal-card {
+    position: relative;
+}
+
+.card-overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+/* Делаем светяшку и рендер «прозрачными» для мышки, чтобы клик шел на ссылку */
+.card-glow,
+.portal-render {
+    pointer-events: none;
+}
+
+.portal-content {
+    position: relative;
+    z-index: 2; /* Контент и кнопки остаются кликабельными поверх ссылки */
+}
+
+.btn-details {
+    display: none;
+    text-decoration: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-details:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 992px) {
+    .mobile-only-btn {
+        display: block;
+    }
+}
+/* --- КЛИКАБЕЛЬНЫЕ КАРТОЧКИ И МОБИЛЬНЫЕ КНОПКИ --- */
+.portal-card {
+    position: relative;
+}
+
+.card-overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.card-glow,
+.portal-render {
+    pointer-events: none;
+}
+
+.portal-content {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-details {
+    display: none;
+    text-decoration: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-details:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 992px) {
+    /* На мобилках полностью отключаем клик по всей карточке */
+    .card-overlay-link {
+        display: none;
+    }
+    
+    .mobile-only-btn {
+        display: block;
+    }
+
+
 }

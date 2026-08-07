@@ -1,10 +1,10 @@
 // --- БЛОК ОПЛАТЫ И СТАРЫХ МОДАЛОК ---
 const modal = document.getElementById('modalOverlay');
 const closeModalBtn = document.getElementById('closeModal');
-const payForm = document.querySelector('.modal form');
+const payForm = document.getElementById('paymentForm');
 
 function openModal() {
-    modal.style.display = 'flex';
+    if (modal) modal.style.display = 'flex';
 }
 
 if (closeModalBtn) {
@@ -27,11 +27,11 @@ document.querySelectorAll(".close-button").forEach(btn => {
 });
 
 if (payForm) {
-    payForm.onsubmit = async (e) => {
+    payForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const nickname = payForm.querySelector('input[name="nickname"]').value;
         const promocode = payForm.querySelector('input[name="promocode"]').value;
-        const itemType = document.getElementById('itemType').value;
+        const itemType = document.getElementById('itemType') ? document.getElementById('itemType').value : 'pass';
         const payButton = payForm.querySelector('.modal-pay-button');
         
         payButton.innerText = "Создание платежа...";
@@ -45,26 +45,44 @@ if (payForm) {
                 body: JSON.stringify({ nickname, type: itemType, promocode })
             });
             const result = await response.json();
-            if (result.url) window.location.href = result.url;
-            else alert("Ошибка: " + (result.error || "Не удалось создать платеж"));
+            if (result.url) {
+                window.location.href = result.url;
+            } else {
+                alert("Ошибка: " + (result.error || "Не удалось создать платеж"));
+            }
         } catch (err) {
             alert("Ошибка соединения с сервером оплаты.");
         } finally {
             payButton.innerText = "Оплатить";
             payButton.disabled = false;
         }
-    };
+    });
 }
 
-// --- БЛОК КОПИРОВАНИЯ IP ---
+// --- БЛОК КОПИРОВАНИЯ IP / ПЕРЕХОДА ПО ССЫЛКЕ ---
+function handleIpClick(event) {
+    if (window.innerWidth <= 992) {
+        event.preventDefault();
+        copyIP();
+    }
+}
+
 function copyIP() {
-    const ipText = document.getElementById('ipText').innerText;
+    const ipTextElem = document.getElementById('ipText');
     const ipHint = document.getElementById('ipHint');
+    if (!ipTextElem) return;
+
+    const ipText = ipTextElem.innerText;
+    
     navigator.clipboard.writeText(ipText).then(() => {
+        if (!ipHint) return;
+        const originalHTML = ipHint.innerHTML; 
+        
         ipHint.innerText = "Скопировано!";
         ipHint.style.color = "#FFC300";
+        
         setTimeout(() => {
-            ipHint.innerText = "Нажми, чтобы скопировать";
+            ipHint.innerHTML = originalHTML;
             ipHint.style.color = "rgba(255, 255, 255, 0.5)";
         }, 2000);
     });
@@ -77,93 +95,51 @@ document.addEventListener("DOMContentLoaded", () => {
             if (entry.isIntersecting) entry.target.classList.add('in-view');
         });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    
     document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
 });
 
-// --- БЛОК ИНТЕРАКТИВНОЙ КАРУСЕЛИ РЕЖИМОВ (С дополнительной инфой) ---
-const modesData = [
-    {
-        title: "Apiary SMP",
-        desc: "Ванила+ с масштабными ивентами, развитой экономикой и полностью без грифа. Администрация играет на равных с вами. Полноценное ПВЕ и суды для решения конфликтов.",
-        render: "./img/main_render.png", 
-        badges: ["1.21.11", "Платный", "Без грифа"],
-        features: ["Масштабные ивенты", "Строгий анти-гриф", "Внутренние суды", "Живая экономика"],
-        plugins: ["Simple Voice Chat", "CoreProtect", "Кастомная генерация", "1000 достижений"],
-        rulesLink: "/rules-main.html",
-        actionType: "pay",
-        bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(30, 20, 0, 0.6) 50%, rgba(0,0,0,0) 100%)"
-    },
-    {
-        title: "Apiary Sky",
-        desc: "Классический OneBlock режим! Ты начинаешь на одном-единственном блоке над бездной. Разрушай его, получай ресурсы, расширяй остров и создавай с друзьями собственное небесное царство.",
-        render: "./img/mini_render.png", 
-        badges: ["1.21.11", "OneBlock", "Бесплатный"],
-        features: ["Бесконечный блок", "Система островов", "Развитая экономика", "Интересные квесты"],
-        plugins: ["Острова игроков", "Собственные плагины", "Система скилов", "Simple Voice Chat"],
-        rulesLink: "/rules-sky.html",
-        actionType: "ip", // заменено с "bot" на прямое получение IP/вход
-        bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0, 20, 40, 0.6) 50%, rgba(0,0,0,0) 100%)"
-    },
-    {
-        title: "Apiary Hard",
-        desc: "Настоящее испытание для хардкорных игроков. Режим Hardcore: жестокие убийства, тотальный гриф и полное отсутствие жалости. Выживет сильнейший.",
-        render: "./img/hard_render.png",
-        badges: ["1.21.11", "Хардкор", "Гриф разрешен", "Открытие 31 июля!"],
-        features: ["Полный хаос", "Разрешен гриф", "Разрешено ПВП", "Нет ограничений"],
-        plugins: ["Только ванильные механики", "Жесткий анти-чит", "Ограничения карты"],
-        rulesLink: "/rules-hard.html",
-        actionType: "soon", // заменено с "bot" (обозначает, что сервер скоро откроется)
-        timer: "До открытия: 12 дней",
-        bgColor: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(40, 5, 5, 0.6) 50%, rgba(0,0,0,0) 100%)"
-    }
-];
+// --- ЛОГИКА ПОРТАЛОВ (ИЗМЕНЕНИЕ ФОНА) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const portalsSection = document.getElementById('servers-portals');
+    const cards = document.querySelectorAll('.portal-card');
 
-let currentIndex = 0;
-const updateCarousel = (index) => {
-    const data = modesData[index];
-    document.querySelectorAll('.animate-target').forEach(el => el.classList.add('fade-hidden'));
-    
-    setTimeout(() => {
-        document.getElementById('renderImg').src = data.render;
-        document.getElementById('modeTitle').innerText = data.title;
-        document.getElementById('modeDesc').innerText = data.desc;
-        document.getElementById('modes-carousel').style.background = data.bgColor;
-        document.getElementById('modeRulesLink').href = data.rulesLink;
-        
-        const badgesContainer = document.getElementById('modeBadges');
-        badgesContainer.innerHTML = "";
-        data.badges.forEach((badge, idx) => {
-            badgesContainer.innerHTML += `<span class="badge ${idx === 1 ? 'highlight-badge' : ''}">${badge}</span>`;
+    if (portalsSection) {
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const bgColor = card.getAttribute('data-bg');
+                if (bgColor) portalsSection.style.backgroundColor = bgColor;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                portalsSection.style.backgroundColor = '#0a0a0a'; 
+            });
         });
-
-        const featuresContainer = document.getElementById('modeFeatures');
-        featuresContainer.innerHTML = data.features.map(f => `<li>${f}</li>`).join("");
-
-        const pluginsContainer = document.getElementById('modePlugins');
-        pluginsContainer.innerHTML = data.plugins.map(p => `<li>${p}</li>`).join("");
-        
-        const actionContainer = document.getElementById('modeActionContainer');
-        if (data.actionType === "pay") {
-            actionContainer.innerHTML = `<button class="mode-cta-btn" onclick="openModal()">Купить проходку</button>`;
-        } else if (data.actionType === "ip") {
-            actionContainer.innerHTML = `<button class="mode-cta-btn" onclick="copyIP()">Скопировать IP</button>`;
-        } else if (data.actionType === "soon") {
-            actionContainer.innerHTML = `<div class="mode-cta-btn disabled">${data.timer || 'Скоро открытие'}</div>`;
-        }
-        
-        document.querySelectorAll('.animate-target').forEach(el => el.classList.remove('fade-hidden'));
-    }, 300); 
-};
-
-document.getElementById('prevBtn')?.addEventListener('click', () => {
-    currentIndex = (currentIndex === 0) ? modesData.length - 1 : currentIndex - 1;
-    updateCarousel(currentIndex);
+    }
 });
-document.getElementById('nextBtn')?.addEventListener('click', () => {
-    currentIndex = (currentIndex === modesData.length - 1) ? 0 : currentIndex + 1;
-    updateCarousel(currentIndex);
-});
-updateCarousel(currentIndex);
+
+// --- НЕЗАВИСИМОЕ КОПИРОВАНИЕ IP ---
+function copyHubIP(ipText, btnElement) {
+    navigator.clipboard.writeText(ipText).then(() => {
+        const originalText = btnElement.innerText;
+        const originalWidth = btnElement.offsetWidth;
+        
+        btnElement.style.width = `${originalWidth}px`;
+        btnElement.innerText = "IP Скопирован! Ищи NPC в Хабе";
+        btnElement.style.background = "linear-gradient(135deg, #00c853, #009624)"; 
+        btnElement.style.color = "#fff";
+        
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+            btnElement.style.width = '100%'; 
+            btnElement.style.background = ""; 
+            btnElement.style.color = "";
+        }, 3000);
+    }).catch(err => {
+        console.error('Ошибка копирования IP: ', err);
+        alert('Не удалось скопировать IP. Введите вручную: ' + ipText);
+    });
+}
 
 // --- ПЛАВНЫЙ FAQ (JS Аккордеон) ---
 document.querySelectorAll('.faq-header').forEach(header => {
@@ -171,112 +147,172 @@ document.querySelectorAll('.faq-header').forEach(header => {
         const item = header.parentElement;
         const isActive = item.classList.contains('active');
         
-        // Закрываем все
         document.querySelectorAll('.faq-item').forEach(el => {
             el.classList.remove('active');
-            el.querySelector('.faq-content-wrapper').style.maxHeight = null;
+            const wrapper = el.querySelector('.faq-content-wrapper');
+            if (wrapper) wrapper.style.maxHeight = null;
         });
 
-        // Открываем кликнутый, если он был закрыт
         if (!isActive) {
             item.classList.add('active');
             const content = item.querySelector('.faq-content-wrapper');
-            content.style.maxHeight = content.scrollHeight + "px";
+            if (content) content.style.maxHeight = content.scrollHeight + "px";
         }
     });
 });
 
-// --- СВАЙП-КАРУСЕЛЬ ОТЗЫВОВ (НА ЧИСТОМ TRANSFORM) ---
+// --- СВАЙП-КАРУСЕЛЬ ОТЗЫВОВ ---
 const sliderWindow = document.getElementById('reviewsSlider');
 const sliderTrack = document.getElementById('reviewsTrack');
 
-// Дублируем элементы для бесконечного цикла
-const originalItems = [...sliderTrack.children];
-originalItems.forEach(item => {
-    const clone = item.cloneNode(true);
-    sliderTrack.appendChild(clone);
-});
+if (sliderWindow && sliderTrack) {
+    const originalItems = [...sliderTrack.children];
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        sliderTrack.appendChild(clone);
+    });
 
-let currentX = 0;          // Текущая позиция ленты в пикселях
-let isDragging = false;    // Флаг зажатой мыши/пальца
-let startX = 0;            // Точка старта при клике/касании
-let dragX = 0;             // Расстояние, на которое протащили в текущий момент
-// Автоматически снижаем скорость прокрутки, если экран меньше или равен 992px
-const autoScrollSpeed = window.innerWidth <= 992 ? 0.25 : 0.6;
+    let currentX = 0;
+    let isDragging = false;
+    let startX = 0;
+    let dragX = 0;
+    const autoScrollSpeed = window.innerWidth <= 992 ? 0.25 : 0.6;
 
-// Функция обновления позиции через CSS Transform (работает быстрее и плавнее)
-function updateSliderPosition() {
-    sliderTrack.style.transform = `translateX(${currentX}px)`;
-}
-
-// Главный цикл автопрокрутки
-function animate() {
-    if (!isDragging) {
-        currentX -= autoScrollSpeed;
-        
-        // Вычисляем ширину половины трека (оригинальных карточек вместе с gap)
-        // Так как все карточки одинаковые, ширина половины — это ровно половина scrollWidth
-        const halfWidth = sliderTrack.scrollWidth / 2;
-        
-        // Если лента уехала влево больше чем на половину — сбрасываем в 0 для бесшовности
-        if (Math.abs(currentX) >= halfWidth) {
-            currentX = 0;
-        }
-        updateSliderPosition();
+    function updateSliderPosition() {
+        sliderTrack.style.transform = `translateX(${currentX}px)`;
     }
-    requestAnimationFrame(animate);
+
+    function animate() {
+        if (!isDragging) {
+            currentX -= autoScrollSpeed;
+            const halfWidth = sliderTrack.scrollWidth / 2;
+            if (Math.abs(currentX) >= halfWidth) {
+                currentX = 0;
+            }
+            updateSliderPosition();
+        }
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    sliderWindow.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        sliderWindow.style.cursor = 'grabbing';
+        startX = e.pageX - currentX;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX;
+        dragX = x - startX;
+        
+        const halfWidth = sliderTrack.scrollWidth / 2;
+        if (dragX > 0) dragX = -halfWidth; 
+        if (Math.abs(dragX) >= halfWidth) dragX = 0;
+
+        currentX = dragX;
+        updateSliderPosition();
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        sliderWindow.style.cursor = 'grab';
+    });
+
+    sliderWindow.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - currentX;
+    }, { passive: true });
+
+    sliderWindow.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const x = e.touches[0].pageX;
+        dragX = x - startX;
+
+        const halfWidth = sliderTrack.scrollWidth / 2;
+        if (dragX > 0) dragX = -halfWidth;
+        if (Math.abs(dragX) >= halfWidth) dragX = 0;
+
+        currentX = dragX;
+        updateSliderPosition();
+    }, { passive: true });
+
+    sliderWindow.addEventListener('touchend', () => {
+        isDragging = false;
+    });
 }
 
-// Запуск анимации
-animate();
+// База данных с описаниями режимов
+const serverModes = {
+    smp: {
+        title: "Apiary SMP",
+        badges: '<span class="badge badge-gold">Платная проходка</span>',
+        content: `
+            <p>Наш основной ванильный сервер для тех, кто ценит адекватное комьюнити и масштабные проекты.</p>
+            <h4>🔥 Особенности режима:</h4>
+            <ul>
+                <li><strong>Доверие:</strong> У нас нет приватов. За воровство и гриферство — моментальный бан.</li>
+                <li><strong>Экономика:</strong> Живой рынок, где валютой выступают алмазы. Торгуй с другими игроками.</li>
+                <li><strong>Ивенты:</strong> Регулярные события от администрации и самих игроков.</li>
+            </ul>
+            <p><em>* Вход на этот режим возможен только после покупки проходки на сайте.</em></p>
+        `
+    },
+    sky: {
+        title: "Apiary Sky",
+        badges: '<span class="badge badge-dark">Бесплатно в Хабе</span>',
+        content: `
+            <p>Развивай свой остров, начиная всего с одного магического блока, который бесконечно регенерирует.</p>
+            <h4>☁️ Что тебя ждет:</h4>
+            <ul>
+                <li><strong>Кастомные генераторы:</strong> Добывай редкие ресурсы прямо из своего блока.</li>
+                <li><strong>Квесты:</strong> Выполняй задания для получения уникальных наград.</li>
+                <li><strong>Экономика и топы:</strong> Соревнуйся с другими островами за звание лучшего.</li>
+            </ul>
+            <p><em>* Режим абсолютно бесплатен. Просто заходи в хаб и npc портал Скайблока.</em></p>
+        `
+    },
+    hard: {
+        title: "Apiary Hard",
+        badges: '<span class="badge badge-red">Бесплатно (Скоро)</span>',
+        content: `
+            <p>Режим для тех, кому ванилла кажется слишком простой. Здесь нет правил.</p>
+            <h4>💀 Условия выживания:</h4>
+            <ul>
+                <li><strong>Разрешен гриф:</strong> Защищай свои сундуки, ломай чужие.</li>
+                <li><strong>Усложненные мобы:</strong> Обычные зомби покажутся тебе боссами.</li>
+                <li><strong>PvP везде:</strong> Никаких безопасных зон за пределами спавна.</li>
+            </ul>
+            <p><em>* Открытие запланировано на 21 августа. Вход через общий хаб.</em></p>
+        `
+    }
+};
 
-// --- ОБРАБОТЧИКИ ДЛЯ МЫШИ (ДЕСКТОП) ---
-sliderWindow.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    sliderWindow.style.cursor = 'grabbing';
-    startX = e.pageX - currentX;
-});
+function openModeModal(modeId, event) {
+    if (event && event.target.closest('.portal-btn')) {
+        return; 
+    }
 
-window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX;
-    dragX = x - startX;
+    const data = serverModes[modeId];
+    const modeModal = document.getElementById('modeModal');
+    if (!data || !modeModal) return;
+
+    document.getElementById('modeTitle').innerText = data.title;
+    document.getElementById('modeBadges').innerHTML = data.badges;
+    document.getElementById('modeBody').innerHTML = data.content;
     
-    // Ограничиваем свайп, чтобы не улетать в пустоту при резком рывке
-    const halfWidth = sliderTrack.scrollWidth / 2;
-    if (dragX > 0) dragX = -halfWidth; 
-    if (Math.abs(dragX) >= halfWidth) dragX = 0;
+    modeModal.classList.add('active');
+    modeModal.style.display = 'flex';
+}
 
-    currentX = dragX;
-    updateSliderPosition();
-});
-
-window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    sliderWindow.style.cursor = 'grab';
-});
-
-// --- ОБРАБОТЧИКИ ДЛЯ ТАЧА (МОБИЛКИ) ---
-sliderWindow.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    startX = e.touches[0].pageX - currentX;
-}, { passive: true });
-
-sliderWindow.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const x = e.touches[0].pageX;
-    dragX = x - startX;
-
-    const halfWidth = sliderTrack.scrollWidth / 2;
-    if (dragX > 0) dragX = -halfWidth;
-    if (Math.abs(dragX) >= halfWidth) dragX = 0;
-
-    currentX = dragX;
-    updateSliderPosition();
-}, { passive: true });
-
-sliderWindow.addEventListener('touchend', () => {
-    isDragging = false;
-});
+function closeModeModal(e) {
+    const modeModal = document.getElementById('modeModal');
+    if (!modeModal) return;
+    if (e.target.classList.contains('mode-modal-overlay') || e.target.classList.contains('close-btn') || e.target.closest('.close-button')) {
+        modeModal.classList.remove('active');
+        modeModal.style.display = 'none';
+    }
+}

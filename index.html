@@ -20,25 +20,24 @@
             </p>
             
             <div class="hero-actions">
-    <!-- Обертка для кнопки и ссылки под ней -->
-    <div class="btn-group">
-        <button class="hero-btn" onclick="openModal()">Присоединиться</button>
-        
-        <div class="free-pass-block">
-            <a href="https://forms.gle/uPsuiS9zt6TvfPBy9" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="free-pass-link">
-                Хочу играть бесплатно (Заполнить анкету) →
-            </a>
-        </div>
-    </div>
+                <div class="btn-group">
+                    <button class="hero-btn" onclick="openModal()">Присоединиться</button>
+                    
+                    <div class="free-pass-block">
+                        <a href="https://t.me/apiary_shop_bot" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="free-pass-link">
+                            Получить бесплатную проходку (Заполнить анкету) →
+                        </a>
+                    </div>
+                </div>
 
-    <div class="ip-copy-block" onclick="copyIP()">
-        <span id="ipText">play.apiarysmp.online</span>
-        <span id="ipHint" class="ip-hint">Нажми, чтобы скопировать</span>
-    </div>
+                <div class="ip-copy-block">
+    <span id="ipText">play.apiarysmp.online</span>
+    <span id="ipHint" class="ip-hint" onclick="copyHubIP('play.apiarysmp.online', this)">Нажми, чтобы скопировать</span>
 </div>
+            </div>
         </div>
         
         <div class="hero-decor scroll-anim">
@@ -47,49 +46,89 @@
         </div>
     </main>
 
-    <!-- СЕКЦИЯ РЕЖИМОВ (С расширенной информацией) -->
-<section id="modes-carousel" class="scroll-anim transition-bg">
-    <h2 class="carousel-section-title">Выбери свой режим игры</h2>
-    <div class="carousel-container">
-        <button id="prevBtn" class="nav-btn">&larr;</button>
-        
-        <div class="carousel-content">
-            <div class="character-render">
-                <img id="renderImg" src="./img/main_render.png" alt="Character Render" class="animate-target">
-            </div>
+    <div class="hub-banner scroll-anim">
+        <div class="hub-banner-content">
+            <h3>ОДИН IP — ЕДИНЫЙ ХАБ</h3>
+            <p>Для игры на любом из режимов используй IP: <strong>play.apiarysmp.online</strong></p>
+            <p class="hub-subtext">Заходи в хаб бесплатно. Доступ на ванильный Apiary SMP требует наличия проходки, остальные режимы — открыты для всех!</p>
+        </div>
+    </div>
+
+    <!-- СЕКЦИЯ РЕЖИМОВ -->
+    <section id="servers-portals" class="servers-portals">
+        <div class="container portals-wrapper">
+            <h2 class="carousel-section-title">Наши режимы</h2>
             
-            <div class="mode-info animate-target">
-                <div class="mode-header">
-                    <h3 id="modeTitle">Apiary SMP</h3>
-                    <div id="modeBadges" class="mode-badges"></div>
-                </div>
-                
-                <p id="modeDesc">Загрузка описания...</p>
-                
-                <div class="mode-details">
-                    <div class="details-column">
-                        <h4>Особенности:</h4>
-                        <ul id="modeFeatures" class="details-list"></ul>
+            <div class="portals-grid">
+                <!-- Карточка 1: Apiary SMP -->
+                <div class="portal-card smp-card" data-bg="#1a1400" onclick="openModeModal('smp', event)">
+                    <div class="card-glow"></div>
+                    <img src="assets/main_render.png" alt="Apiary SMP" class="portal-render">
+                    <div class="portal-content">
+                        <h3>Apiary SMP</h3>
+                        <div class="badges">
+                            <span class="badge">Java 1.21+</span>
+                            <span class="badge badge-gold">Платный</span>
+                            <span class="badge badge-green">Без грифа</span>
+                        </div>
+                        <p class="portal-desc">Ламповое ванильное выживание без приватов. Строй масштабные города, развивай экономику и участвуй в жизни дружного комьюнити.</p>
+                        <ul class="features-list">
+                            <li>Кастомные плагины</li>
+                            <li>Живая экономика</li>
+                            <li>Уникальные ивенты</li>
+                        </ul>
+                        <button class="portal-btn btn-smp" onclick="openModal()">Купить проходку</button>
+                        <span class="rules-link">Кликни на карточку для подробностей</span>
                     </div>
-                    <div class="details-column">
-                        <h4>Ключевые плагины:</h4>
-                        <ul id="modePlugins" class="details-list"></ul>
+                </div>
+
+                <!-- Карточка 2: Apiary Sky -->
+                <div class="portal-card sky-card" data-bg="#000d1a" onclick="openModeModal('sky', event)">
+                    <div class="card-glow"></div>
+                    <img src="assets/mini_render.png" alt="Apiary Sky" class="portal-render">
+                    <div class="portal-content">
+                        <h3>Apiary Sky</h3>
+                        <div class="badges">
+                            <span class="badge">Java 1.21+</span>
+                            <span class="badge badge-blue">OneBlock</span>
+                        </div>
+                        <p class="portal-desc">Начни выживание на одном блоке в бескрайнем небе. Улучшай остров, открывай новые фазы и торгуй с игроками.</p>
+                        <ul class="features-list">
+                            <li>Уникальные фазы</li>
+                            <li>Система квестов</li>
+                            <li>Полноценный рынок</li>
+                        </ul>
+                        <button class="portal-btn btn-sky" onclick="copyHubIP('play.apiarysmp.online', this)">Скопировать IP</button>
+                        <span class="rules-link">Кликни на карточку для подробностей</span>
                     </div>
                 </div>
-                
-                <div class="mode-actions-row">
-                    <!-- Сюда JS будет подставлять либо кнопку "Купить", либо "Скопировать IP", либо Таймер/Анонс -->
-                    <div id="modeActionContainer"></div>
-                    <a href="#" id="modeRulesLink" class="rules-link" target="_blank">Читать правила сервера →</a>
+
+                <!-- Карточка 3: Apiary Hard -->
+                <div class="portal-card hard-card" data-bg="#1a0505" onclick="openModeModal('hard', event)">
+                    <div class="card-glow"></div>
+                    <img src="assets/hard_render.png" alt="Apiary Hard" class="portal-render">
+                    <div class="portal-content">
+                        <h3>Apiary Hard</h3>
+                        <div class="badges">
+                            <span class="badge">Java 1.21+</span>
+                            <span class="badge badge-red">Хардкор</span>
+                            <span class="badge badge-dark">Гриф</span>
+                        </div>
+                        <p class="portal-desc">Настоящий ванильный режим хардкора, где смерть = гарантированная потеря абсолютно всего.</p>
+                        <ul class="features-list">
+                            <li>Разрешен гриф</li>
+                            <li>Повышенная сложность</li>
+                            <li>Разрешено PvP</li>
+                        </ul>
+                        <button class="portal-btn btn-hard disabled">Скоро открытие (21 августа)</button>
+                        <span class="rules-link">Кликни на карточку для подробностей</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <button id="nextBtn" class="nav-btn">&rarr;</button>
-    </div>
-</section>
+    </section>
 
-    <!-- СЕКЦИЯ ОТЗЫВОВ (JS Слайдер) -->
+    <!-- СЕКЦИЯ ОТЗЫВОВ -->
     <section class="reviews-section scroll-anim">
         <h2 class="carousel-section-title">Отзывы наших пчелок</h2>
         <div class="slider-window" id="reviewsSlider">
@@ -107,7 +146,7 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ FAQ (JS Аккордеон) -->
+    <!-- СЕКЦИЯ FAQ -->
     <section class="faq-section scroll-anim">
         <h2 class="carousel-section-title">Частые вопросы</h2>
         <div class="faq-container">
@@ -203,25 +242,26 @@
 Услугой является предоставление доступа к серверу ApiarySMP после успешной оплаты.</p>
         </div>
     </div>
+
     <div class="overlay" id="termsModal">
         <div class="modal large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Пользовательское соглашение</h2>
             <p class="modal-text">Оплачивая услугу, пользователь подтверждает, что ознакомлен с правилами сервера ApiarySMP и обязуется их соблюдать. <br>
-
 Услуга является цифровой и считается оказанной с момента предоставления доступа.</p>
         </div>
     </div>
+
     <div class="overlay" id="deliveryModal">
         <div class="modal large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Получение услуги</h2>
             <p class="modal-text">После успешной оплаты доступ к серверу предоставляется автоматически или вручную администратором.<br>
-
 Для получения услуги необходимо указать корректный никнейм Minecraft при оплате.</p>
         </div>
     </div>
-    
+
+    <!-- Модалка оплаты -->
     <div id="modalOverlay" class="overlay">
         <div class="modal">
             <span class="close-button" id="closeModal">&times;</span>
@@ -233,6 +273,16 @@
                 <input type="text" name="promocode" class="modal-input" placeholder="Код автора (если есть)">
                 <button type="submit" class="modal-pay-button">Оплатить</button>
             </form>
+        </div>
+    </div>
+
+    <!-- ДОБАВЛЕНА НЕДОСТАЮЩАЯ МОДАЛКА ДЛЯ РЕЖИМОВ -->
+    <div id="modeModal" class="overlay mode-modal-overlay" onclick="closeModeModal(event)">
+        <div class="modal large">
+            <span class="close-button" onclick="closeModeModal(event)">&times;</span>
+            <h2 class="modal-title" id="modeTitle">Режим</h2>
+            <div id="modeBadges" style="margin-bottom: 15px;"></div>
+            <div class="modal-text" id="modeBody"></div>
         </div>
     </div>
 
