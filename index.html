@@ -7,235 +7,554 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main class="hero-section">
-        <div class="hero-content scroll-anim">
-            <h1 class="hero-title">ApiarySMP <span class="highlight">Жужжим вместе</span></h1>
-            <p class="hero-text">
-                Сервер с развивающимся сообществом — это не просто ванилла. 
-                Увлекательные ивенты, внутренние суды и качественная модерация. 
-                Присоединяйся к нам прямо сейчас!
+
+    <div class="ambient-spot ambient-spot-1"></div>
+    <div class="ambient-spot ambient-spot-2"></div>
+
+    <!-- ПЕРВЫЙ ЭКРАН -->
+    <header class="hero-section" id="top">
+        <div class="site-container">
+            
+            <div class="server-status-tag" id="statusPill">
+                <span class="status-dot"></span>
+                <span id="statusLabel">Опрашиваем сервер...</span>
+            </div>
+
+            <h1 class="hero-header">
+                Apiary<span class="text-accent">SMP</span>
+                <span class="hero-subhead">Ламповое сообщество без приватов и духоты</span>
+            </h1>
+
+            <p class="hero-lead">
+                Классическое ванильное выживание на доверии. Мы объединяем игроков, 
+                строим города, судим нарушителей на открытых заседаниях и развиваем честную экономику.
             </p>
-            
-            <div class="hero-actions">
-                <div class="btn-group">
-                    <button class="hero-btn" onclick="openModal()">Присоединиться</button>
+
+            <div class="access-ways-container">
+                <div class="access-way-card way-paid">
+                    <div class="way-badge">Быстрый старт</div>
+                    <h3>Платная проходка</h3>
+                    <p class="way-desc">
+                        Для тех, кто ценит свое время. Полный скип анкеты: оплачиваешь 135 рублей и моментально попадаешь в вайтлист сервера без собеседований и ожидания.
+                    </p>
+                    <button class="btn-primary" onclick="openModal()">
+                        Купить проходку — 135₽
+                    </button>
+                    <span class="way-note">Автоматическая выдача сразу после оплаты</span>
+                </div>
+
+                <div class="access-way-divider">
+                    <span>или</span>
+                </div>
+
+                <div class="access-way-card way-free">
+                    <div class="way-badge badge-neutral">Бесплатный вход</div>
+                    <h3>Заполнение анкеты</h3>
+                    <p class="way-desc">
+                        Не хочешь платить? Без проблем. Переходи в нашего Telegram-бота, подробно отвечай на вопросы анкеты и жди решения модерации.
+                    </p>
+                    <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener noreferrer" class="btn-outline">
+                        Заполнить анкету в боте →
+                    </a>
+                    <span class="way-note">Рассмотрение заявок живыми людьми</span>
+                </div>
+            </div>
+
+            <div class="hub-ip-box" onclick="copyIP(this)">
+                <div class="ip-meta">
+                    <span class="ip-title">Единый адрес сервера:</span>
+                    <span class="ip-code" id="ipValue">play.apiarysmp.online</span>
+                </div>
+                <div class="ip-action">
+                    <span class="ip-action-text">Скопировать</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- МИНИ-ИГРА ПАСЕКА -->
+    <section class="game-section" id="game">
+        <div class="site-container">
+            <div class="section-heading text-left">
+                <span class="section-kicker">Интерактивный уголок</span>
+                <h2 class="section-headline">Пасека Apiary: Добыча нектара</h2>
+                <p class="section-subtext">Пока качается ресурспак или проверяется заявка — развивай собственное медовое хозяйство прямо здесь.</p>
+            </div>
+
+            <div class="game-board">
+                <div class="clicker-pane">
+                    <div class="honey-counter-box">
+                        <span class="counter-label">Запас мёда</span>
+                        <span class="counter-val" id="honeyCount">0</span>
+                        <span class="hps-val" id="hpsDisplay">+0 в секунду</span>
+                    </div>
+
+                    <div class="clicker-interactive-wrap">
+                        <button class="honeycomb-btn" id="hiveClicker" aria-label="Собрать мёд">
+                            <span class="hive-symbol">⬢</span>
+                            <span class="hive-core">МЁД</span>
+                        </button>
+                    </div>
+
+                    <div class="player-rank-bar">
+                        <div class="rank-info">
+                            <span class="rank-name" id="rankName">Ученик бортника</span>
+                            <span class="rank-level" id="rankLevel">1 уровень</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="rankProgress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-pane">
+                    <h3 class="shop-title">Развитие пасеки</h3>
+                    <div class="upgrades-stack">
+                        
+                        <div class="upgrade-row" id="upgClick">
+                            <div class="upgrade-info">
+                                <strong>Улучшенный черпак</strong>
+                                <span>+1 мёда за каждый твой клик</span>
+                                <span class="upgrade-owned">Куплено: <b id="lvlClick">0</b></span>
+                            </div>
+                            <button class="btn-buy" onclick="buyUpgrade('click')">
+                                <span class="buy-cost" id="costClick">15</span> мёда
+                            </button>
+                        </div>
+
+                        <div class="upgrade-row" id="upgBees">
+                            <div class="upgrade-info">
+                                <strong>Дикая пчела</strong>
+                                <span>Автоматически собирает +1 мёда/сек</span>
+                                <span class="upgrade-owned">В рою: <b id="lvlBees">0</b></span>
+                            </div>
+                            <button class="btn-buy" onclick="buyUpgrade('bees')">
+                                <span class="buy-cost" id="costBees">50</span> мёда
+                            </button>
+                        </div>
+
+                        <div class="upgrade-row" id="upgHive">
+                            <div class="upgrade-info">
+                                <strong>Улей из тёмного дуба</strong>
+                                <span>Гнездо на несколько семей (+6 мёда/сек)</span>
+                                <span class="upgrade-owned">Построено: <b id="lvlHive">0</b></span>
+                            </div>
+                            <button class="btn-buy" onclick="buyUpgrade('hive')">
+                                <span class="buy-cost" id="costHive">220</span> мёда
+                            </button>
+                        </div>
+
+                        <div class="upgrade-row" id="upgField">
+                            <div class="upgrade-info">
+                                <strong>Вересковая поляна</strong>
+                                <span>Густые медоносы на спавне (+24 мёда/сек)</span>
+                                <span class="upgrade-owned">Полей: <b id="lvlField">0</b></span>
+                            </div>
+                            <button class="btn-buy" onclick="buyUpgrade('field')">
+                                <span class="buy-cost" id="costField">850</span> мёда
+                            </button>
+                        </div>
+
+                    </div>
                     
-                    <div class="free-pass-block">
-                        <a href="https://t.me/apiary_shop_bot" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="free-pass-link">
-                            Получить бесплатную проходку (Заполнить анкету) →
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ip-copy-block">
-    <span id="ipText">play.apiarysmp.online</span>
-    <span id="ipHint" class="ip-hint" onclick="copyHubIP('play.apiarysmp.online', this)">Нажми, чтобы скопировать</span>
-</div>
-            </div>
-        </div>
-        
-        <div class="hero-decor scroll-anim">
-            <img src="./img/NeonMain.svg" class="neon-glow" alt="">
-            <img src="./img/буэно3 1.svg" class="bee-float" alt="Bee">
-        </div>
-    </main>
-
-    <div class="hub-banner scroll-anim">
-        <div class="hub-banner-content">
-            <h3>ОДИН IP — ЕДИНЫЙ ХАБ</h3>
-            <p>Для игры на любом из режимов используй IP: <strong>play.apiarysmp.online</strong></p>
-            <p class="hub-subtext">Заходи в хаб бесплатно. Доступ на ванильный Apiary SMP требует наличия проходки, остальные режимы — открыты для всех!</p>
-        </div>
-    </div>
-
-    <!-- СЕКЦИЯ РЕЖИМОВ -->
-    <section id="servers-portals" class="servers-portals">
-        <div class="container portals-wrapper">
-            <h2 class="carousel-section-title">Наши режимы</h2>
-            
-            <div class="portals-grid">
-                <!-- Карточка 1: Apiary SMP -->
-                <div class="portal-card smp-card" data-bg="#1a1400" onclick="openModeModal('smp', event)">
-                    <div class="card-glow"></div>
-                    <img src="assets/main_render.png" alt="Apiary SMP" class="portal-render">
-                    <div class="portal-content">
-                        <h3>Apiary SMP</h3>
-                        <div class="badges">
-                            <span class="badge">Java 1.21+</span>
-                            <span class="badge badge-gold">Платный</span>
-                            <span class="badge badge-green">Без грифа</span>
-                        </div>
-                        <p class="portal-desc">Ламповое ванильное выживание без приватов. Строй масштабные города, развивай экономику и участвуй в жизни дружного комьюнити.</p>
-                        <ul class="features-list">
-                            <li>Кастомные плагины</li>
-                            <li>Живая экономика</li>
-                            <li>Уникальные ивенты</li>
-                        </ul>
-                        <button class="portal-btn btn-smp" onclick="openModal()">Купить проходку</button>
-                        <span class="rules-link">Кликни на карточку для подробностей</span>
-                    </div>
-                </div>
-
-                <!-- Карточка 2: Apiary Sky -->
-                <div class="portal-card sky-card" data-bg="#000d1a" onclick="openModeModal('sky', event)">
-                    <div class="card-glow"></div>
-                    <img src="assets/mini_render.png" alt="Apiary Sky" class="portal-render">
-                    <div class="portal-content">
-                        <h3>Apiary Sky</h3>
-                        <div class="badges">
-                            <span class="badge">Java 1.21+</span>
-                            <span class="badge badge-blue">OneBlock</span>
-                        </div>
-                        <p class="portal-desc">Начни выживание на одном блоке в бескрайнем небе. Улучшай остров, открывай новые фазы и торгуй с игроками.</p>
-                        <ul class="features-list">
-                            <li>Уникальные фазы</li>
-                            <li>Система квестов</li>
-                            <li>Полноценный рынок</li>
-                        </ul>
-                        <button class="portal-btn btn-sky" onclick="copyHubIP('play.apiarysmp.online', this)">Скопировать IP</button>
-                        <span class="rules-link">Кликни на карточку для подробностей</span>
-                    </div>
-                </div>
-
-                <!-- Карточка 3: Apiary Hard -->
-                <div class="portal-card hard-card" data-bg="#1a0505" onclick="openModeModal('hard', event)">
-                    <div class="card-glow"></div>
-                    <img src="assets/hard_render.png" alt="Apiary Hard" class="portal-render">
-                    <div class="portal-content">
-                        <h3>Apiary Hard</h3>
-                        <div class="badges">
-                            <span class="badge">Java 1.21+</span>
-                            <span class="badge badge-red">Хардкор</span>
-                            <span class="badge badge-dark">Гриф</span>
-                        </div>
-                        <p class="portal-desc">Настоящий ванильный режим хардкора, где смерть = гарантированная потеря абсолютно всего.</p>
-                        <ul class="features-list">
-                            <li>Разрешен гриф</li>
-                            <li>Повышенная сложность</li>
-                            <li>Разрешено PvP</li>
-                        </ul>
-                        <button class="portal-btn btn-hard disabled">Скоро открытие (21 августа)</button>
-                        <span class="rules-link">Кликни на карточку для подробностей</span>
+                    <div class="game-footer-actions">
+                        <button class="btn-text-subtle" onclick="resetGameProgress()">Сбросить прогресс пасеки</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ ОТЗЫВОВ -->
-    <section class="reviews-section scroll-anim">
-        <h2 class="carousel-section-title">Отзывы наших пчелок</h2>
-        <div class="slider-window" id="reviewsSlider">
-            <div class="slider-track" id="reviewsTrack">
-                <div class="review-card"><img src="./img/skin-avatar 2.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">barnetyz</h4><p class="review-text">комьюнити поможет даже с тяжелыми наркотиками</p></div></div>
-                <div class="review-card"><img src="./img/pipiska1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">Quazar</h4><p class="review-text">Крутой сервер с очень интересными ивентами, играю уже полгода и хочу продолжать играть дальше</p></div></div>
-                <div class="review-card"><img src="./img/pipiska2.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">Kot_na_arbuze</h4><p class="review-text">Крутой сервер много активных игроков, ивентов и хорошая администрация проходка стоит своих денег</p></div></div>
-                <div class="review-card"><img src="./img/skin-avatar 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">HoldDog</h4><p class="review-text">Объективно, сервер подходит для игры: коммуникация с игроками, ивенты, торговля, города и т.д. позволяют провести время с наслаждением.</p></div></div>
-                <div class="review-card"><img src="./img/skin-avatar (2) 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">NesquickWithBeer</h4><p class="review-text">Клевый ванильный сервер!</p></div></div>
-                <div class="review-card"><img src="./img/Rectangle 5.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">stazhr</h4><p class="review-text">Прикольный сервер со своим вайбом пчел 🐝</p></div></div>
-                <div class="review-card"><img src="./img/skin-avatar (4) 1.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">timofokerr</h4><p class="review-text">Не сервере проводятся интересные ивенты,хорошее комьюнити и средний онлайн,жить не смогу без этого сервера,с любовью</p></div></div>
-                <div class="review-card"><img src="./img/pipiska3.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">millet1911</h4><p class="review-text">сервер добротный,ивенты придумываю я,значит и они улетные,пять звёзд</p></div></div>
-                <div class="review-card"><img src="./img/pipiska4.png" class="card-avatar" alt=""><div class="card-body"><h4 class="username">Arhigis</h4><p class="review-text">Круглосуточная дойка пчел вернула мне отца в семью</p></div></div>
+    <!-- О СЕРВЕРЕ -->
+    <article class="narrative-section" id="story">
+        <div class="site-container">
+            <header class="narrative-header">
+                <span class="section-kicker">Основы нашего мира</span>
+                <h2 class="narrative-title">Как устроен Apiary SMP</h2>
+                <p class="narrative-summary">
+                    Мы принципиально отказались от механик классических публичных серверов с донатом на неуязвимость, 
+                    хаотичным строительством коробок из булыжника и вечным страхом за содержимое сундуков. 
+                    Жизнь нашего сервера держится на четырех фундаментальных столпах.
+                </p>
+            </header>
+
+            <div class="story-chapters">
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">01</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Мир без приватов и культура взаимного уважения</h3>
+                        <p>
+                            На сервере полностью отсутствуют команды вроде деревянного топора и защиты регионов. 
+                            Каждая база, ферма или дом стоят открытыми. Вы можете свободно путешествовать по постройкам соседей, 
+                            рассматривать их интерьеры и механизмы.
+                        </p>
+                        <p>
+                            Безопасность достигается не системными стенами, а дотошным логированием. Каждый взятый из сундука предмет, 
+                            сломанный блок или открытая дверь записываются базой данных. В случае любого инцидента виновник 
+                            получает перманентную блокировку, а пострадавшая постройка восстанавливается администратором 
+                            до исходного состояния буквально за несколько секунд.
+                        </p>
+                        <blockquote class="chapter-quote">
+                            «Доверие здесь — не пустой звук. Мы играем так, как играли бы с давними друзьями на локальном сервере, 
+                            только масштабируем это на сотни увлеченных людей».
+                        </blockquote>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">02</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Правовая система, тикеты и модерация</h3>
+                        <p>
+                            Наши модераторы следят за порядком на сервере 25/8 поэтому ты никогда не встретишь читера или токсичного игрока.
+                            На нашем дискорд сервере ты всегда можшь создать тикет с вопросом, жалобой на игрока или просто притензией, и один
+                            из наших модераторов решит твою проблему в кратчайшие сроки.
+                        </p>
+                        <p>
+                            У нас свои чётко выверенные правила, игроки уже почти год играют соблюдая их и именно поэтому наш сервер остаётся самым лучшим.
+                            Наши правила написал один из бывших модераторов, и они настолько хороши, что мы до сих пор их ниразу неотредактировали, спасибо тебе,
+                            NotJabockk...
+                        </p>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">03</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Живая экономика на чистых алмазах</h3>
+                        <p>
+                            Никакой виртуальной валюты из воздуха, админшопов и продажи ресурсов за реальные деньги. 
+                            Экономика Apiary SMP абсолютно органична: валютой выступают обычные добытые в шахтах алмазы.
+                        </p>
+                        <p>
+                            Игроки строят торговые районы, открывают собственные лавки, формируют компании и синдикаты. 
+                            Цены на ресурсы определяются исключительно спросом и предложением: от редких пластинок и книг 
+                            с чарами до тонны строительных блоков для возведения очередного монументального города.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">04</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Уникальные события и жизнь комьюнити</h3>
+                        <p>
+                            Сервер не превращается в рутинную афк-стоянку у автоферм. Мы регулярно проводим масштабные события: 
+                            рыболовные турниры с авторскими моделями улова, ярмарки, спортивные состязания, лорные ивенты 
+                            и празднование сезонов.
+                        </p>
+                        <p>
+                            Главное — инициатива идет не только от администрации. Любой игрок может анонсировать собственный 
+                            ивент, собрать людей, построить арену и разыграть призовой фонд. Сервер дает почву — вы создаете историю.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- СЕКЦИЯ МАГАЗИНА -->
+    <section class="shop-promo-section" id="shop">
+        <div class="site-container">
+            <div class="shop-promo-card">
+                <div class="shop-promo-glow"></div>
+                <div class="shop-promo-badge">Официальный магазин</div>
+                <h2 class="shop-promo-title">Медовая лавка Apiary</h2>
+                <p class="shop-promo-text">
+                    Поддержите проект и выделитесь на сервере. В нашей лавке доступны эксклюзивные визуальные титулы, 
+                    косметические эффекты и авторский мерч. Никаких ресурсов за рубли, креатива и Pay-to-Win механик — 
+                    только честный баланс и стиль.
+                </p>
+                <div class="shop-promo-actions">
+                    <a href="shop.html" class="btn-primary shop-cta-btn">
+                        Открыть магазин товаров
+                    </a>
+                    <span class="shop-promo-note">Отдельная страница каталога с удобной оплатой</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ FAQ -->
-    <section class="faq-section scroll-anim">
-        <h2 class="carousel-section-title">Частые вопросы</h2>
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-header">
-                    <h3>В чём уникальность ApiarySMP?</h3>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content-wrapper">
-                    <div class="faq-content">
-                        <p>Наш сервер выделяется по-настоящему масштабными ивентами и живой экономикой. У нас нет скуки — мы регулярно проводим события, которые меняют ход игры, а комьюнити настолько дружелюбное, что поможет освоиться любому новичку.</p>
-                    </div>
-                </div>
+    <!-- ОТЗЫВЫ -->
+    <section class="reviews-section" id="reviews">
+        <div class="site-container">
+            <div class="section-heading">
+                <span class="section-kicker">Опыт участников</span>
+                <h2 class="section-headline">Что говорят жители сервера</h2>
+                <p class="section-subtext">Реальные отзывы игроков из нашего сообщества.</p>
             </div>
+        </div>
 
-            <div class="faq-item">
-                <div class="faq-header">
-                    <h3>Как администрация относится к игрокам?</h3>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content-wrapper">
-                    <div class="faq-content">
-                        <p>Никакого пафоса и ЧСВ. Наша администрация общается с игроками на равных, играет вместе с вами и решает проблемы быстро и прозрачно. У нас даже есть внутренние суды для решения конфликтов.</p>
+        <div class="drag-carousel-viewport" id="reviewsViewport">
+            <div class="drag-carousel-track" id="reviewsTrack">
+                
+                <div class="review-brick">
+                    <img src="./img/skin-avatar 2.png" class="brick-avatar" alt="barnetyz" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">barnetyz</span>
+                        <p>Комьюнити всегда поможет, даже в самых нестандартных игровых ситуациях. Очень спокойная и дружелюбная атмосфера.</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-header">
-                    <h3>Будут ли лаги на сервере?</h3>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content-wrapper">
-                    <div class="faq-content">
-                        <p>Сервер стоит на собственном мощном хостинге, который работает 24/7 без перебоев. Мы тщательно оптимизируем сборку, чтобы TPS всегда держался на уровне 20, даже при массовых ивентах.</p>
+                <div class="review-brick">
+                    <img src="./img/pipiska1.png" class="brick-avatar" alt="Quazar" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">Quazar</span>
+                        <p>Отличный сервер с продуманными ивентами. Играю уже полгода и не собираюсь делать перерывов.</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-header">
-                    <h3>Как работает донат и есть ли P2W?</h3>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content-wrapper">
-                    <div class="faq-content">
-                        <p>На основном сервере доната, влияющего на баланс (Pay-To-Win), нет в принципе. Есть только платная проходка. На мини-сервере присутствует небольшой донат для поддержки проекта, который осуществляется удобно через нашего Telegram-бота.</p>
+                <div class="review-brick">
+                    <img src="./img/pipiska2.png" class="brick-avatar" alt="Kot_na_arbuze" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">Kot_na_arbuze</span>
+                        <p>Много активных людей, регулярные события и понимающая модерация. Проходка полностью оправдывает свою цену.</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-header">
-                    <h3>Что с безопасностью и грифом?</h3>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content-wrapper">
-                    <div class="faq-content">
-                        <p>На основном и мини-сервере гриф строго запрещен! Все действия логируются. Если что-то пойдет не так, админы откатят урон за секунды. (На сервере Hard гриф разрешен — но это для любителей боли).</p>
+                <div class="review-brick">
+                    <img src="./img/skin-avatar 1.png" class="brick-avatar" alt="HoldDog">
+                    <div class="brick-text">
+                        <span class="brick-author">HoldDog</span>
+                        <p>Объективно комфортный сервер: торговля, совместные стройки и города позволяют отдыхать после рабочего дня.</p>
                     </div>
                 </div>
+
+                <div class="review-brick">
+                    <img src="./img/skin-avatar (2) 1.png" class="brick-avatar" alt="NesquickWithBeer" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">NesquickWithBeer</span>
+                        <p>Честная ванилла со своей уютной медовой эстетикой. Новички осваиваются быстро.</p>
+                    </div>
+                </div>
+
+                <div class="review-brick">
+                    <img src="./img/Rectangle 5.png" class="brick-avatar" alt="stazhr" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">stazhr</span>
+                        <p>Приятный сервер со своим узнаваемым стилем и доброжелательными соседями.</p>
+                    </div>
+                </div>
+
+                <div class="review-brick">
+                    <img src="./img/pipiska4.png" class="brick-avatar" alt="Arhigis" onerror="this.src='./img/skin-avatar 1.png'">
+                    <div class="brick-text">
+                        <span class="brick-author">Arhigis</span>
+                        <p>Атмосфера вечерних посиделок в голосовом канале и масштабные стройки возвращают былой интерес к игре.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- ФУТЕР И МОДАЛКИ -->
-    <footer class="footer scroll-anim">
-        <div class="footer-content">
-            <div class="footer-block">
-                <h3>Контакты</h3>
-                <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="site-container">
+            <div class="section-heading">
+                <span class="section-kicker">Частые вопросы</span>
+                <h2 class="section-headline">Ответы перед входом</h2>
             </div>
-            <div class="footer-block">
-                <h3>Реквизиты</h3>
-                <p>Самозанятый</p>
-                <p>Бризицкий Михаил Романович</p>
-                <p>ИНН: 253609705426</p>
+
+            <div class="faq-list">
+                
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Какая версия игры требуется и можно ли без лицензии?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Мы работаем на актуальной версии Minecraft Java Edition 1.21+. На сервер можно заходить как с официальной учетной записи Microsoft, так и через проверенные сторонние лаунчеры.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Действительно ли бесплатная анкета ничем не уступает покупке?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Абсолютно ничем. Права у всех игроков равны. Проходка за 135 рублей — это инструмент экономии времени для тех, кто не хочет ждать проверки своей заявки модераторами.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Как реагировать, если мою постройку повредили?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Достаточно сразу открыть тикет в канале поддержки. Модераторы проверят логи конкретных координат, установят виновника, выдадут наказание и откатят урон без потерь для вас.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Есть ли привилегии с креативом или полетом?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Нет и не планируется. У нас нет Pay-to-Win механик. Даже администрация проекта добывает ресурсы вручную во время обычной игры.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Есть ли на сервере голосовой чат?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Да, у нас установлен плагин на позиционный голосовой чат (Simple Voice Chat). Вы слышите игроков в зависимости от расстояния и направления в пространстве, а также можете общаться шепотом или создавать групповые рации.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Какие модификации разрешено использовать клиенту?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Разрешены любые оптимизаторы (Sodium, Iris, Lithium), шейдеры, схематики Litematica (без функций авто-принтера) и информационные мини-карты без отображения пещер и других игроков.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Как устроена система кланов и совместных городов?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            На сервере действует открытая клановая система. Создать объединение можно от 3 человек через тикет в поддержке. Вы можете очертить территорию общего поселения, строить общую инфраструктуру и вести дипломатию с другими городами.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-unit">
+                    <button class="faq-header-btn">
+                        <span>Что происходит с инвентарем при гибели персонажа?</span>
+                        <span class="faq-sign">+</span>
+                    </button>
+                    <div class="faq-dropdown">
+                        <div class="faq-text">
+                            Действует стандартная ванильная механика: вещи выпадают на месте гибели. Правила сервера строго запрещают другим игрокам присваивать чужой лут со смертей — если кто-то подобрал ваши ресурсы, он обязан вернуть их владельцу.
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="footer-block">
-                <h3>Документы</h3>
-                <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
-                <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
-                <a href="#" class="footer-link" data-modal="deliveryModal">Получение услуги</a>
+        </div>
+    </section>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer-wrap">
+        <div class="site-container">
+            <div class="footer-grid">
+                <div class="footer-cell cell-brand">
+                    <div class="footer-logo">Apiary<span class="text-accent">SMP</span></div>
+                    <p class="footer-desc">Независимый ванильный сервер Minecraft. Создан игроками для игроков.</p>
+                    <span class="footer-legal-note">Не является аффилированным продуктом Mojang AB или Microsoft.</span>
+                </div>
+
+                <div class="footer-cell">
+                    <h4>Контакты</h4>
+                    <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
+                    <p>Telegram: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
+                </div>
+
+                <div class="footer-cell">
+                    <h4>Реквизиты</h4>
+                    <p>Самозанятый</p>
+                    <p>Бризицкий Михаил Романович</p>
+                    <p>ИНН: 253609705426</p>
+                </div>
+
+                <div class="footer-cell">
+                    <h4>Навигация и документы</h4>
+                    <a href="shop.html" class="footer-link link-shop">Магазин товаров →</a>
+                    <a href="rules-main.html" class="footer-link link-rules">Свод правил сервера →</a>
+                    <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
+                    <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
+                    <a href="#" class="footer-link" data-modal="deliveryModal">Получение услуги</a>
+                </div>
             </div>
         </div>
     </footer>
-    
+
+    <!-- ПЛАВАЮЩАЯ НАВИГАЦИЯ -->
+    <nav class="bottom-dock" aria-label="Быстрая навигация">
+        <a href="#top" class="dock-action" title="В начало страницы">
+            <span class="dock-txt">Главная</span>
+        </a>
+        <a href="#game" class="dock-action" title="Пасека">
+            <span class="dock-txt">Пасека</span>
+        </a>
+        <a href="#story" class="dock-action" title="Об устройстве">
+            <span class="dock-txt">Сервер</span>
+        </a>
+        <a href="#shop" class="dock-action" title="Магазин">
+            <span class="dock-txt">Магазин</span>
+        </a>
+        <a href="rules-main.html" class="dock-action" title="Правила">
+            <span class="dock-txt">Правила</span>
+        </a>
+        <button class="dock-highlight-btn" onclick="openModal()">
+            Проходка • 135₽
+        </button>
+    </nav>
+
+    <!-- МОДАЛКА ОПЛАТЫ -->
+    <div id="modalOverlay" class="overlay">
+        <div class="sheet-modal">
+            <span class="close-button" id="closeModal">&times;</span>
+            <div class="modal-pretitle">Моментальный пропуск</div>
+            <h2 class="modal-title">Проходка на ApiarySMP</h2>
+            <p class="modal-pricing">Стоимость: <strong id="itemPrice">135₽</strong></p>
+            
+            <form id="paymentForm">
+                <input type="hidden" name="item_type" id="itemType" value="pass">
+                
+                <div class="form-row">
+                    <label for="nickField">Игровой никнейм Minecraft</label>
+                    <input type="text" id="nickField" name="nickname" class="sheet-input" placeholder="Например: Notch" required autocomplete="off">
+                </div>
+
+                <div class="form-row">
+                    <label for="promoField">Промокод автора (если есть)</label>
+                    <input type="text" id="promoField" name="promocode" class="sheet-input" placeholder="Необязательно">
+                </div>
+
+                <button type="submit" class="modal-submit-btn">Оплатить и скипнуть анкету</button>
+            </form>
+            <span class="modal-footnote">Доступ выдается автоматически после завершения транзакции.</span>
+        </div>
+    </div>
+
+    <!-- ЮРИДИЧЕСКИЕ МОДАЛКИ -->
     <div class="overlay" id="offerModal">
-        <div class="modal large">
+        <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Публичная оферта</h2>
             <p class="modal-text">Настоящий документ является официальным предложением самозанятого Бризицкого Михаила Романовича (ИНН 253609705426) заключить договор на оказание цифровых услуг. <br>
@@ -244,7 +563,7 @@
     </div>
 
     <div class="overlay" id="termsModal">
-        <div class="modal large">
+        <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Пользовательское соглашение</h2>
             <p class="modal-text">Оплачивая услугу, пользователь подтверждает, что ознакомлен с правилами сервера ApiarySMP и обязуется их соблюдать. <br>
@@ -253,7 +572,7 @@
     </div>
 
     <div class="overlay" id="deliveryModal">
-        <div class="modal large">
+        <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Получение услуги</h2>
             <p class="modal-text">После успешной оплаты доступ к серверу предоставляется автоматически или вручную администратором.<br>
@@ -261,30 +580,7 @@
         </div>
     </div>
 
-    <!-- Модалка оплаты -->
-    <div id="modalOverlay" class="overlay">
-        <div class="modal">
-            <span class="close-button" id="closeModal">&times;</span>
-            <h2 class="modal-title">Вход на сервер</h2>
-            <p class="modal-price">Стоимость: <span id="itemPrice">135₽ </span></p>
-            <form id="paymentForm">
-                <input type="hidden" name="item_type" id="itemType" value="pass">
-                <input type="text" name="nickname" class="modal-input" placeholder="Введите ваш ник" required>
-                <input type="text" name="promocode" class="modal-input" placeholder="Код автора (если есть)">
-                <button type="submit" class="modal-pay-button">Оплатить</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ДОБАВЛЕНА НЕДОСТАЮЩАЯ МОДАЛКА ДЛЯ РЕЖИМОВ -->
-    <div id="modeModal" class="overlay mode-modal-overlay" onclick="closeModeModal(event)">
-        <div class="modal large">
-            <span class="close-button" onclick="closeModeModal(event)">&times;</span>
-            <h2 class="modal-title" id="modeTitle">Режим</h2>
-            <div id="modeBadges" style="margin-bottom: 15px;"></div>
-            <div class="modal-text" id="modeBody"></div>
-        </div>
-    </div>
+    <div id="toastMessage" class="toast-strip"></div>
 
     <script src="./script.js"></script>
 </body>

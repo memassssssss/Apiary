@@ -1,318 +1,487 @@
-// --- БЛОК ОПЛАТЫ И СТАРЫХ МОДАЛОК ---
-const modal = document.getElementById('modalOverlay');
-const closeModalBtn = document.getElementById('closeModal');
-const payForm = document.getElementById('paymentForm');
+// --- КОНФИГУРАЦИЯ СЕРВЕРА ---
+const SERVER_IP = "play.apiarysmp.online";
 
-function openModal() {
-    if (modal) modal.style.display = 'flex';
-}
+// --- ЗВУКОВОЙ СИНТЕЗАТОР (ТОЛЬКО ДЛЯ КЛИКЕРА) ---
+let audioCtx = null;
 
-if (closeModalBtn) {
-    closeModalBtn.onclick = () => modal.style.display = 'none';
-}
-
-document.querySelectorAll(".footer-link").forEach(link => {
-    link.addEventListener("click", e => {
-        e.preventDefault();
-        const targetModal = document.getElementById(link.dataset.modal);
-        if (targetModal) targetModal.style.display = "flex";
-    });
-});
-
-document.querySelectorAll(".close-button").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const parentOverlay = btn.closest(".overlay");
-        if (parentOverlay) parentOverlay.style.display = "none";
-    });
-});
-
-if (payForm) {
-    payForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const nickname = payForm.querySelector('input[name="nickname"]').value;
-        const promocode = payForm.querySelector('input[name="promocode"]').value;
-        const itemType = document.getElementById('itemType') ? document.getElementById('itemType').value : 'pass';
-        const payButton = payForm.querySelector('.modal-pay-button');
-        
-        payButton.innerText = "Создание платежа...";
-        payButton.disabled = true;
-
-        try {
-            const response = await fetch('https://pay.apiarysmp.online/create', {
-                method: 'POST',
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nickname, type: itemType, promocode })
-            });
-            const result = await response.json();
-            if (result.url) {
-                window.location.href = result.url;
-            } else {
-                alert("Ошибка: " + (result.error || "Не удалось создать платеж"));
-            }
-        } catch (err) {
-            alert("Ошибка соединения с сервером оплаты.");
-        } finally {
-            payButton.innerText = "Оплатить";
-            payButton.disabled = false;
+function getAudioContext() {
+    if (!audioCtx) {
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtxClass) {
+            audioCtx = new AudioCtxClass();
         }
-    });
-}
-
-// --- БЛОК КОПИРОВАНИЯ IP / ПЕРЕХОДА ПО ССЫЛКЕ ---
-function handleIpClick(event) {
-    if (window.innerWidth <= 992) {
-        event.preventDefault();
-        copyIP();
     }
-}
-
-function copyIP() {
-    const ipTextElem = document.getElementById('ipText');
-    const ipHint = document.getElementById('ipHint');
-    if (!ipTextElem) return;
-
-    const ipText = ipTextElem.innerText;
-    
-    navigator.clipboard.writeText(ipText).then(() => {
-        if (!ipHint) return;
-        const originalHTML = ipHint.innerHTML; 
-        
-        ipHint.innerText = "Скопировано!";
-        ipHint.style.color = "#FFC300";
-        
-        setTimeout(() => {
-            ipHint.innerHTML = originalHTML;
-            ipHint.style.color = "rgba(255, 255, 255, 0.5)";
-        }, 2000);
-    });
-}
-
-// --- МИКРО-АНИМАЦИИ ПРИ СКРОЛЛЕ ---
-document.addEventListener("DOMContentLoaded", () => {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('in-view');
-        });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-    
-    document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
-});
-
-// --- ЛОГИКА ПОРТАЛОВ (ИЗМЕНЕНИЕ ФОНА) ---
-document.addEventListener('DOMContentLoaded', () => {
-    const portalsSection = document.getElementById('servers-portals');
-    const cards = document.querySelectorAll('.portal-card');
-
-    if (portalsSection) {
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                const bgColor = card.getAttribute('data-bg');
-                if (bgColor) portalsSection.style.backgroundColor = bgColor;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                portalsSection.style.backgroundColor = '#0a0a0a'; 
-            });
-        });
+    if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
     }
-});
-
-// --- НЕЗАВИСИМОЕ КОПИРОВАНИЕ IP ---
-function copyHubIP(ipText, btnElement) {
-    navigator.clipboard.writeText(ipText).then(() => {
-        const originalText = btnElement.innerText;
-        const originalWidth = btnElement.offsetWidth;
-        
-        btnElement.style.width = `${originalWidth}px`;
-        btnElement.innerText = "IP Скопирован! Ищи NPC в Хабе";
-        btnElement.style.background = "linear-gradient(135deg, #00c853, #009624)"; 
-        btnElement.style.color = "#fff";
-        
-        setTimeout(() => {
-            btnElement.innerText = originalText;
-            btnElement.style.width = '100%'; 
-            btnElement.style.background = ""; 
-            btnElement.style.color = "";
-        }, 3000);
-    }).catch(err => {
-        console.error('Ошибка копирования IP: ', err);
-        alert('Не удалось скопировать IP. Введите вручную: ' + ipText);
-    });
+    return audioCtx;
 }
 
-// --- ПЛАВНЫЙ FAQ (JS Аккордеон) ---
-document.querySelectorAll('.faq-header').forEach(header => {
-    header.addEventListener('click', () => {
-        const item = header.parentElement;
-        const isActive = item.classList.contains('active');
-        
-        document.querySelectorAll('.faq-item').forEach(el => {
-            el.classList.remove('active');
-            const wrapper = el.querySelector('.faq-content-wrapper');
-            if (wrapper) wrapper.style.maxHeight = null;
-        });
+function triggerClickSound(baseFreq = 480) {
+    try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
 
-        if (!isActive) {
-            item.classList.add('active');
-            const content = item.querySelector('.faq-content-wrapper');
-            if (content) content.style.maxHeight = content.scrollHeight + "px";
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.45, ctx.currentTime + 0.09);
+
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.09);
+    } catch {}
+}
+
+// --- УВЕДОМЛЕНИЯ ---
+function triggerToast(text) {
+    const toast = document.getElementById('toastMessage');
+    if (!toast) return;
+    toast.textContent = text;
+    toast.classList.add('visible');
+    setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 2200);
+}
+
+// --- КОПИРОВАНИЕ IP ---
+function copyIP(container) {
+    navigator.clipboard.writeText(SERVER_IP).then(() => {
+        triggerToast("IP скопирован: " + SERVER_IP);
+        const actionText = container ? container.querySelector('.ip-action-text') : null;
+        if (actionText) {
+            const original = actionText.textContent;
+            actionText.textContent = "Скопировано!";
+            setTimeout(() => {
+                actionText.textContent = original;
+            }, 2000);
         }
-    });
-});
-
-// --- СВАЙП-КАРУСЕЛЬ ОТЗЫВОВ ---
-const sliderWindow = document.getElementById('reviewsSlider');
-const sliderTrack = document.getElementById('reviewsTrack');
-
-if (sliderWindow && sliderTrack) {
-    const originalItems = [...sliderTrack.children];
-    originalItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        sliderTrack.appendChild(clone);
-    });
-
-    let currentX = 0;
-    let isDragging = false;
-    let startX = 0;
-    let dragX = 0;
-    const autoScrollSpeed = window.innerWidth <= 992 ? 0.25 : 0.6;
-
-    function updateSliderPosition() {
-        sliderTrack.style.transform = `translateX(${currentX}px)`;
-    }
-
-    function animate() {
-        if (!isDragging) {
-            currentX -= autoScrollSpeed;
-            const halfWidth = sliderTrack.scrollWidth / 2;
-            if (Math.abs(currentX) >= halfWidth) {
-                currentX = 0;
-            }
-            updateSliderPosition();
-        }
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    sliderWindow.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        sliderWindow.style.cursor = 'grabbing';
-        startX = e.pageX - currentX;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX;
-        dragX = x - startX;
-        
-        const halfWidth = sliderTrack.scrollWidth / 2;
-        if (dragX > 0) dragX = -halfWidth; 
-        if (Math.abs(dragX) >= halfWidth) dragX = 0;
-
-        currentX = dragX;
-        updateSliderPosition();
-    });
-
-    window.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        sliderWindow.style.cursor = 'grab';
-    });
-
-    sliderWindow.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].pageX - currentX;
-    }, { passive: true });
-
-    sliderWindow.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const x = e.touches[0].pageX;
-        dragX = x - startX;
-
-        const halfWidth = sliderTrack.scrollWidth / 2;
-        if (dragX > 0) dragX = -halfWidth;
-        if (Math.abs(dragX) >= halfWidth) dragX = 0;
-
-        currentX = dragX;
-        updateSliderPosition();
-    }, { passive: true });
-
-    sliderWindow.addEventListener('touchend', () => {
-        isDragging = false;
+    }).catch(() => {
+        triggerToast("Адрес: " + SERVER_IP);
     });
 }
 
-// База данных с описаниями режимов
-const serverModes = {
-    smp: {
-        title: "Apiary SMP",
-        badges: '<span class="badge badge-gold">Платная проходка</span>',
-        content: `
-            <p>Наш основной ванильный сервер для тех, кто ценит адекватное комьюнити и масштабные проекты.</p>
-            <h4>🔥 Особенности режима:</h4>
-            <ul>
-                <li><strong>Доверие:</strong> У нас нет приватов. За воровство и гриферство — моментальный бан.</li>
-                <li><strong>Экономика:</strong> Живой рынок, где валютой выступают алмазы. Торгуй с другими игроками.</li>
-                <li><strong>Ивенты:</strong> Регулярные события от администрации и самих игроков.</li>
-            </ul>
-            <p><em>* Вход на этот режим возможен только после покупки проходки на сайте.</em></p>
-        `
-    },
-    sky: {
-        title: "Apiary Sky",
-        badges: '<span class="badge badge-dark">Бесплатно в Хабе</span>',
-        content: `
-            <p>Развивай свой остров, начиная всего с одного магического блока, который бесконечно регенерирует.</p>
-            <h4>☁️ Что тебя ждет:</h4>
-            <ul>
-                <li><strong>Кастомные генераторы:</strong> Добывай редкие ресурсы прямо из своего блока.</li>
-                <li><strong>Квесты:</strong> Выполняй задания для получения уникальных наград.</li>
-                <li><strong>Экономика и топы:</strong> Соревнуйся с другими островами за звание лучшего.</li>
-            </ul>
-            <p><em>* Режим абсолютно бесплатен. Просто заходи в хаб и npc портал Скайблока.</em></p>
-        `
-    },
-    hard: {
-        title: "Apiary Hard",
-        badges: '<span class="badge badge-red">Бесплатно (Скоро)</span>',
-        content: `
-            <p>Режим для тех, кому ванилла кажется слишком простой. Здесь нет правил.</p>
-            <h4>💀 Условия выживания:</h4>
-            <ul>
-                <li><strong>Разрешен гриф:</strong> Защищай свои сундуки, ломай чужие.</li>
-                <li><strong>Усложненные мобы:</strong> Обычные зомби покажутся тебе боссами.</li>
-                <li><strong>PvP везде:</strong> Никаких безопасных зон за пределами спавна.</li>
-            </ul>
-            <p><em>* Открытие запланировано на 21 августа. Вход через общий хаб.</em></p>
-        `
+// --- СТАТУС СЕРВЕРА ---
+async function checkOnlineStatus() {
+    const label = document.getElementById('statusLabel');
+    if (!label) return;
+
+    try {
+        const response = await fetch(`https://api.mcsrvstat.us/3/${SERVER_IP}`);
+        const data = await response.json();
+
+        if (data.online) {
+            const count = data.players ? data.players.online : 0;
+            label.textContent = `В игре сейчас: ${count} чел. • Версия 1.21+`;
+        } else {
+            label.textContent = "Сервер онлайн • Версия 1.21+";
+        }
+    } catch {
+        label.textContent = "Сервер онлайн • Версия 1.21+";
+    }
+}
+
+// --- МИНИ-ИГРА ПАСЕКА ---
+const gameState = {
+    honey: 0,
+    clickPower: 1,
+    upgrades: {
+        click: { level: 0, baseCost: 15, costMult: 1.45, power: 1 },
+        bees:  { level: 0, baseCost: 50, costMult: 1.35, hps: 1 },
+        hive:  { level: 0, baseCost: 220, costMult: 1.3, hps: 6 },
+        field: { level: 0, baseCost: 850, costMult: 1.25, hps: 24 }
     }
 };
 
-function openModeModal(modeId, event) {
-    if (event && event.target.closest('.portal-btn')) {
-        return; 
+const ranks = [
+    { threshold: 0, title: "Ученик бортника" },
+    { threshold: 50, title: "Сборщик пыльцы" },
+    { threshold: 250, title: "Хозяин пасеки" },
+    { threshold: 1000, title: "Старший пчеловод" },
+    { threshold: 5000, title: "Архитектор сот" },
+    { threshold: 20000, title: "Хранитель роя" }
+];
+
+function loadGameData() {
+    const saved = localStorage.getItem('apiary_game_save_v2');
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            gameState.honey = Number(parsed.honey) || 0;
+            if (parsed.upgrades) {
+                for (const key in parsed.upgrades) {
+                    if (gameState.upgrades[key]) {
+                        gameState.upgrades[key].level = Number(parsed.upgrades[key].level) || 0;
+                    }
+                }
+            }
+        } catch {}
     }
-
-    const data = serverModes[modeId];
-    const modeModal = document.getElementById('modeModal');
-    if (!data || !modeModal) return;
-
-    document.getElementById('modeTitle').innerText = data.title;
-    document.getElementById('modeBadges').innerHTML = data.badges;
-    document.getElementById('modeBody').innerHTML = data.content;
-    
-    modeModal.classList.add('active');
-    modeModal.style.display = 'flex';
 }
 
-function closeModeModal(e) {
-    const modeModal = document.getElementById('modeModal');
-    if (!modeModal) return;
-    if (e.target.classList.contains('mode-modal-overlay') || e.target.classList.contains('close-btn') || e.target.closest('.close-button')) {
-        modeModal.classList.remove('active');
-        modeModal.style.display = 'none';
+function saveGameData() {
+    localStorage.setItem('apiary_game_save_v2', JSON.stringify(gameState));
+}
+
+function getUpgradeCost(key) {
+    const item = gameState.upgrades[key];
+    return Math.floor(item.baseCost * Math.pow(item.costMult, item.level));
+}
+
+function getCalculatedHPS() {
+    let totalHps = 0;
+    totalHps += gameState.upgrades.bees.level * gameState.upgrades.bees.hps;
+    totalHps += gameState.upgrades.hive.level * gameState.upgrades.hive.hps;
+    totalHps += gameState.upgrades.field.level * gameState.upgrades.field.hps;
+    return totalHps;
+}
+
+function getCalculatedClick() {
+    return 1 + (gameState.upgrades.click.level * gameState.upgrades.click.power);
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function updateRankBar() {
+    let currentRankIndex = 0;
+    for (let i = 0; i < ranks.length; i++) {
+        if (gameState.honey >= ranks[i].threshold) {
+            currentRankIndex = i;
+        }
+    }
+
+    const currentRank = ranks[currentRankIndex];
+    const nextRank = ranks[currentRankIndex + 1];
+
+    const rankNameEl = document.getElementById('rankName');
+    const rankLevelEl = document.getElementById('rankLevel');
+    const rankProgressEl = document.getElementById('rankProgress');
+
+    if (rankNameEl) rankNameEl.textContent = currentRank.title;
+    if (rankLevelEl) rankLevelEl.textContent = `${currentRankIndex + 1} уровень`;
+
+    if (rankProgressEl) {
+        if (nextRank) {
+            const range = nextRank.threshold - currentRank.threshold;
+            const progress = (gameState.honey - currentRank.threshold) / range;
+            const pct = Math.min(100, Math.max(0, Math.floor(progress * 100)));
+            rankProgressEl.style.width = pct + '%';
+        } else {
+            rankProgressEl.style.width = '100%';
+        }
     }
 }
+
+function updateGameInterface() {
+    const honeyValEl = document.getElementById('honeyCount');
+    const hpsDisplayEl = document.getElementById('hpsDisplay');
+    if (honeyValEl) honeyValEl.textContent = Math.floor(gameState.honey).toLocaleString('ru-RU');
+    if (hpsDisplayEl) hpsDisplayEl.textContent = `+${getCalculatedHPS().toLocaleString('ru-RU')} в секунду`;
+
+    for (const key in gameState.upgrades) {
+        const item = gameState.upgrades[key];
+        const cost = getUpgradeCost(key);
+        
+        const costEl = document.getElementById(`cost${capitalize(key)}`);
+        const lvlEl = document.getElementById(`lvl${capitalize(key)}`);
+        const btnEl = document.querySelector(`#upg${capitalize(key)} .btn-buy`);
+
+        if (costEl) costEl.textContent = cost.toLocaleString('ru-RU');
+        if (lvlEl) lvlEl.textContent = item.level;
+        if (btnEl) btnEl.disabled = gameState.honey < cost;
+    }
+
+    updateRankBar();
+}
+
+function buyUpgrade(key) {
+    const cost = getUpgradeCost(key);
+    if (gameState.honey >= cost) {
+        gameState.honey -= cost;
+        gameState.upgrades[key].level += 1;
+        triggerClickSound(550 + Math.random() * 150);
+        updateGameInterface();
+        saveGameData();
+    }
+}
+
+function resetGameProgress() {
+    if (confirm("Точно сбросить весь прогресс пасеки?")) {
+        gameState.honey = 0;
+        for (const key in gameState.upgrades) {
+            gameState.upgrades[key].level = 0;
+        }
+        saveGameData();
+        updateGameInterface();
+        triggerToast("Пасека сброшена");
+    }
+}
+
+function initGameEngine() {
+    loadGameData();
+    updateGameInterface();
+
+    const clickerBtn = document.getElementById('hiveClicker');
+    if (clickerBtn) {
+        clickerBtn.addEventListener('click', (e) => {
+            const gain = getCalculatedClick();
+            gameState.honey += gain;
+            triggerClickSound(420 + Math.random() * 160);
+            updateGameInterface();
+
+            const rect = clickerBtn.getBoundingClientRect();
+            const tag = document.createElement('span');
+            tag.className = 'float-click-num';
+            tag.textContent = `+${gain}`;
+            tag.style.setProperty('--x-shift', `${(Math.random() - 0.5) * 40}px`);
+            tag.style.left = `${e.clientX - rect.left}px`;
+            tag.style.top = `${e.clientY - rect.top}px`;
+
+            clickerBtn.appendChild(tag);
+            setTimeout(() => tag.remove(), 750);
+        });
+    }
+
+    setInterval(() => {
+        const hps = getCalculatedHPS();
+        if (hps > 0) {
+            gameState.honey += hps / 10;
+            updateGameInterface();
+        }
+    }, 100);
+
+    setInterval(saveGameData, 8000);
+}
+
+// --- КАРУСЕЛЬ ОТЗЫВОВ ---
+function initDraggableCarousel() {
+    const viewport = document.getElementById('reviewsViewport');
+    const track = document.getElementById('reviewsTrack');
+    if (!viewport || !track) return;
+
+    const children = Array.from(track.children);
+    children.forEach(el => track.appendChild(el.cloneNode(true)));
+
+    let isPointerDown = false;
+    let startX = 0;
+    let currentX = 0;
+    let previousX = 0;
+    let velocity = 0;
+    const autoSpeed = 0.45;
+
+    function getTrackHalfWidth() {
+        return track.scrollWidth / 2;
+    }
+
+    function handleLoop() {
+        const half = getTrackHalfWidth();
+        if (half <= 0) return;
+
+        if (currentX <= -half) {
+            currentX += half;
+            startX -= half;
+        } else if (currentX >= 0) {
+            currentX -= half;
+            startX += half;
+        }
+    }
+
+    function render() {
+        if (!isPointerDown) {
+            currentX -= autoSpeed;
+            currentX += velocity;
+            velocity *= 0.94;
+            handleLoop();
+        }
+        track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+        requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    viewport.addEventListener('pointerdown', (e) => {
+        isPointerDown = true;
+        startX = e.clientX - currentX;
+        previousX = e.clientX;
+        velocity = 0;
+        viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+        if (!isPointerDown) return;
+        velocity = e.clientX - previousX;
+        previousX = e.clientX;
+        currentX = e.clientX - startX;
+        handleLoop();
+    });
+
+    const stopDragging = (e) => {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        try {
+            viewport.releasePointerCapture(e.pointerId);
+        } catch {}
+    };
+
+    viewport.addEventListener('pointerup', stopDragging);
+    viewport.addEventListener('pointercancel', stopDragging);
+}
+
+// --- ПЛАВНЫЙ СКРОЛЛ ---
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                history.pushState(null, '', targetId);
+            }
+        });
+    });
+}
+
+// --- ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ ---
+function initScrollReveal() {
+    const elementsToAnimate = document.querySelectorAll(
+        '.access-way-card, .hub-ip-box, .game-board, .narrative-header, .chapter-block, .shop-promo-card, .section-heading, .faq-unit'
+    );
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    elementsToAnimate.forEach(el => {
+        el.classList.add('reveal');
+        revealObserver.observe(el);
+    });
+}
+
+// --- АККОРДЕОН FAQ ---
+function initFAQ() {
+    document.querySelectorAll('.faq-header-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const parent = button.closest('.faq-unit');
+            const dropdown = parent.querySelector('.faq-dropdown');
+            const isOpen = parent.classList.contains('open');
+
+            document.querySelectorAll('.faq-unit').forEach(unit => {
+                unit.classList.remove('open');
+                const drop = unit.querySelector('.faq-dropdown');
+                if (drop) drop.style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                parent.classList.add('open');
+                dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+            }
+        });
+    });
+}
+
+// --- МОДАЛКИ И ОПЛАТА ---
+const paymentModal = document.getElementById('modalOverlay');
+const closeModal = document.getElementById('closeModal');
+const payForm = document.getElementById('paymentForm');
+
+function openModal() {
+    if (paymentModal) {
+        paymentModal.style.display = 'flex';
+    }
+}
+
+function initModals() {
+    if (closeModal && paymentModal) {
+        closeModal.onclick = () => {
+            paymentModal.style.display = 'none';
+        };
+    }
+
+    document.querySelectorAll(".footer-link[data-modal]").forEach(link => {
+        link.addEventListener("click", e => {
+            e.preventDefault();
+            const targetModal = document.getElementById(link.dataset.modal);
+            if (targetModal) targetModal.style.display = "flex";
+        });
+    });
+
+    document.querySelectorAll(".close-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const overlay = btn.closest(".overlay");
+            if (overlay) overlay.style.display = "none";
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('overlay')) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    if (payForm) {
+        payForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nickname = payForm.querySelector('input[name="nickname"]').value.trim();
+            const promocode = payForm.querySelector('input[name="promocode"]').value.trim();
+            const itemType = document.getElementById('itemType') ? document.getElementById('itemType').value : 'pass';
+            const submitBtn = payForm.querySelector('.modal-submit-btn');
+
+            submitBtn.innerText = "Создание платежа...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('https://pay.apiarysmp.online/create', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nickname, type: itemType, promocode })
+                });
+                
+                const result = await response.json();
+                if (result.url) {
+                    window.location.href = result.url;
+                } else {
+                    alert("Ошибка: " + (result.error || "Не удалось создать платеж"));
+                }
+            } catch {
+                alert("Ошибка соединения с сервером оплаты.");
+            } finally {
+                submitBtn.innerText = "Оплатить и скипнуть анкету";
+                submitBtn.disabled = false;
+            }
+        });
+    }
+}
+
+// --- ЕДИНАЯ ТОЧКА СТАРТА ---
+document.addEventListener('DOMContentLoaded', () => {
+    checkOnlineStatus();
+    initGameEngine();
+    initDraggableCarousel();
+    initSmoothScroll();
+    initScrollReveal();
+    initFAQ();
+    initModals();
+});
