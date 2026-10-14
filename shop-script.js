@@ -4,6 +4,7 @@ const MANAGER_TG = "Apiary_SMP";
 
 let currentSelectedProduct = "";
 let currentSelectedPrice = 0;
+let currentSelectedVariant = "";
 
 // --- УВЕДОМЛЕНИЯ ---
 function triggerToast(text) {
@@ -25,41 +26,139 @@ function copyIP() {
     });
 }
 
-// --- ФИЛЬТРАЦИЯ ТОВАРОВ ---
-function initCategoryFilters() {
+// --- ФИЛЬТРАЦИЯ И ПОИСК ТОВАРОВ ---
+function initCatalogFilters() {
     const tabs = document.querySelectorAll('.filter-tab');
+    const searchInput = document.getElementById('shopSearchInput');
     const cards = document.querySelectorAll('.product-card');
+
+    let activeCategory = 'all';
+    let searchQuery = '';
+
+    function applyFilters() {
+        cards.forEach(card => {
+            const categories = (card.dataset.category || '').split(' ');
+            const title = (card.querySelector('.product-title')?.textContent || '').toLowerCase();
+            const desc = (card.querySelector('.product-desc')?.textContent || '').toLowerCase();
+
+            const matchesCategory = activeCategory === 'all' || categories.includes(activeCategory);
+            const matchesSearch = !searchQuery || title.includes(searchQuery) || desc.includes(searchQuery);
+
+            if (matchesCategory && matchesSearch) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            const category = tab.dataset.category;
-
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
+            activeCategory = tab.dataset.category;
+            applyFilters();
+        });
+    });
 
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            applyFilters();
+        });
+    }
+}
+
+// --- ИНТЕРАКТИВНЫЕ ВАРИАНТЫ В КАРТОЧКАХ ---
+function initCardVariants() {
+    document.querySelectorAll('.card-variant-selector').forEach(selector => {
+        const chips = selector.querySelectorAll('.variant-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
             });
         });
     });
 }
 
-// --- МОДАЛКА ЗАКАЗА И ГЕНЕРАЦИЯ ССЫЛКИ В TELEGRAM ---
+// --- ИНТЕРАКТИВНЫЙ СИМУЛЯТОР ЧАТА И TAB ---
+function initSandboxSimulator() {
+    const nickInput = document.getElementById('previewNick');
+    const prefixInput = document.getElementById('previewPrefix');
+    const colorBtns = document.querySelectorAll('.color-btn');
+
+    const tabPrefix = document.getElementById('tabPrefixDisplay');
+    const tabNick = document.getElementById('tabNickDisplay');
+    const chatPrefix = document.getElementById('chatPrefixDisplay');
+    const chatNick = document.getElementById('chatNickDisplay');
+
+    let activeColor = '#f2a829';
+
+    function updatePreview() {
+        const nickVal = nickInput && nickInput.value.trim() ? nickInput.value.trim() : 'Notch';
+        const prefixVal = prefixInput && prefixInput.value.trim() ? prefixInput.value.trim() : 'Игрок';
+
+        if (tabNick) tabNick.textContent = nickVal;
+        if (chatNick) chatNick.textContent = nickVal;
+
+        if (tabPrefix) {
+            tabPrefix.textContent = `[${prefixVal}]`;
+            tabPrefix.style.color = activeColor;
+        }
+        if (chatPrefix) {
+            chatPrefix.textContent = `[${prefixVal}]`;
+            chatPrefix.style.color = activeColor;
+        }
+    }
+
+    if (nickInput) nickInput.addEventListener('input', updatePreview);
+    if (prefixInput) prefixInput.addEventListener('input', updatePreview);
+
+    colorBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            colorBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeColor = btn.dataset.color;
+            updatePreview();
+        });
+    });
+
+    updatePreview();
+}
+
+// --- ЗАКАЗ ТОВАРА И ГЕНЕРАЦИЯ ССЫЛКИ В TELEGRAM ---
 function orderProduct(title, price) {
     currentSelectedProduct = title;
     currentSelectedPrice = price;
+    currentSelectedVariant = "";
+    openOrderModal();
+}
 
+function orderProductWithVariant(btnElement, baseTitle, price) {
+    const card = btnElement.closest('.product-card');
+    const activeChip = card ? card.querySelector('.variant-chip.active') : null;
+    const variantName = activeChip ? activeChip.dataset.val : "";
+
+    currentSelectedProduct = baseTitle;
+    currentSelectedPrice = price;
+    currentSelectedVariant = variantName;
+
+    openOrderModal();
+}
+
+function openOrderModal() {
     const modal = document.getElementById('orderModal');
     const titleEl = document.getElementById('orderModalItemTitle');
     const priceEl = document.getElementById('orderModalItemPrice');
     const nickInput = document.getElementById('orderNickField');
 
-    if (titleEl) titleEl.textContent = title;
-    if (priceEl) priceEl.textContent = `${price}₽`;
+    const fullTitle = currentSelectedVariant 
+        ? `${currentSelectedProduct} (${currentSelectedVariant})` 
+        : currentSelectedProduct;
+
+    if (titleEl) titleEl.textContent = fullTitle;
+    if (priceEl) priceEl.textContent = `${currentSelectedPrice}₽`;
     if (nickInput) nickInput.value = '';
 
     updateTelegramOrderLink();
@@ -75,7 +174,11 @@ function updateTelegramOrderLink() {
     if (!tgBtn) return;
 
     const nickname = nickInput && nickInput.value.trim() ? nickInput.value.trim() : "Не указан";
-    const textMsg = `Привет! Хочу приобрести в лавке ApiarySMP:\n• Товар: ${currentSelectedProduct}\n• Стоимость: ${currentSelectedPrice}₽\n• Мой игровой ник: ${nickname}`;
+    const itemWithVariant = currentSelectedVariant 
+        ? `${currentSelectedProduct} [Вариант: ${currentSelectedVariant}]` 
+        : currentSelectedProduct;
+
+    const textMsg = `Привет! Хочу оформить в лавке ApiarySMP:\n• Позиция: ${itemWithVariant}\n• Стоимость: ${currentSelectedPrice}₽\n• Мой никнейм в игре: ${nickname}`;
     
     tgBtn.href = `https://t.me/${MANAGER_TG}?text=${encodeURIComponent(textMsg)}`;
 }
@@ -120,6 +223,8 @@ function initModals() {
 
 // --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
-    initCategoryFilters();
+    initCatalogFilters();
+    initCardVariants();
+    initSandboxSimulator();
     initModals();
 });

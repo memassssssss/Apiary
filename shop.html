@@ -14,18 +14,19 @@
     <div class="ambient-spot ambient-spot-1"></div>
     <div class="ambient-spot ambient-spot-2"></div>
 
-    <!-- ВЕРХНЯЯ ПЛАШКА РУЧНОЙ ВЫДАЧИ -->
+    <!-- ВЕРХНЯЯ ПЛАШКА РУЧНОЙ ВЫДАЧИ И ПРЕДЗАКАЗОВ -->
     <div class="shop-notice-bar">
         <div class="site-container notice-flex">
             <div class="notice-info">
-                <span class="notice-pill">В разработке</span>
+                <span class="notice-pill">Предзаказ открыт</span>
                 <p class="notice-text">
-                    Автоматическая выдача товаров через сайт находится в разработке, но вы всё равно можете приобрести любые позиции. 
-                    Для покупки свяжитесь с менеджером в Telegram: <strong>@Apiary_SMP</strong>
+                    Автоматическая выдача в разработке. Товары «Спонсор улья», «Рост в 1 блок» и «Подарочная проходка» уже активны и выдаются сразу. 
+                    Остальные кастомные фичи будут постепенно добавляться в течение недели (19–25 октября). 
+                    Забронировать их по предзаказу можно уже сейчас через менеджера в Telegram: <strong>@Apiary_SMP</strong>
                 </p>
             </div>
             <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener" class="notice-action-btn">
-                Связаться с менеджером →
+                Менеджер в Telegram →
             </a>
         </div>
     </div>
@@ -34,126 +35,161 @@
     <header class="shop-hero">
         <div class="site-container">
             <div class="shop-top-nav">
-                <a href="index.html" class="back-link">← На главную</a>
+                <a href="index.html" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    На главную
+                </a>
                 <span class="shop-hub-ip" onclick="copyIP()">play.apiarysmp.online</span>
             </div>
 
             <h1 class="shop-title">
                 Медовая <span class="text-accent">лавка</span>
-                <span class="shop-subhead">Косметика, визуальные эффекты и спонсорство сервера</span>
+                <span class="shop-subhead">Визуальный кастом, уютные механики и спонсорство</span>
             </h1>
 
             <p class="shop-lead">
-                Мы принципиально не продаем ресурсы, броню и креатив. Все товары в лавке — исключительно 
-                визуальный кастом и поддержка развития проекта без вреда для ванильного баланса.
+                Никакого Pay-to-Win, ресурсов за рубли и креатива. Все товары — это визуальный стиль, 
+                уютный бытовой декор и прямая поддержка хостинга любимого сервера.
             </p>
 
-            <!-- ФИЛЬТРЫ КАТЕГОРИЙ -->
-            <div class="shop-filters">
-                <button class="filter-tab active" data-category="all">Все товары</button>
-                <button class="filter-tab" data-category="visual">Визуал и Чат</button>
-                <button class="filter-tab" data-category="gameplay">Кастом персонажа</button>
-                <button class="filter-tab" data-category="support">Спонсорство</button>
+            <div class="shop-controls-wrap">
+                <div class="shop-search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="shopSearchInput" placeholder="Поиск по товарам и механикам..." autocomplete="off">
+                </div>
+
+                <div class="shop-filters">
+                    <button class="filter-tab active" data-category="all">Все позиции</button>
+                    <button class="filter-tab" data-category="active">Доступно сразу</button>
+                    <button class="filter-tab" data-category="preorder">Предзаказ (19–25 окт)</button>
+                    <button class="filter-tab" data-category="character">Персонаж</button>
+                    <button class="filter-tab" data-category="base">База и Уют</button>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- ИНТЕРАКТИВНАЯ ПЕСОЧНИЦА КАСТОМА -->
+    <section class="sandbox-section">
+        <div class="site-container">
+            <div class="sandbox-card">
+                <div class="sandbox-header">
+                    <div>
+                        <span class="section-kicker">Интерактивный симулятор</span>
+                        <h2 class="sandbox-title">Примерка префикса и гравировки</h2>
+                    </div>
+                    <span class="sandbox-badge">Live Preview</span>
+                </div>
+
+                <div class="sandbox-grid">
+                    <div class="sandbox-controls">
+                        <div class="control-group">
+                            <label for="previewNick">Ваш никнейм</label>
+                            <input type="text" id="previewNick" value="Notch" maxlength="16">
+                        </div>
+                        <div class="control-group">
+                            <label for="previewPrefix">Текст префикса</label>
+                            <input type="text" id="previewPrefix" value="Бортник" maxlength="16">
+                        </div>
+                        <div class="control-group">
+                            <label>Цвет оформления</label>
+                            <div class="color-picker-row">
+                                <button class="color-btn active" data-color="#f2a829" style="background:#f2a829"></button>
+                                <button class="color-btn" data-color="#2ecc71" style="background:#2ecc71"></button>
+                                <button class="color-btn" data-color="#9b59b6" style="background:#9b59b6"></button>
+                                <button class="color-btn" data-color="#3498db" style="background:#3498db"></button>
+                                <button class="color-btn" data-color="#e74c3c" style="background:#e74c3c"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sandbox-display">
+                        <div class="preview-box">
+                            <span class="preview-type">Вид в списке игроков (TAB)</span>
+                            <div class="tab-preview-item">
+                                <span class="tab-indicator"></span>
+                                <span class="tab-prefix-tag" id="tabPrefixDisplay">[Бортник]</span>
+                                <span class="tab-nick-val" id="tabNickDisplay">Notch</span>
+                                <span class="tab-ping">18ms</span>
+                            </div>
+                        </div>
+
+                        <div class="preview-box">
+                            <span class="preview-type">Вид сообщения в чате</span>
+                            <div class="chat-preview-item">
+                                <span class="chat-prefix-tag" id="chatPrefixDisplay">[Бортник]</span>
+                                <span class="chat-nick-val" id="chatNickDisplay">Notch</span>: 
+                                <span class="chat-msg-val">Привет улей, заходите на чай в таверну!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- КАТАЛОГ ТОВАРОВ -->
     <main class="shop-catalog" id="catalog">
         <div class="site-container">
             <div class="products-grid">
 
-                <div class="product-card" data-category="visual">
-                    <div class="card-badge">Хит продаж</div>
-                    <div class="product-icon-wrap">💬</div>
-                    <h3 class="product-title">Кастомный префикс + Discord</h3>
-                    <p class="product-desc">
-                        Персональный цветной префикс перед никнеймом в списке игроков (TAB) и игровом чате. Дополнительно выдается уникальная роль и цвет в официальном Discord-сервере.
-                    </p>
-                    <ul class="product-perks">
-                        <li>Свободный выбор цвета и текста</li>
-                        <li>Отображение в чате и табе</li>
-                        <li>Эксклюзивная роль в Discord</li>
-                    </ul>
-                    <div class="product-bottom">
-                        <div class="product-price">249₽ <span class="price-type">/ навсегда</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Кастомный префикс в TAB + Discord', 249)">
-                            Заказать
-                        </button>
+                <div class="product-card featured-product" data-category="active">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">SUP-01</span>
+                        <h3 class="product-title">Спонсор улья</h3>
                     </div>
-                </div>
-
-                <div class="product-card" data-category="visual">
-                    <div class="card-badge">Визуал</div>
-                    <div class="product-icon-wrap">✨</div>
-                    <h3 class="product-title">Эффекты поступи (Трейлы)</h3>
                     <p class="product-desc">
-                        Красивые визуальные следы под ногами персонажа во время ходьбы, бега и прыжков. Выделяйтесь среди других жителей улья во время прогулок по городам.
+                        Главный статус поддержки проекта. Прямой доступ к закулисной жизни сервера, закрытому общению с администрацией и планам развития.
                     </p>
                     <ul class="product-perks">
-                        <li>Фиолетовые частицы Края</li>
-                        <li>Огненные искры пламени</li>
-                        <li>Густой мистический дым</li>
-                    </ul>
-                    <div class="product-bottom">
-                        <div class="product-price">299₽ <span class="price-type">/ навсегда</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Визуальные эффекты трейлов от ходьбы', 299)">
-                            Заказать
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="gameplay">
-                    <div class="card-badge">Эксклюзив</div>
-                    <div class="product-icon-wrap">🐝</div>
-                    <h3 class="product-title">Рост в 1 блок (Мини-пчёлка)</h3>
-                    <p class="product-desc">
-                        Уникальная косметическая механика изменения размера модельки. Вы можете стать крошечным персонажем ростом ровно в один блок для забавных скриншотов и уютных посиделок.
-                    </p>
-                    <ul class="product-perks">
-                        <li>Уменьшение модели до 1 блока</li>
-                        <li>Быстрое переключение по команде</li>
-                        <li>Возврат в обычный рост в любой момент</li>
-                    </ul>
-                    <div class="product-bottom">
-                        <div class="product-price">349₽ <span class="price-type">/ навсегда</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Косметический рост в один блок', 349)">
-                            Заказать
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card featured-product" data-category="support">
-                    <div class="card-badge badge-gold">Клуб меценатов</div>
-                    <div class="product-icon-wrap">👑</div>
-                    <h3 class="product-title">Спонсор улья</h3>
-                    <p class="product-desc">
-                        Специальный статус для тех, кто хочет напрямую поддерживать хостинг и развитие сервера. Полный доступ к закрытой внутренней кухне проекта.
-                    </p>
-                    <ul class="product-perks">
-                        <li>Вход в приватный чат с администрацией</li>
+                        <li>Вход в закрытый чат с администрацией</li>
                         <li>Ранние спойлеры к новым ивентам</li>
-                        <li>Эксклюзивный закулисный контент</li>
-                        <li>Золотой никнейм спонсора в табе</li>
+                        <li>Эксклюзивный бэкстейдж разработки</li>
+                        <li>Золотой цвет ника в табе и чате</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">399₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product btn-gold" onclick="orderProduct('Спонсор улья (Приватный чат + Спойлеры)', 399)">
+                        <button class="btn-buy-product btn-gold" onclick="orderProduct('Спонсор улья', 399)">
                             Стать спонсором
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="support">
-                    <div class="card-badge">Подарок</div>
-                    <div class="product-icon-wrap">🎁</div>
-                    <h3 class="product-title">Подарочная проходка для друга</h3>
+                <div class="product-card" data-category="active character">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">CHR-01</span>
+                        <h3 class="product-title">Рост в 1 блок</h3>
+                    </div>
                     <p class="product-desc">
-                        Хотите позвать на сервер друга, не заставляя его писать длинную анкету? Оформите подарочный ключ без ожидания и проверок.
+                        Косметическая механика изменения роста персонажа. Вы уменьшаетесь ровно до высоты одного блока для забавных моментов и атмосферных скриншотов.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Уменьшение модели до 1 блока</li>
+                        <li>Быстрое включение в меню</li>
+                        <li>Возврат в обычный рост в любой момент</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">349₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Косметический рост в 1 блок', 349)">
+                            Заказать
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="active">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">PAS-01</span>
+                        <h3 class="product-title">Подарочная проходка</h3>
+                    </div>
+                    <p class="product-desc">
+                        Хотите позвать на сервер друга, не заставляя его писать длинную анкету? Оформите подарочную проходку с моментальным добавлением в вайтлист.
                     </p>
                     <ul class="product-perks">
                         <li>Полный скип анкеты для получателя</li>
-                        <li>Красивое цифровое поздравление</li>
+                        <li>Крутая открытка</li>
                         <li>Моментальный доступ в вайтлист</li>
                     </ul>
                     <div class="product-bottom">
@@ -164,6 +200,220 @@
                     </div>
                 </div>
 
+                <div class="product-card" data-category="preorder character">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">PET-01</span>
+                        <h3 class="product-title">Плечевой спутник: Пчёлка</h3>
+                    </div>
+                    <p class="product-desc">
+                        Маленькая верная пчёлка, плавно покачивающаяся над вашим плечом. Бестелесный спутник, который не нагружает сервер и всегда с вами.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Парит рядышком над плечём</li>
+                        <li>У пчёлки нет хит-бокса, она не будет мешать</li>
+                        <li>Можно в любой момент выключить в меню</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">299₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Плечевой спутник Пчёлка (Предзаказ)', 299)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder character">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">FX-01</span>
+                        <h3 class="product-title">Эффект появления при входе</h3>
+                    </div>
+                    <p class="product-desc">
+                        Красивая визуальная анимация при входе на сервер (при покупке доступны все сразу)
+                    </p>
+                    <div class="card-variant-selector" data-param="Стиль появления">
+                        <button class="variant-chip active" data-val="Метеорит">Искорки</button>
+                        <button class="variant-chip" data-val="Рой пчел">Дымок</button>
+                        <button class="variant-chip" data-val="Врата Края">Фиолетовые частички</button>
+                    </div>
+                    <ul class="product-perks">
+                        <li>Каскад частиц и особенный звук</li>
+                        <li>Виден всем окружающим игрокам</li>
+                        <li>Переключение стиля в меню</li>
+                        <li>Бесконечный респект, почёт и уважение</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">199₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'Эффект появления при входе', 199)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder character">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">ELY-01</span>
+                        <h3 class="product-title">След от элитр (Elytra Trail)</h3>
+                    </div>
+                    <p class="product-desc">
+                        Плотный красивый шлейф частиц за вашей спиной во время полета на элитрах. Выберите эффект полета  (при покупке доступны все сразу):
+                    </p>
+                    <div class="card-variant-selector" data-param="Тип шлейфа">
+                        <button class="variant-chip active" data-val="Медовый">Медовый</button>
+                        <button class="variant-chip" data-val="Огненный форсаж">Огонь</button>
+                        <button class="variant-chip" data-val="Нотный стан">Ноты</button>
+                        <button class="variant-chip" data-val="Пузыри">Пузыри</button>
+                    </div>
+                    <ul class="product-perks">
+                        <li>Активируется только в планировании</li>
+                        <li>Плавное рассеивание в воздухе</li>
+                        <li>Отключение в меню в любой момент</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">199₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'След от элитр', 199)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder base">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">TXT-01</span>
+                        <h3 class="product-title">Именная вывеска для базы</h3>
+                    </div>
+                    <p class="product-desc">
+                        Парящий объемный 3D-текст с градиентом на TextDisplay над входом в вашу таверну, магазин или замок.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Поворот надписи вслед за взглядом</li>
+                        <li>Градиентные цвета и форматирование</li>
+                        <li>Установка и перемещение по клику</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">149₽ <span class="price-type">/ вывеска</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Именная вывеска над базой (TextDisplay)', 149)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder base">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">BEL-01</span>
+                        <h3 class="product-title">Дверной звонок у дома</h3>
+                    </div>
+                    <p class="product-desc">
+                        Интерактивная кнопка-звонок для ворот или порога дома. При нажатии гостем владелец мгновенно получает мягкое уведомление в ActionBar.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Оповещение хозяина базы в сети</li>
+                        <li>Приятный щелчок для гостя</li>
+                        <li>Защита от спама звонком</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">129₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Дверной звонок у дома (Колокол)', 129)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder base">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">LOR-01</span>
+                        <h3 class="product-title">Гравировщик предметов (/lore)</h3>
+                    </div>
+                    <p class="product-desc">
+                        Возможность кастомизировать любимые инструменты и доспехи: цветные градиентные названия и авторские цитаты в описании предмета.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Команды /rename-color и /lore</li>
+                        <li>Сохранение цвета при починке</li>
+                        <li>Памятные цитаты на оружии и броне</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">149₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Гравировщик предметов (/lore)', 149)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder base">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">FUN-01</span>
+                        <h3 class="product-title">Праздничная хлопушка</h3>
+                    </div>
+                    <p class="product-desc">
+                        Многоразовый праздничный предмет. При клике выпускает залп разноцветного конфетти и звездочек для свадеб, открытий городов и посиделок.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Яркий салют из шерстяных конфетти</li>
+                        <li>Удобный кулдаун в 3 минуты</li>
+                        <li>Не наносит урон окружающим</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">99₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Праздничная хлопушка (Party Popper)', 99)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder character">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">PRF-01</span>
+                        <h3 class="product-title">Кастомный префикс + Discord</h3>
+                    </div>
+                    <p class="product-desc">
+                        Персональный цветной префикс перед ником в списке игроков (TAB) и игровом чате. Дополнительно выдается уникальная роль и цвет в официальном Discord-сервере.
+                    </p>
+                    <ul class="product-perks">
+                        <li>Свободный выбор текста и цвета</li>
+                        <li>Отображение в чате и табе</li>
+                        <li>Эксклюзивная роль в Discord</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">249₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProduct('Кастомный префикс в TAB + Discord', 249)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="preorder character">
+                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                    <div class="product-header">
+                        <span class="product-code-tag">TRL-01</span>
+                        <h3 class="product-title">Эффекты поступи (Трейлы)</h3>
+                    </div>
+                    <p class="product-desc">
+                        Визуальные следы под ногами персонажа при ходьбе и беге. Выберите тип частиц для прогулок по городам  (при покупке доступны все сразу):
+                    </p>
+                    <div class="card-variant-selector" data-param="Тип поступи">
+                        <button class="variant-chip active" data-val="Край">Край</button>
+                        <button class="variant-chip" data-val="Пламя">Пламя</button>
+                        <button class="variant-chip" data-val="Дым">Дым</button>
+                    </div>
+                    <ul class="product-perks">
+                        <li>Мягкое затухание следа позади</li>
+                        <li>Не мешает обзору в бою</li>
+                        <li>Удобное меню включения/выключения</li>
+                    </ul>
+                    <div class="product-bottom">
+                        <div class="product-price">249₽ <span class="price-type">/ сезон</span></div>
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'Эффекты поступи (Трейлы шагов)', 249)">
+                            Предзаказ
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -172,22 +422,22 @@
     <section class="shop-steps-section">
         <div class="site-container">
             <div class="steps-box">
-                <h2 class="steps-heading">Как происходит покупка</h2>
+                <h2 class="steps-heading">Как происходит покупка и предзаказ</h2>
                 <div class="steps-grid">
                     <div class="step-card">
-                        <span class="step-num">1</span>
-                        <h4>Выбор товара</h4>
-                        <p>Нажимаете кнопку «Заказать» у нужной позиции или сразу переходите в Telegram к нашему менеджеру.</p>
+                        <span class="step-num">01</span>
+                        <h4>Выбор позиции</h4>
+                        <p>Нажимаете кнопку у готового товара или позиции по предзаказу и вводите свой никнейм в игре.</p>
                     </div>
                     <div class="step-card">
-                        <span class="step-num">2</span>
-                        <h4>Уточнение деталей</h4>
-                        <p>Указываете ваш никнейм в игре, желаемый текст префикса, трек для пластинки или цвет роли.</p>
+                        <span class="step-num">02</span>
+                        <h4>Диалог с менеджером</h4>
+                        <p>Сайт перенаправляет вас в Telegram-диалог к менеджеру <strong>@Apiary_SMP</strong> с готовым сформированным сообщением.</p>
                     </div>
                     <div class="step-card">
-                        <span class="step-num">3</span>
-                        <h4>Оплата и выдача</h4>
-                        <p>Менеджер отправляет реквизиты или чек оплаты, после чего активирует товар на вашем аккаунте в течение 10–15 минут.</p>
+                        <span class="step-num">03</span>
+                        <h4>Активация на сервере</h4>
+                        <p>Готовые товары выдаются за 15 минут. Предзаказы фиксируются за ником и активируются в течение недели с 19 по 25 октября.</p>
                     </div>
                 </div>
             </div>
@@ -256,7 +506,7 @@
             
             <div class="order-direct-content">
                 <p class="modal-order-desc">
-                    Для мгновенного оформления напишите нашему менеджеру <strong>@Apiary_SMP</strong> в Telegram. Никнейм и товар уже будут добавлены в диалог.
+                    Для оформления напишите менеджеру <strong>@Apiary_SMP</strong> в Telegram. Никнейм и выбранный вариант уже будут добавлены в диалог.
                 </p>
                 <div class="form-row">
                     <label for="orderNickField">Ваш игровой никнейм Minecraft</label>
@@ -266,7 +516,7 @@
                     Перейти к диалогу в Telegram
                 </a>
             </div>
-            <span class="modal-footnote">Менеджер ответит и выдаст товар в ближайшее время</span>
+            <span class="modal-footnote">Менеджер ответит и зафиксирует заказ в ближайшее время</span>
         </div>
     </div>
 
