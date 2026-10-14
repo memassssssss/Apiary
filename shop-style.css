@@ -104,6 +104,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+    position: relative;
+    padding-right: 52px;
 }
 
 .notice-info {
@@ -151,6 +153,31 @@ body {
 .notice-action-btn:hover {
     background: var(--honey-bright);
     transform: translateY(-1px);
+}
+
+.notice-close-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 1px solid rgba(220, 160, 50, 0.25);
+    color: var(--txt-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.notice-close-btn:hover {
+    color: var(--honey-bright);
+    border-color: var(--honey-bright);
+    background: rgba(224, 146, 20, 0.15);
 }
 
 /* --- ШАПКА МАГАЗИНА --- */
@@ -560,7 +587,6 @@ body {
     flex-grow: 1;
 }
 
-/* Интерактивный переключатель вариантов в карточках */
 .card-variant-selector {
     display: flex;
     gap: 6px;
@@ -982,6 +1008,37 @@ body {
     margin-top: 14px;
 }
 
+/* Окно подтверждения скрытия плашки */
+.notice-confirm-sheet {
+    max-width: 480px;
+}
+
+.confirm-actions-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.btn-cancel-modal {
+    background: transparent;
+    border: 1px solid var(--border-light);
+    color: var(--txt-muted);
+    padding: 12px;
+    border-radius: var(--radius-round);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-modal:hover {
+    color: var(--txt-main);
+    border-color: var(--border-strong);
+    background: var(--bg-surface-elevated);
+}
+
 .toast-strip {
     position: fixed;
     top: 20px;
@@ -1033,6 +1090,8 @@ body {
         flex-direction: column;
         align-items: stretch;
         text-align: left;
+        padding-right: 0;
+        padding-top: 10px;
     }
 
     .notice-info {
@@ -1043,6 +1102,12 @@ body {
 
     .notice-action-btn {
         text-align: center;
+    }
+
+    .notice-close-btn {
+        top: 6px;
+        right: 4px;
+        transform: none;
     }
 }
 

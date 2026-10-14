@@ -26,6 +26,82 @@ function copyIP() {
     });
 }
 
+// --- ЗАКРЫТИЕ ПЛАШКИ С ПОДТВЕРЖДЕНИЕМ ---
+function initNoticeBarDismiss() {
+    const noticeBar = document.querySelector('.shop-notice-bar');
+    const noticeFlex = document.querySelector('.shop-notice-bar .notice-flex');
+    if (!noticeBar || !noticeFlex) return;
+
+    if (localStorage.getItem('apiary_notice_dismissed') === 'true') {
+        noticeBar.style.display = 'none';
+        return;
+    }
+
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'notice-close-btn';
+    closeBtn.setAttribute('aria-label', 'Закрыть уведомление');
+    closeBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    `;
+    noticeFlex.appendChild(closeBtn);
+
+    const confirmModalHtml = `
+    <div id="noticeConfirmModal" class="overlay">
+        <div class="sheet-modal notice-confirm-sheet">
+            <div class="modal-pretitle">Внимание</div>
+            <h2 class="modal-title">Скрыть плашку?</h2>
+            <p class="modal-text">
+                Вы действительно хотите скрыть информационную плашку? Напоминаем: автоматическая выдача сейчас находится в разработке, все позиции оформляются вручную через Telegram менеджера @Apiary_SMP.
+            </p>
+            <div class="confirm-actions-row">
+                <button type="button" id="confirmDismissNoticeBtn" class="modal-submit-btn">
+                    Да, я всё прочитал, мне всё ясно, скрыть
+                </button>
+                <button type="button" id="cancelDismissNoticeBtn" class="btn-cancel-modal">
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', confirmModalHtml);
+
+    const confirmModal = document.getElementById('noticeConfirmModal');
+    const confirmBtn = document.getElementById('confirmDismissNoticeBtn');
+    const cancelBtn = document.getElementById('cancelDismissNoticeBtn');
+
+    closeBtn.addEventListener('click', () => {
+        if (confirmModal) confirmModal.style.display = 'flex';
+    });
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            if (confirmModal) confirmModal.style.display = 'none';
+        });
+    }
+
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            if (confirmModal) confirmModal.style.display = 'none';
+            noticeBar.style.display = 'none';
+            localStorage.setItem('apiary_notice_dismissed', 'true');
+            triggerToast("Информационная плашка скрыта");
+        });
+    }
+
+    if (confirmModal) {
+        confirmModal.addEventListener('click', (e) => {
+            if (e.target === confirmModal) {
+                confirmModal.style.display = 'none';
+            }
+        });
+    }
+}
+
 // --- ФИЛЬТРАЦИЯ И ПОИСК ТОВАРОВ ---
 function initCatalogFilters() {
     const tabs = document.querySelectorAll('.filter-tab');
@@ -223,6 +299,7 @@ function initModals() {
 
 // --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
+    initNoticeBarDismiss();
     initCatalogFilters();
     initCardVariants();
     initSandboxSimulator();
