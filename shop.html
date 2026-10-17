@@ -14,20 +14,16 @@
     <div class="ambient-spot ambient-spot-1"></div>
     <div class="ambient-spot ambient-spot-2"></div>
 
-    <!-- ВЕРХНЯЯ ПЛАШКА РУЧНОЙ ВЫДАЧИ И ПРЕДЗАКАЗОВ -->
+    <!-- ВЕРХНЯЯ ПЛАШКА СТАТУСА -->
     <div class="shop-notice-bar">
         <div class="site-container notice-flex">
             <div class="notice-info">
-                <span class="notice-pill">Предзаказ открыт</span>
+                <span class="notice-pill">Моментальная доставка 24/7</span>
                 <p class="notice-text">
-                    Автоматическая выдача в разработке. Товары «Спонсор улья», «Рост в 1 блок» и «Подарочная проходка» уже активны и выдаются сразу. 
-                    Остальные кастомные фичи будут постепенно добавляться в течение недели (19–25 октября). 
-                    Забронировать их по предзаказу можно уже сейчас через менеджера в Telegram: <strong>@Apiary_SMP</strong>
+                    Все косметические позиции и привилегии выдаются сервером автоматически сразу после онлайн-оплаты через ЮKassa. 
+                    Управление эффектами в игре доступно по команде <strong>/menu</strong>.
                 </p>
             </div>
-            <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener" class="notice-action-btn">
-                Менеджер в Telegram →
-            </a>
         </div>
     </div>
 
@@ -60,8 +56,6 @@
 
                 <div class="shop-filters">
                     <button class="filter-tab active" data-category="all">Все позиции</button>
-                    <button class="filter-tab" data-category="active">Доступно сразу</button>
-                    <button class="filter-tab" data-category="preorder">Предзаказ (19–25 окт)</button>
                     <button class="filter-tab" data-category="character">Персонаж</button>
                     <button class="filter-tab" data-category="base">База и Уют</button>
                 </div>
@@ -133,8 +127,9 @@
         <div class="site-container">
             <div class="products-grid">
 
+                <!-- 1. СПОНСОР УЛЬЯ (ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM) -->
                 <div class="product-card featured-product" data-category="active">
-                    <div class="card-status-badge badge-now">Доступно сразу</div>
+                    <div class="card-status-badge badge-now">Через менеджера</div>
                     <div class="product-header">
                         <span class="product-code-tag">SUP-01</span>
                         <h3 class="product-title">Спонсор улья</h3>
@@ -150,13 +145,14 @@
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">399₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product btn-gold" onclick="orderProduct('Спонсор улья', 399)">
+                        <button class="btn-buy-product btn-gold" onclick="orderViaTelegram('Спонсор улья', 399)">
                             Стать спонсором
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="active character">
+                <!-- 2. РОСТ В 1 БЛОК (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">CHR-01</span>
@@ -167,185 +163,169 @@
                     </p>
                     <ul class="product-perks">
                         <li>Уменьшение модели до 1 блока</li>
-                        <li>Быстрое включение в меню</li>
+                        <li>Быстрое включение в меню /cosmetics</li>
                         <li>Возврат в обычный рост в любой момент</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">349₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Косметический рост в 1 блок', 349)">
+                        <button class="btn-buy-product" onclick="orderProduct('scale', 'Рост в 1 блок', 349)">
                             Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="active">
+                <!-- 3. ПЛЕЧЕВАЯ ПЧЁЛКА (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
-                    <div class="product-header">
-                        <span class="product-code-tag">PAS-01</span>
-                        <h3 class="product-title">Подарочная проходка</h3>
-                    </div>
-                    <p class="product-desc">
-                        Хотите позвать на сервер друга, не заставляя его писать длинную анкету? Оформите подарочную проходку с моментальным добавлением в вайтлист.
-                    </p>
-                    <ul class="product-perks">
-                        <li>Полный скип анкеты для получателя</li>
-                        <li>Крутая открытка</li>
-                        <li>Моментальный доступ в вайтлист</li>
-                    </ul>
-                    <div class="product-bottom">
-                        <div class="product-price">135₽ <span class="price-type">/ билет</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Подарочная проходка для друга', 135)">
-                            Подарить
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="preorder character">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
                     <div class="product-header">
                         <span class="product-code-tag">PET-01</span>
                         <h3 class="product-title">Плечевой спутник: Пчёлка</h3>
                     </div>
                     <p class="product-desc">
-                        Маленькая верная пчёлка, плавно покачивающаяся над вашим плечом. Бестелесный спутник, который не нагружает сервер и всегда с вами.
+                        Маленькая верная пчёлка, плавно покачивающаяся над вашим плечом. Бессмертный спутник без коллизий, который не мешает серверу и всегда рядом.
                     </p>
                     <ul class="product-perks">
-                        <li>Парит рядышком над плечём</li>
-                        <li>У пчёлки нет хит-бокса, она не будет мешать</li>
-                        <li>Можно в любой момент выключить в меню</li>
+                        <li>Парит над плечом и машет крылышками</li>
+                        <li>Без коллизий (не толкает и не мешает стрелять)</li>
+                        <li>Можно в любой момент включить или выключить в меню</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">349₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Плечевой спутник Пчёлка (Предзаказ)', 349)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProduct('bee', 'Плечевой спутник: Пчёлка', 349)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder character">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 4. ЭФФЕКТ ПОЯВЛЕНИЯ (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="character">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">FX-01</span>
                         <h3 class="product-title">Эффект появления при входе</h3>
                     </div>
                     <p class="product-desc">
-                        Красивая визуальная анимация при входе на сервер (при покупке доступны все сразу)
+                        Красивая визуальная анимация при входе на сервер (при покупке доступны все стили):
                     </p>
                     <div class="card-variant-selector" data-param="Стиль появления">
-                        <button class="variant-chip active" data-val="Метеорит">Искорки</button>
-                        <button class="variant-chip" data-val="Рой пчел">Дымок</button>
-                        <button class="variant-chip" data-val="Врата Края">Фиолетовые частички</button>
+                        <button class="variant-chip active" data-val="Искорки">Искорки</button>
+                        <button class="variant-chip" data-val="Дымок">Дымок</button>
+                        <button class="variant-chip" data-val="Край">Фиолетовые частички</button>
                     </div>
                     <ul class="product-perks">
-                        <li>Каскад частиц и особенный звук</li>
+                        <li>Каскад частиц и звон аметиста при заходе</li>
                         <li>Виден всем окружающим игрокам</li>
-                        <li>Переключение стиля в меню</li>
-                        <li>Бесконечный респект, почёт и уважение</li>
+                        <li>Переключение стиля в меню /cosmetics</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">199₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'Эффект появления при входе', 199)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'spawn', 'Эффект появления при входе', 199)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder character">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 5. СЛЕД ОТ ЭЛИТР (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="character">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">ELY-01</span>
                         <h3 class="product-title">След от элитр (Elytra Trail)</h3>
                     </div>
                     <p class="product-desc">
-                        Плотный красивый шлейф частиц за вашей спиной во время полета на элитрах. Выберите эффект полета  (при покупке доступны все сразу):
+                        Плотный красивый шлейф частиц за вашей спиной во время полета на элитрах (доступны все варианты):
                     </p>
                     <div class="card-variant-selector" data-param="Тип шлейфа">
                         <button class="variant-chip active" data-val="Медовый">Медовый</button>
-                        <button class="variant-chip" data-val="Огненный форсаж">Огонь</button>
-                        <button class="variant-chip" data-val="Нотный стан">Ноты</button>
+                        <button class="variant-chip" data-val="Огонь">Огонь</button>
+                        <button class="variant-chip" data-val="Ноты">Ноты</button>
                         <button class="variant-chip" data-val="Пузыри">Пузыри</button>
                     </div>
                     <ul class="product-perks">
-                        <li>Активируется только в планировании</li>
+                        <li>Активируется автоматически только в полете</li>
                         <li>Плавное рассеивание в воздухе</li>
                         <li>Отключение в меню в любой момент</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">239₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'След от элитр', 239)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'elytra', 'След от элитр (Elytra Trail)', 239)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder base">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 6. 3D ВЫВЕСКА (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="base">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">TXT-01</span>
                         <h3 class="product-title">Именная вывеска для базы</h3>
                     </div>
                     <p class="product-desc">
-                        Парящий объемный 3D-текст с градиентом на TextDisplay над входом в вашу таверну, магазин или замок.
+                        Парящий объемный 3D-текст на TextDisplay над входом в вашу таверну, магазин или замок.
                     </p>
                     <ul class="product-perks">
-                        <li>Поворот надписи вслед за взглядом</li>
-                        <li>Градиентные цвета и форматирование</li>
-                        <li>Установка и перемещение по клику</li>
+                        <li>Поворот надписи вслед за взглядом гостя</li>
+                        <li>3 режима: один цвет, градиент или радуга rainbow</li>
+                        <li>Установка и снятие через команду /basesign</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">149₽ <span class="price-type">/ вывеска</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Именная вывеска над базой (TextDisplay)', 149)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProduct('basesign', 'Именная вывеска для базы', 149)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder base">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 7. ДВЕРНОЙ ЗВОНОК (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="base">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">BEL-01</span>
                         <h3 class="product-title">Дверной звонок у дома</h3>
                     </div>
                     <p class="product-desc">
-                        Интерактивная кнопка-звонок для ворот или порога дома. При нажатии гостем владелец мгновенно получает мягкое уведомление в ActionBar.
+                        Интерактивная кнопка-звонок для ворот или порога дома. При нажатии владелец получает уведомление в ActionBar со звуком колокола.
                     </p>
                     <ul class="product-perks">
                         <li>Оповещение хозяина базы в сети</li>
-                        <li>Приятный щелчок для гостя</li>
-                        <li>Защита от спама звонком</li>
+                        <li>Персональный защищенный предмет</li>
+                        <li>Выдача предмета кнопкой в меню /cosmetics</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">129₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Дверной звонок у дома (Колокол)', 129)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProduct('doorbell', 'Дверной звонок у дома', 129)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder base">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 8. ГРАВИРОВЩИК / КАЗУАЛ (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="base">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">LOR-01</span>
                         <h3 class="product-title">Гравировщик предметов (/lore)</h3>
                     </div>
                     <p class="product-desc">
-                        Возможность кастомизировать любимые инструменты и доспехи: цветные градиентные названия и авторские цитаты в описании предмета.
+                        Возможность кастомизировать любимые инструменты и доспехи: цветные названия, градиенты и авторские цитаты в описании предмета.
                     </p>
                     <ul class="product-perks">
-                        <li>Команды /rename-color и /lore</li>
-                        <li>Сохранение цвета при починке</li>
+                        <li>Команды /rename и /setlore с градиентами через |</li>
+                        <li>Сохранение цвета при починке и наковальнях</li>
                         <li>Памятные цитаты на оружии и броне</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">149₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Гравировщик предметов (/lore)', 149)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProduct('lore', 'Гравировщик предметов (/lore)', 149)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder base">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 9. ПРАЗДНИЧНАЯ ХЛОПУШКА (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="base">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">FUN-01</span>
                         <h3 class="product-title">Праздничная хлопушка</h3>
@@ -356,18 +336,19 @@
                     <ul class="product-perks">
                         <li>Яркий салют из шерстяных конфетти</li>
                         <li>Удобный кулдаун в 3 минуты</li>
-                        <li>Не наносит урон окружающим</li>
+                        <li>Персональный предмет (нельзя потерять или передать)</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">99₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Праздничная хлопушка (Party Popper)', 99)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProduct('popper', 'Праздничная хлопушка', 99)">
+                            Заказать
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder character">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 10. ПРЕФИКС В TAB + DISCORD (ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM) -->
+                <div class="product-card" data-category="character">
+                    <div class="card-status-badge badge-now">Через менеджера</div>
                     <div class="product-header">
                         <span class="product-code-tag">PRF-01</span>
                         <h3 class="product-title">Кастомный префикс + Discord</h3>
@@ -382,20 +363,21 @@
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">249₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('Кастомный префикс в TAB + Discord', 249)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderViaTelegram('Кастомный префикс + Discord', 249)">
+                            Заказать в TG
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="preorder character">
-                    <div class="card-status-badge badge-wait">19–25 октября</div>
+                <!-- 11. ТРЕЙЛЫ ШАГОВ (ОНЛАЙН ЮKASSA) -->
+                <div class="product-card" data-category="character">
+                    <div class="card-status-badge badge-now">Доступно сразу</div>
                     <div class="product-header">
                         <span class="product-code-tag">TRL-01</span>
                         <h3 class="product-title">Эффекты поступи (Трейлы)</h3>
                     </div>
                     <p class="product-desc">
-                        Визуальные следы под ногами персонажа при ходьбе и беге. Выберите тип частиц для прогулок по городам  (при покупке доступны все сразу):
+                        Визуальные следы под ногами персонажа при ходьбе и беге. Выберите тип частиц (доступны все сразу):
                     </p>
                     <div class="card-variant-selector" data-param="Тип поступи">
                         <button class="variant-chip active" data-val="Край">Край</button>
@@ -403,17 +385,18 @@
                         <button class="variant-chip" data-val="Дым">Дым</button>
                     </div>
                     <ul class="product-perks">
-                        <li>Мягкое затухание следа позади</li>
-                        <li>Не мешает обзору в бою</li>
-                        <li>Удобное меню включения/выключения</li>
+                        <li>Плотные красивые следы при движении</li>
+                        <li>Автоматически отключаются при полете</li>
+                        <li>Удобное меню переключения /cosmetics</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">249₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'Эффекты поступи (Трейлы шагов)', 249)">
-                            Предзаказ
+                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'trails', 'Эффекты поступи (Трейлы шагов)', 249)">
+                            Заказать
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>
@@ -422,22 +405,22 @@
     <section class="shop-steps-section">
         <div class="site-container">
             <div class="steps-box">
-                <h2 class="steps-heading">Как происходит покупка и предзаказ</h2>
+                <h2 class="steps-heading">Как происходит покупка и активация</h2>
                 <div class="steps-grid">
                     <div class="step-card">
                         <span class="step-num">01</span>
                         <h4>Выбор позиции</h4>
-                        <p>Нажимаете кнопку у готового товара или позиции по предзаказу и вводите свой никнейм в игре.</p>
+                        <p>Нажимаете кнопку «Заказать» у любого понравившегося товара и указываете свой игровой никнейм.</p>
                     </div>
                     <div class="step-card">
                         <span class="step-num">02</span>
-                        <h4>Диалог с менеджером</h4>
-                        <p>Сайт перенаправляет вас в Telegram-диалог к менеджеру <strong>@Apiary_SMP</strong> с готовым сформированным сообщением.</p>
+                        <h4>Безопасная оплата</h4>
+                        <p>Сайт перенаправляет на официальный защищенный шлюз ЮKassa (СБП, банковские карты, SberPay), а спонсорство и префиксы согласовываются лично с менеджером.</p>
                     </div>
                     <div class="step-card">
                         <span class="step-num">03</span>
-                        <h4>Активация на сервере</h4>
-                        <p>Готовые товары выдаются за 15 минут. Предзаказы фиксируются за ником и активируются в течение недели с 19 по 25 октября.</p>
+                        <h4>Моментальная доставка</h4>
+                        <p>Сервер автоматически начисляет права. Заходите в игру, вводите <strong>/cosmetics</strong> и включайте косметику!</p>
                     </div>
                 </div>
             </div>
@@ -457,8 +440,8 @@
                 <div class="footer-cell">
                     <h4>Контакты</h4>
                     <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
-                    <p>Telegram: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
-                    <p>Менеджер лавки: <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener">@Apiary_SMP</a></p>
+                    <p>Telegram бота: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
+                    <p>Менеджер в Telegram: <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener">@Apiary_SMP</a></p>
                 </div>
 
                 <div class="footer-cell">
@@ -491,12 +474,12 @@
         <a href="rules-main.html" class="dock-action" title="Правила">
             <span class="dock-txt">Правила</span>
         </a>
-        <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener" class="dock-highlight-btn">
-            Менеджер в TG
+        <a href="#catalog" class="dock-highlight-btn">
+            В каталог • 99₽+
         </a>
     </nav>
 
-    <!-- МОДАЛКА БЫСТРОГО ЗАКАЗА -->
+    <!-- МОДАЛКА 1: ОНЛАЙН-ОПЛАТА ЮKASSA -->
     <div id="orderModal" class="overlay">
         <div class="sheet-modal">
             <span class="close-button" id="closeOrderModal">&times;</span>
@@ -504,47 +487,106 @@
             <h2 class="modal-title" id="orderModalItemTitle">Товар</h2>
             <p class="modal-pricing">Стоимость: <strong id="orderModalItemPrice">0₽</strong></p>
             
-            <div class="order-direct-content">
-                <p class="modal-order-desc">
-                    Для оформления напишите менеджеру <strong>@Apiary_SMP</strong> в Telegram. Никнейм и выбранный вариант уже будут добавлены в диалог.
-                </p>
+            <form id="shopPaymentForm">
+                <input type="hidden" id="orderProductKey" value="">
+                <input type="hidden" id="orderProductVariant" value="">
+
                 <div class="form-row">
                     <label for="orderNickField">Ваш игровой никнейм Minecraft</label>
-                    <input type="text" id="orderNickField" class="sheet-input" placeholder="Например: Notch" autocomplete="off">
+                    <input type="text" id="orderNickField" class="sheet-input" placeholder="Например: Notch" required autocomplete="off">
                 </div>
-                <a href="#" id="tgOrderRedirectBtn" target="_blank" rel="noopener" class="modal-submit-btn">
-                    Перейти к диалогу в Telegram
-                </a>
-            </div>
-            <span class="modal-footnote">Менеджер ответит и зафиксирует заказ в ближайшее время</span>
+
+                <div class="form-row">
+                    <label for="orderPromoField">Промокод автора (если есть)</label>
+                    <input type="text" id="orderPromoField" class="sheet-input" placeholder="Необязательно">
+                </div>
+
+                <button type="submit" id="shopSubmitPayBtn" class="modal-submit-btn">
+                    Оплатить через ЮKassa
+                </button>
+            </form>
+
+            <span class="modal-footnote" style="margin-top: 16px;">Доступ и права начисляются автоматически сразу после подтверждения транзакции.</span>
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКИЕ МОДАЛКИ -->
+    <!-- МОДАЛКА 2: ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM (СПОНСОР И ПРЕФИКС) -->
+    <div id="tgOrderModal" class="overlay">
+        <div class="sheet-modal">
+            <span class="close-button" id="closeTgOrderModal">&times;</span>
+            <div class="modal-pretitle">Персональная настройка</div>
+            <h2 class="modal-title" id="tgOrderModalTitle">Спонсор улья</h2>
+            <p class="modal-pricing">Стоимость: <strong id="tgOrderModalPrice">399₽</strong></p>
+            
+            <div class="order-direct-content">
+                <p class="modal-order-desc">
+                    Этот статус требует индивидуальной настройки (выдача роли и закрытых чатов в Discord, кастомный текст и цвет префикса). 
+                    Введите ник и перейдите к диалогу с менеджером:
+                </p>
+                <div class="form-row">
+                    <label for="tgNickField">Ваш игровой никнейм Minecraft</label>
+                    <input type="text" id="tgNickField" class="sheet-input" placeholder="Например: Notch" autocomplete="off">
+                </div>
+                <a href="#" id="tgDirectRedirectBtn" target="_blank" rel="noopener" class="modal-submit-btn">
+                    Перейти к менеджеру в Telegram →
+                </a>
+            </div>
+            <span class="modal-footnote" style="margin-top: 14px;">Менеджер ответит и выдаст доступ в кратчайшие сроки.</span>
+        </div>
+    </div>
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
     <div class="overlay" id="offerModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Публичная оферта</h2>
-            <p class="modal-text">Настоящий документ является официальным предложением самозанятого Бризицкого Михаила Романовича (ИНН 253609705426) заключить договор на оказание цифровых услуг. <br>
-Услугой является предоставление доступа к серверу ApiarySMP после успешной оплаты.</p>
+            <div class="modal-text">
+                <p><strong>1. Общие положения</strong><br>
+                Настоящий документ является официальным публичным предложением (публичной офертой согласно ст. 437 ГК РФ) плательщика налога на профессиональный доход (самозанятого) <strong>Бризицкого Михаила Романовича</strong> (ИНН <strong>253609705426</strong>), именуемого в дальнейшем «Исполнитель», заключить договор оказания цифровых услуг с любым физическим лицом («Заказчик»).</p>
+
+                <p><strong>2. Предмет соглашения</strong><br>
+                Исполнитель предоставляет Заказчику право доступа к игровому серверу ApiarySMP (добавление никнейма в белый список) и/или активирует внутриигровые декоративные права и косметические эффекты в системе сервера. Все услуги носят исключительно виртуальный нематериальный характер.</p>
+
+                <p><strong>3. Акцепт и стоимость</strong><br>
+                Оплата заказа признается полным и безоговорочным акцептом условий настоящей Оферты (ст. 438 ГК РФ). Цены на услуги указаны на страницах каталога в рублях РФ.</p>
+
+                <p><strong>4. Условия исполнения и невозвратность</strong><br>
+                В соответствии со ст. 26.1 Закона РФ «О защите прав потребителей», цифровая услуга считается полностью оказанной в момент предоставления доступа или регистрации прав учетной записи через RCON/LuckPerms. Блокировка аккаунта за нарушение установленных правил сервера не влечет за собой возврат денежных средств.</p>
+
+                <p><strong>5. Реквизиты</strong><br>
+                Самозанятый: Бризицкий Михаил Романович<br>
+                ИНН: 253609705426<br>
+                Email: pizduke13@gmail.com</p>
+            </div>
         </div>
     </div>
 
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ -->
     <div class="overlay" id="termsModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
             <h2 class="modal-title">Пользовательское соглашение</h2>
-            <p class="modal-text">Оплачивая услугу, пользователь подтверждает, что ознакомлен с правилами сервера ApiarySMP и обязуется их соблюдать. <br>
-Услуга является цифровой и считается оказанной с момента предоставления доступа.</p>
+            <div class="modal-text">
+                <p><strong>1. Общие правила</strong><br>
+                Пользуясь сайтом и игровым сервером ApiarySMP, Пользователь соглашается соблюдать установленный Свод правил сервера (размещенный по адресу rules-main.html) и не нарушать баланс игры.</p>
+
+                <p><strong>2. Ограничение ответственности</strong><br>
+                Сервер ApiarySMP является независимым любительским проектом и никак не аффилирован с компаниями Mojang AB или Microsoft. Все донат-услуги проекта предоставляются «как есть» и не дают игроку неуязвимости или нечестных преимуществ перед другими (Non-P2W).</p>
+            </div>
         </div>
     </div>
 
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛУЧЕНИЕ УСЛУГИ -->
     <div class="overlay" id="deliveryModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
-            <h2 class="modal-title">Получение услуги</h2>
-            <p class="modal-text">После успешной оплаты доступ к серверу предоставляется автоматически или вручную администратором.<br>
-Для получения услуги необходимо указать корректный никнейм Minecraft при оплате.</p>
+            <h2 class="modal-title">Порядок получения услуги</h2>
+            <div class="modal-text">
+                <p><strong>Регламент доставки:</strong><br>
+                1. <strong>Вайтлист:</strong> никнейм моментально заносится в список доступа сервера в течение 1–2 минут после оплаты.<br>
+                2. <strong>Косметика и донат:</strong> права на эффекты применяются автоматически. Для управления активированными предметами введите команду <code>/cosmetics</code> в чате сервера.<br>
+                3. Если при оплате была допущена опечатка в никнейме, напишите на почту <strong>pizduke13@gmail.com</strong> для корректировки.</p>
+            </div>
         </div>
     </div>
 

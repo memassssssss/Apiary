@@ -2,9 +2,13 @@
 const SERVER_IP = "play.apiarysmp.online";
 const MANAGER_TG = "Apiary_SMP";
 
+let currentProductKey = "";
 let currentSelectedProduct = "";
 let currentSelectedPrice = 0;
 let currentSelectedVariant = "";
+
+let currentTgProductTitle = "";
+let currentTgProductPrice = 0;
 
 // --- УВЕДОМЛЕНИЯ ---
 function triggerToast(text) {
@@ -24,82 +28,6 @@ function copyIP() {
     }).catch(() => {
         triggerToast("Адрес: " + SERVER_IP);
     });
-}
-
-// --- ЗАКРЫТИЕ ПЛАШКИ С ПОДТВЕРЖДЕНИЕМ ---
-function initNoticeBarDismiss() {
-    const noticeBar = document.querySelector('.shop-notice-bar');
-    const noticeFlex = document.querySelector('.shop-notice-bar .notice-flex');
-    if (!noticeBar || !noticeFlex) return;
-
-    if (localStorage.getItem('apiary_notice_dismissed') === 'true') {
-        noticeBar.style.display = 'none';
-        return;
-    }
-
-    const closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'notice-close-btn';
-    closeBtn.setAttribute('aria-label', 'Закрыть уведомление');
-    closeBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-    `;
-    noticeFlex.appendChild(closeBtn);
-
-    const confirmModalHtml = `
-    <div id="noticeConfirmModal" class="overlay">
-        <div class="sheet-modal notice-confirm-sheet">
-            <div class="modal-pretitle">Внимание</div>
-            <h2 class="modal-title">Скрыть плашку?</h2>
-            <p class="modal-text">
-                Вы действительно хотите скрыть информационную плашку? Напоминаем: автоматическая выдача сейчас находится в разработке, все позиции оформляются вручную через Telegram менеджера @Apiary_SMP.
-            </p>
-            <div class="confirm-actions-row">
-                <button type="button" id="confirmDismissNoticeBtn" class="modal-submit-btn">
-                    Да, я всё прочитал, мне всё ясно, скрыть
-                </button>
-                <button type="button" id="cancelDismissNoticeBtn" class="btn-cancel-modal">
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', confirmModalHtml);
-
-    const confirmModal = document.getElementById('noticeConfirmModal');
-    const confirmBtn = document.getElementById('confirmDismissNoticeBtn');
-    const cancelBtn = document.getElementById('cancelDismissNoticeBtn');
-
-    closeBtn.addEventListener('click', () => {
-        if (confirmModal) confirmModal.style.display = 'flex';
-    });
-
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => {
-            if (confirmModal) confirmModal.style.display = 'none';
-        });
-    }
-
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', () => {
-            if (confirmModal) confirmModal.style.display = 'none';
-            noticeBar.style.display = 'none';
-            localStorage.setItem('apiary_notice_dismissed', 'true');
-            triggerToast("Информационная плашка скрыта");
-        });
-    }
-
-    if (confirmModal) {
-        confirmModal.addEventListener('click', (e) => {
-            if (e.target === confirmModal) {
-                confirmModal.style.display = 'none';
-            }
-        });
-    }
 }
 
 // --- ФИЛЬТРАЦИЯ И ПОИСК ТОВАРОВ ---
@@ -145,7 +73,7 @@ function initCatalogFilters() {
     }
 }
 
-// --- ИНТЕРАКТИВНЫЕ ВАРИАНТЫ В КАРТОЧКАХ ---
+// --- ВЫБОР ВАРИАНТОВ В КАРТОЧКАХ ---
 function initCardVariants() {
     document.querySelectorAll('.card-variant-selector').forEach(selector => {
         const chips = selector.querySelectorAll('.variant-chip');
@@ -203,19 +131,21 @@ function initSandboxSimulator() {
     updatePreview();
 }
 
-// --- ЗАКАЗ ТОВАРА И ГЕНЕРАЦИЯ ССЫЛКИ В TELEGRAM ---
-function orderProduct(title, price) {
+// --- 1. ОНЛАЙН-ОПЛАТА ЧЕРЕЗ ЮKASSA (КАРТОЧКИ КАТАЛОГА) ---
+function orderProduct(key, title, price) {
+    currentProductKey = key;
     currentSelectedProduct = title;
     currentSelectedPrice = price;
     currentSelectedVariant = "";
     openOrderModal();
 }
 
-function orderProductWithVariant(btnElement, baseTitle, price) {
+function orderProductWithVariant(btnElement, key, baseTitle, price) {
     const card = btnElement.closest('.product-card');
     const activeChip = card ? card.querySelector('.variant-chip.active') : null;
     const variantName = activeChip ? activeChip.dataset.val : "";
 
+    currentProductKey = key;
     currentSelectedProduct = baseTitle;
     currentSelectedPrice = price;
     currentSelectedVariant = variantName;
@@ -228,6 +158,9 @@ function openOrderModal() {
     const titleEl = document.getElementById('orderModalItemTitle');
     const priceEl = document.getElementById('orderModalItemPrice');
     const nickInput = document.getElementById('orderNickField');
+    const promoInput = document.getElementById('orderPromoField');
+    const keyField = document.getElementById('orderProductKey');
+    const varField = document.getElementById('orderProductVariant');
 
     const fullTitle = currentSelectedVariant 
         ? `${currentSelectedProduct} (${currentSelectedVariant})` 
@@ -236,45 +169,112 @@ function openOrderModal() {
     if (titleEl) titleEl.textContent = fullTitle;
     if (priceEl) priceEl.textContent = `${currentSelectedPrice}₽`;
     if (nickInput) nickInput.value = '';
+    if (promoInput) promoInput.value = '';
+    if (keyField) keyField.value = currentProductKey;
+    if (varField) varField.value = currentSelectedVariant;
 
-    updateTelegramOrderLink();
-
-    if (modal) {
-        modal.style.display = 'flex';
-    }
+    if (modal) modal.style.display = 'flex';
 }
 
-function updateTelegramOrderLink() {
-    const nickInput = document.getElementById('orderNickField');
-    const tgBtn = document.getElementById('tgOrderRedirectBtn');
+// --- 2. ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM (СПОНСОР И ПРЕФИКС) ---
+function orderViaTelegram(title, price) {
+    currentTgProductTitle = title;
+    currentTgProductPrice = price;
+
+    const modal = document.getElementById('tgOrderModal');
+    const titleEl = document.getElementById('tgOrderModalTitle');
+    const priceEl = document.getElementById('tgOrderModalPrice');
+    const nickInput = document.getElementById('tgNickField');
+
+    if (titleEl) titleEl.textContent = title;
+    if (priceEl) priceEl.textContent = `${price}₽`;
+    if (nickInput) nickInput.value = '';
+
+    updateTgDirectLink();
+
+    if (modal) modal.style.display = 'flex';
+}
+
+function updateTgDirectLink() {
+    const nickInput = document.getElementById('tgNickField');
+    const tgBtn = document.getElementById('tgDirectRedirectBtn');
     if (!tgBtn) return;
 
     const nickname = nickInput && nickInput.value.trim() ? nickInput.value.trim() : "Не указан";
-    const itemWithVariant = currentSelectedVariant 
-        ? `${currentSelectedProduct} [Вариант: ${currentSelectedVariant}]` 
-        : currentSelectedProduct;
-
-    const textMsg = `Привет! Хочу оформить в лавке ApiarySMP:\n• Позиция: ${itemWithVariant}\n• Стоимость: ${currentSelectedPrice}₽\n• Мой никнейм в игре: ${nickname}`;
+    const textMsg = `Привет! Хочу оформить в лавке ApiarySMP:\n• Позиция: ${currentTgProductTitle}\n• Стоимость: ${currentTgProductPrice}₽\n• Мой игровой ник: ${nickname}`;
     
     tgBtn.href = `https://t.me/${MANAGER_TG}?text=${encodeURIComponent(textMsg)}`;
 }
 
-// --- МОДАЛКИ И ДОКУМЕНТЫ ---
+// --- ИНИЦИАЛИЗАЦИЯ ВСЕХ МОДАЛОК И СОБЫТИЙ ---
 function initModals() {
     const orderModal = document.getElementById('orderModal');
     const closeOrderBtn = document.getElementById('closeOrderModal');
-    const nickInput = document.getElementById('orderNickField');
+    const shopForm = document.getElementById('shopPaymentForm');
+
+    const tgOrderModal = document.getElementById('tgOrderModal');
+    const closeTgOrderBtn = document.getElementById('closeTgOrderModal');
+    const tgNickInput = document.getElementById('tgNickField');
 
     if (closeOrderBtn && orderModal) {
-        closeOrderBtn.onclick = () => {
-            orderModal.style.display = 'none';
-        };
+        closeOrderBtn.onclick = () => { orderModal.style.display = 'none'; };
     }
 
-    if (nickInput) {
-        nickInput.addEventListener('input', updateTelegramOrderLink);
+    if (closeTgOrderBtn && tgOrderModal) {
+        closeTgOrderBtn.onclick = () => { tgOrderModal.style.display = 'none'; };
     }
 
+    if (tgNickInput) {
+        tgNickInput.addEventListener('input', updateTgDirectLink);
+    }
+
+    // Отправка формы ЮKassa на бэкенд pay.apiarysmp.online
+    if (shopForm) {
+        shopForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nickname = document.getElementById('orderNickField').value.trim();
+            const promocode = document.getElementById('orderPromoField').value.trim();
+            const pType = document.getElementById('orderProductKey').value;
+            const variant = document.getElementById('orderProductVariant').value;
+            const submitBtn = document.getElementById('shopSubmitPayBtn');
+
+            if (!nickname) {
+                alert("Пожалуйста, введите ваш никнейм Minecraft!");
+                return;
+            }
+
+            submitBtn.innerText = "Создание платежа...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('https://pay.apiarysmp.online/create', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nickname: nickname,
+                        type: pType,
+                        promocode: promocode,
+                        variant: variant
+                    })
+                });
+
+                const result = await response.json();
+                if (result.url) {
+                    window.location.href = result.url;
+                } else {
+                    alert("Ошибка оплаты: " + (result.error || "Не удалось создать счет"));
+                }
+            } catch (err) {
+                alert("Ошибка связи с платежным сервером.");
+            } finally {
+                submitBtn.innerText = "Оплатить через ЮKassa";
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // Модалки документов в футере
     document.querySelectorAll(".footer-link[data-modal]").forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
@@ -299,7 +299,6 @@ function initModals() {
 
 // --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
-    initNoticeBarDismiss();
     initCatalogFilters();
     initCardVariants();
     initSandboxSimulator();
