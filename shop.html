@@ -14,8 +14,8 @@
     <div class="ambient-spot ambient-spot-1"></div>
     <div class="ambient-spot ambient-spot-2"></div>
 
-    <!-- ВЕРХНЯЯ ПЛАШКА СТАТУСА -->
-    <div class="shop-notice-bar">
+    <!-- ВЕРХНЯЯ ПЛАШКА СТАТУСА (СКРЫВАЕТСЯ НА МОБИЛКАХ И ПО КЛИКУ НА КРЕСТИК) -->
+    <div class="shop-notice-bar" id="shopNoticeBar">
         <div class="site-container notice-flex">
             <div class="notice-info">
                 <span class="notice-pill">Моментальная доставка 24/7</span>
@@ -24,6 +24,7 @@
                     Управление эффектами в игре доступно по команде <strong>/menu</strong>.
                 </p>
             </div>
+            <button type="button" class="notice-close-btn" id="closeNoticeBtn" aria-label="Закрыть уведомление" onclick="dismissNoticeBar()">&times;</button>
         </div>
     </div>
 
@@ -490,10 +491,8 @@
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Через менеджера</div>
 
-                    <!-- ВИЗУАЛЬНЫЙ МОКАП ДИСКОРД + МАЙНКРАФТ -->
                     <div class="product-media media-visual-card visual-prefix" onclick="scrollToSandbox()" title="Кликните, чтобы примерить в песочнице">
                         <div class="prefix-mockup-box">
-                            <!-- ДИСКОРД СТРОКА -->
                             <div class="mock-line mock-discord">
                                 <span class="mock-platform-tag">Discord</span>
                                 <div class="discord-pill">
@@ -501,7 +500,6 @@
                                     <span class="discord-role-text">@Бортник</span>
                                 </div>
                             </div>
-                            <!-- МАЙНКРАФТ ТАБ -->
                             <div class="mock-line mock-mc">
                                 <span class="mock-platform-tag">Minecraft</span>
                                 <div class="mc-pill">
@@ -511,6 +509,8 @@
                             </div>
                         </div>
                         <div class="media-overlay" style="opacity: 1; background: rgba(14, 13, 11, 0.45);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                            <span>Примерить свой цвет в симуляторе ↑</span>
                         </div>
                     </div>
 
@@ -758,8 +758,8 @@
                 <p><strong>4. Условия исполнения и невозвратность</strong><br>
                 В соответствии со ст. 779 Гражданского кодекса РФ (договор возмездного оказания услуг) и ст. 32 Закона РФ «О защите прав потребителей», услуга по предоставлению доступа к функционалу сервера считается полностью оказанной Исполнителем в полном объеме в момент внесения учетной записи Заказчика в список доступа (вайтлист) или начисления внутриигровых прав через систему RCON/LuckPerms. В случае одностороннего расторжения договора со стороны Исполнителя по причине нарушения Заказчиком Правил сервера, денежные средства возврату не подлежат в связи с полным исполнением обязательств Исполнителем на момент предоставления доступа.</p>
 
-               <p><strong>5. Фискальные чеки (422-ФЗ)</strong><br>
-В соответствии с Федеральным законом № 422-ФЗ электронный чек, сформированный Исполнителем в приложении «Мой налог», предоставляется Заказчику в электронной форме по запросу, направленному на адрес электронной почты: pizduke13@gmail.com.</p>
+                <p><strong>5. Фискальные чеки (422-ФЗ)</strong><br>
+                В соответствии с Федеральным законом № 422-ФЗ электронный чек, сформированный Исполнителем в приложении «Мой налог», предоставляется Заказчику в электронной форме по запросу, направленному на адрес электронной почты: pizduke13@gmail.com.</p>
 
                 <p><strong>6. Реквизиты</strong><br>
                 Самозанятый: Бризицкий Михаил Романович<br>

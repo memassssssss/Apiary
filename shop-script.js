@@ -17,6 +17,30 @@ let galleryTitle = "";
 let touchStartX = 0;
 let touchEndX = 0;
 
+// --- УПРАВЛЕНИЕ ВЕРХНЕЙ ПЛАШКОЙ СТАТУСА ---
+function dismissNoticeBar() {
+    const bar = document.getElementById('shopNoticeBar');
+    if (bar) {
+        bar.style.opacity = '0';
+        bar.style.transform = 'translateY(-100%)';
+        setTimeout(() => {
+            bar.style.display = 'none';
+        }, 250);
+        try {
+            localStorage.setItem('apiary_notice_dismissed', 'true');
+        } catch {}
+    }
+}
+
+function checkNoticeBarState() {
+    try {
+        if (localStorage.getItem('apiary_notice_dismissed') === 'true') {
+            const bar = document.getElementById('shopNoticeBar');
+            if (bar) bar.style.display = 'none';
+        }
+    } catch {}
+}
+
 // --- УВЕДОМЛЕНИЯ ---
 function triggerToast(text) {
     const toast = document.getElementById('toastMessage');
@@ -49,7 +73,6 @@ function handleImgError(imgElement) {
     const badge = parent.querySelector('.media-badge-count');
     if (badge) badge.style.display = 'none';
 
-    // Скрываем ховер-оверлей, если картинка не загружена
     const overlay = parent.querySelector('.media-overlay');
     if (overlay) overlay.style.display = 'none';
 }
@@ -300,7 +323,6 @@ function initModals() {
         tgNickInput.addEventListener('input', updateTgDirectLink);
     }
 
-    // Клавиши для лайтбокса (Esc, влево, вправо)
     window.addEventListener('keydown', (e) => {
         const lb = document.getElementById('imageLightboxModal');
         if (!lb || lb.style.display !== 'flex') return;
@@ -310,7 +332,6 @@ function initModals() {
         if (e.key === 'ArrowRight') nextLightboxImage();
     });
 
-    // Мобильные свайпы в лайтбоксе
     if (lbContainer) {
         lbContainer.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
@@ -326,7 +347,6 @@ function initModals() {
         }, { passive: true });
     }
 
-    // Отправка формы ЮKassa на бэкенд
     if (shopForm) {
         shopForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -370,8 +390,6 @@ function initModals() {
         });
     }
 
-    // Модалки документов в футере
-// Открытие любых юридических окон по атрибуту data-modal
     document.querySelectorAll("[data-modal]").forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
@@ -396,6 +414,7 @@ function initModals() {
 
 // --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
+    checkNoticeBarState();
     initCatalogFilters();
     initSandboxSimulator();
     initModals();
