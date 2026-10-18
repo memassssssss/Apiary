@@ -86,7 +86,7 @@ body {
     right: -100px;
 }
 
-/* --- ВЕРХНЯЯ ПЛАШКА РУЧНОЙ ВЫДАЧИ И ПРЕДЗАКАЗОВ --- */
+/* --- ВЕРХНЯЯ ПЛАШКА СТАТУСА --- */
 .shop-notice-bar {
     background: linear-gradient(90deg, #2b1d0c 0%, #1c1409 100%);
     border-bottom: 1px solid var(--border-strong);
@@ -105,7 +105,6 @@ body {
     justify-content: space-between;
     gap: 16px;
     position: relative;
-    padding-right: 52px;
 }
 
 .notice-info {
@@ -135,49 +134,6 @@ body {
 
 .notice-text strong {
     color: var(--honey-bright);
-}
-
-.notice-action-btn {
-    background: var(--honey-primary);
-    color: #120e08;
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 20px;
-    white-space: nowrap;
-    transition: transform 0.2s ease, background 0.2s ease;
-    flex-shrink: 0;
-}
-
-.notice-action-btn:hover {
-    background: var(--honey-bright);
-    transform: translateY(-1px);
-}
-
-.notice-close-btn {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: 1px solid rgba(220, 160, 50, 0.25);
-    color: var(--txt-muted);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.notice-close-btn:hover {
-    color: var(--honey-bright);
-    border-color: var(--honey-bright);
-    background: rgba(224, 146, 20, 0.15);
 }
 
 /* --- ШАПКА МАГАЗИНА --- */
@@ -215,7 +171,7 @@ body {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 0.85rem;
-    padding: 6px 14px;
+    padding: 7px 14px;
     border-radius: 20px;
     cursor: pointer;
     transition: border-color 0.2s ease;
@@ -509,7 +465,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-block);
-    padding: 26px 22px;
+    padding: 20px 20px 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -536,31 +492,109 @@ body {
 
 .card-status-badge {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 0.7rem;
+    top: 14px;
+    right: 14px;
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 4px 10px;
+    padding: 4px 9px;
     border-radius: 20px;
     letter-spacing: 0.3px;
     text-transform: uppercase;
+    z-index: 2;
 }
 
 .badge-now {
-    background: rgba(39, 174, 96, 0.16);
-    color: #2ecc71;
-    border: 1px solid rgba(39, 174, 96, 0.35);
+    background: rgba(39, 174, 96, 0.85);
+    color: #ffffff;
+    border: 1px solid rgba(39, 174, 96, 1);
+    backdrop-filter: blur(8px);
 }
 
-.badge-wait {
-    background: rgba(224, 146, 20, 0.14);
+/* --- СКРИНШОТЫ ТОВАРОВ В КАРТОЧКЕ --- */
+.product-media {
+    width: 100%;
+    height: 165px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: #090807;
+    border: 1px solid var(--border-light);
+    margin-bottom: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.product-media:hover {
+    border-color: var(--honey-bright);
+}
+
+.product-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.product-media:hover img {
+    transform: scale(1.05);
+}
+
+.media-badge-count {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(14, 13, 11, 0.8);
+    border: 1px solid rgba(220, 160, 50, 0.3);
     color: var(--honey-bright);
-    border: 1px solid rgba(224, 146, 20, 0.3);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 12px;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+.media-fallback {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    color: var(--txt-subtle);
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: radial-gradient(circle, rgba(224, 146, 20, 0.08) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.media-fallback svg {
+    opacity: 0.6;
+}
+
+.media-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 9, 7, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--honey-bright);
+    font-size: 0.78rem;
+    font-weight: 700;
+    opacity: 0;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.2s ease;
+}
+
+.product-media:hover .media-overlay {
+    opacity: 1;
 }
 
 .product-header {
     margin-bottom: 10px;
-    padding-right: 120px;
 }
 
 .product-code-tag {
@@ -583,38 +617,19 @@ body {
     font-size: 0.88rem;
     color: var(--txt-muted);
     line-height: 1.55;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     flex-grow: 1;
 }
 
-.card-variant-selector {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-}
-
-.variant-chip {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-light);
-    color: var(--txt-muted);
-    font-size: 0.76rem;
-    font-weight: 600;
-    padding: 5px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.variant-chip:hover {
-    color: var(--txt-main);
-    border-color: var(--border-strong);
-}
-
-.variant-chip.active {
-    background: rgba(242, 168, 41, 0.18);
+.product-inclusive-tag {
+    background: rgba(224, 146, 20, 0.12);
+    border: 1px dashed rgba(224, 146, 20, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 0.78rem;
     color: var(--honey-bright);
-    border-color: var(--honey-bright);
+    margin-bottom: 14px;
+    line-height: 1.4;
 }
 
 .product-perks {
@@ -867,7 +882,7 @@ body {
     transform: scale(1.03);
 }
 
-/* --- МОДАЛЬНЫЕ ОКНА --- */
+/* --- МОДАЛЬНЫЕ ОКНА ОПЛАТЫ --- */
 .overlay {
     display: none;
     position: fixed;
@@ -875,7 +890,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(10, 9, 7, 0.8);
+    background-color: rgba(10, 9, 7, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 10000;
@@ -897,9 +912,9 @@ body {
 }
 
 .sheet-modal-large {
-    max-width: 660px;
+    max-width: 620px;
     text-align: left;
-    max-height: 85vh;
+    max-height: 88vh;
     overflow-y: auto;
 }
 
@@ -991,7 +1006,14 @@ body {
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
+    text-align: center;
     box-shadow: 0 8px 20px rgba(224, 146, 20, 0.3);
+}
+
+.modal-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .modal-footnote {
@@ -1008,35 +1030,108 @@ body {
     margin-top: 14px;
 }
 
-/* Окно подтверждения скрытия плашки */
-.notice-confirm-sheet {
-    max-width: 480px;
+/* --- СТИЛИ ПОЛНОЭКРАННОГО ЛАЙТБОКСА С ГАЛЕРЕЕЙ --- */
+.lightbox-overlay {
+    background-color: rgba(6, 5, 4, 0.94);
 }
 
-.confirm-actions-row {
+.lightbox-container {
+    max-width: 92vw;
+    max-height: 88vh;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 22px;
+    align-items: center;
+    position: relative;
 }
 
-.btn-cancel-modal {
-    background: transparent;
-    border: 1px solid var(--border-light);
-    color: var(--txt-muted);
-    padding: 12px;
-    border-radius: var(--radius-round);
-    font-family: var(--font-body);
-    font-size: 0.92rem;
-    font-weight: 600;
+.lightbox-img-wrap {
+    position: relative;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-img-wrap img {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+    object-fit: contain;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(23, 20, 16, 0.8);
+    border: 1px solid var(--border-strong);
+    color: var(--honey-bright);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease;
+    z-index: 10;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.btn-cancel-modal:hover {
-    color: var(--txt-main);
-    border-color: var(--border-strong);
-    background: var(--bg-surface-elevated);
+.lightbox-arrow:hover {
+    background: var(--honey-primary);
+    color: #120e08;
+}
+
+.lightbox-prev {
+    left: -60px;
+}
+
+.lightbox-next {
+    right: -60px;
+}
+
+.lightbox-meta {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.lightbox-caption {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--honey-bright);
+    text-align: center;
+}
+
+.lightbox-counter {
+    background: rgba(220, 160, 50, 0.15);
+    color: var(--txt-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+.lightbox-close-btn {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    color: #ffffff;
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+    color: var(--honey-bright);
 }
 
 .toast-strip {
@@ -1083,31 +1178,13 @@ body {
         grid-template-columns: 1fr 1fr;
         gap: 28px;
     }
-}
 
-@media (max-width: 768px) {
-    .notice-flex {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: left;
-        padding-right: 0;
-        padding-top: 10px;
+    .lightbox-prev {
+        left: 12px;
     }
 
-    .notice-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .notice-action-btn {
-        text-align: center;
-    }
-
-    .notice-close-btn {
-        top: 6px;
-        right: 4px;
-        transform: none;
+    .lightbox-next {
+        right: 12px;
     }
 }
 
@@ -1126,17 +1203,11 @@ body {
     }
 
     .product-card {
-        padding: 22px 18px;
+        padding: 18px 16px 22px;
     }
 
-    .product-header {
-        padding-right: 0;
-        margin-top: 28px;
-    }
-
-    .card-status-badge {
-        top: 16px;
-        right: 18px;
+    .product-media {
+        height: 140px;
     }
 
     .filter-tab {
@@ -1164,4 +1235,198 @@ body {
         font-size: 0.75rem;
         padding: 7px 11px;
     }
+}
+
+/* --- ВИЗУАЛЬНЫЕ МОКАПЫ ДЛЯ СПОНСОРА И ПРЕФИКСА --- */
+.media-visual-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-strong);
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+}
+
+/* 1. Клубная карта спонсора */
+.visual-sponsor {
+    background: radial-gradient(circle at 80% 20%, rgba(242, 168, 41, 0.25) 0%, rgba(18, 14, 10, 0.95) 70%), #120f0b;
+    border-color: rgba(242, 168, 41, 0.4);
+}
+
+.sponsor-card-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 45%, rgba(242, 168, 41, 0.08) 50%, transparent 55%);
+    pointer-events: none;
+    animation: sponsorShine 6s infinite linear;
+}
+
+@keyframes sponsorShine {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sponsor-card-inner {
+    width: 100%;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    z-index: 1;
+}
+
+.sponsor-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sponsor-chip {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--honey-bright);
+    background: rgba(242, 168, 41, 0.15);
+    border: 1px solid rgba(242, 168, 41, 0.35);
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.sponsor-crown {
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 6px rgba(242, 168, 41, 0.5));
+}
+
+.sponsor-mid-title {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.sponsor-badges-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.s-badge {
+    background: rgba(14, 13, 11, 0.85);
+    border: 1px solid var(--border-light);
+    color: var(--txt-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.s-badge svg {
+    color: var(--honey-bright);
+}
+
+/* 2. Мокап префикса Discord + Minecraft */
+.visual-prefix {
+    background: linear-gradient(135deg, #131215 0%, #0d0c0e 100%);
+    border-color: rgba(114, 137, 218, 0.25);
+    cursor: pointer;
+}
+
+.visual-prefix:hover {
+    border-color: var(--honey-bright);
+}
+
+.prefix-mockup-box {
+    width: 100%;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1;
+}
+
+.mock-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8, 7, 9, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.mock-platform-tag {
+    font-size: 0.65rem;
+    color: var(--txt-subtle);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.discord-pill {
+    background: rgba(88, 101, 242, 0.15);
+    border: 1px solid rgba(88, 101, 242, 0.4);
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.discord-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #5865f2;
+}
+
+.discord-role-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e0e4ff;
+}
+
+.mc-pill {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    gap: 5px;
+}
+
+.mc-prefix-text {
+    color: var(--honey-bright);
+    font-weight: 800;
+}
+
+.mc-nick-text {
+    color: var(--txt-main);
+}
+
+/* Строка подтверждения согласия с офертой и 152-ФЗ в модальных окнах */
+.form-legal-agree {
+    font-size: 0.76rem;
+    color: var(--txt-subtle);
+    margin: 12px 0 6px;
+    text-align: left;
+    line-height: 1.45;
+}
+
+.form-legal-agree a {
+    color: var(--honey-bright);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+}
+
+.form-legal-agree a:hover {
+    color: #ffffff;
 }

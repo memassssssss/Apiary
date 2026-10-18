@@ -419,7 +419,8 @@ function initModals() {
         };
     }
 
-    document.querySelectorAll(".footer-link[data-modal]").forEach(link => {
+// Открытие любых юридических окон по атрибуту data-modal
+    document.querySelectorAll("[data-modal]").forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
             const targetModal = document.getElementById(link.dataset.modal);

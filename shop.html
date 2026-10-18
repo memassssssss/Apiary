@@ -127,9 +127,25 @@
         <div class="site-container">
             <div class="products-grid">
 
-                <!-- 1. СПОНСОР УЛЬЯ (ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM) -->
-                <div class="product-card featured-product" data-category="active">
+                <!-- 1. СПОНСОР УЛЬЯ -->
+                <div class="product-card featured-product" data-category="character base">
                     <div class="card-status-badge badge-now">Через менеджера</div>
+                    
+                    <div class="product-media media-visual-card visual-sponsor">
+                        <div class="sponsor-card-shine"></div>
+                        <div class="sponsor-card-inner">
+                            <div class="sponsor-top-row">
+                                <span class="sponsor-chip">APIARY СПОНСОР</span>
+                                <span class="sponsor-crown">👑</span>
+                            </div>
+                            <div class="sponsor-mid-title">СПОНСОР СЕРВЕРА</div>
+                            <div class="sponsor-badges-row">
+                                <span class="s-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Закрытый чат</span>
+                                <span class="s-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Золотой ник</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">SUP-01</span>
                         <h3 class="product-title">Спонсор улья</h3>
@@ -151,9 +167,25 @@
                     </div>
                 </div>
 
-                <!-- 2. РОСТ В 1 БЛОК (ОНЛАЙН ЮKASSA) -->
+                <!-- 2. РОСТ В 1 БЛОК -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/scale_1.png,./assets/products/scale_2.png" 
+                         data-title="Рост в 1 блок">
+                        <span class="media-badge-count">2 фото</span>
+                        <img src="./assets/products/scale_1.png" alt="Рост в 1 блок" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты роста</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Галерея</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">CHR-01</span>
                         <h3 class="product-title">Рост в 1 блок</h3>
@@ -162,8 +194,8 @@
                         Косметическая механика изменения роста персонажа. Вы уменьшаетесь ровно до высоты одного блока для забавных моментов и атмосферных скриншотов.
                     </p>
                     <ul class="product-perks">
-                        <li>Уменьшение модели до 1 блока</li>
-                        <li>Быстрое включение в меню /cosmetics</li>
+                        <li>Уменьшение модели ровно до 1 блока</li>
+                        <li>Быстрое включение в меню /menu</li>
                         <li>Возврат в обычный рост в любой момент</li>
                     </ul>
                     <div class="product-bottom">
@@ -174,89 +206,151 @@
                     </div>
                 </div>
 
-                <!-- 3. ПЛЕЧЕВАЯ ПЧЁЛКА (ОНЛАЙН ЮKASSA) -->
+                <!-- 3. СПУТНИКИ: ПЧЁЛКА, ЭЛЛЕЙ, СЛАЙМИК -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/pets_bee.png,./assets/products/pets_allay.png,./assets/products/pets_slime.png" 
+                         data-title="Плечевой спутник (Пчёлка, Эллей, Слаймик)">
+                        <span class="media-badge-count">3 фото</span>
+                        <img src="./assets/products/pets_bee.png" alt="Плечевые спутники" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты питомцев</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Все 3 спутника</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">PET-01</span>
-                        <h3 class="product-title">Плечевой спутник: Пчёлка</h3>
+                        <h3 class="product-title">Спутник: Пчёлка, Эллей, Слайм</h3>
                     </div>
                     <p class="product-desc">
-                        Маленькая верная пчёлка, плавно покачивающаяся над вашим плечом. Бессмертный спутник без коллизий, который не мешает серверу и всегда рядом.
+                        Три уютных спутника на выбор: парящая пчёлка, лучезарный эллей на плече или забавный прыгающий мини-слайм рядом. Бессмертные, тихие и без коллизий.
                     </p>
+                    <div class="product-inclusive-tag">
+                        ✨ Включает всех 3 спутников: Пчёлка, Эллей, Слаймик (выбор в /menu)
+                    </div>
                     <ul class="product-perks">
-                        <li>Парит над плечом и машет крылышками</li>
-                        <li>Без коллизий (не толкает и не мешает стрелять)</li>
-                        <li>Можно в любой момент включить или выключить в меню</li>
+                        <li>Парят над плечом или прыгают у ног</li>
+                        <li>Без коллизий (не толкают и не мешают стрелять)</li>
+                        <li>Свободное переключение или отзыв в /menu</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">349₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProduct('bee', 'Плечевой спутник: Пчёлка', 349)">
+                        <button class="btn-buy-product" onclick="orderProduct('bee', 'Плечевой спутник (Пчёлка, Эллей, Слайм)', 349)">
                             Заказать
                         </button>
                     </div>
                 </div>
 
-                <!-- 4. ЭФФЕКТ ПОЯВЛЕНИЯ (ОНЛАЙН ЮKASSA) -->
+                <!-- 4. ЭФФЕКТ ПОЯВЛЕНИЯ -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/spawn_sparks.png,./assets/products/spawn_smoke.png,./assets/products/spawn_end.png" 
+                         data-title="Эффект появления при входе">
+                        <span class="media-badge-count">3 фото</span>
+                        <img src="./assets/products/spawn_sparks.png" alt="Эффект появления" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты эффекта</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Галерея стилей</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">FX-01</span>
                         <h3 class="product-title">Эффект появления при входе</h3>
                     </div>
                     <p class="product-desc">
-                        Красивая визуальная анимация при входе на сервер (при покупке доступны все стили):
+                        Красивая визуальная анимация при входе на сервер. При покупке открываются сразу все 3 стиля (Искорки, Дымок, Врата Края) с удобным выбором в игре.
                     </p>
-                    <div class="card-variant-selector" data-param="Стиль появления">
-                        <button class="variant-chip active" data-val="Искорки">Искорки</button>
-                        <button class="variant-chip" data-val="Дымок">Дымок</button>
-                        <button class="variant-chip" data-val="Край">Фиолетовые частички</button>
+                    <div class="product-inclusive-tag">
+                        ✨ Включает все 3 стиля: Искорки, Дымок, Край (выбор в /menu)
                     </div>
                     <ul class="product-perks">
                         <li>Каскад частиц и звон аметиста при заходе</li>
                         <li>Виден всем окружающим игрокам</li>
-                        <li>Переключение стиля в меню /cosmetics</li>
+                        <li>Свободное переключение стиля в меню /menu</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">199₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'spawn', 'Эффект появления при входе', 199)">
+                        <button class="btn-buy-product" onclick="orderProduct('spawn', 'Эффект появления при входе', 199)">
                             Заказать
                         </button>
                     </div>
                 </div>
 
-                <!-- 5. СЛЕД ОТ ЭЛИТР (ОНЛАЙН ЮKASSA) -->
+                <!-- 5. СЛЕД ОТ ЭЛИТР -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/elytra_honey.png,./assets/products/elytra_flame.png,./assets/products/elytra_notes.png,./assets/products/elytra_bubbles.png" 
+                         data-title="След от элитр (Elytra Trail)">
+                        <span class="media-badge-count">4 фото</span>
+                        <img src="./assets/products/elytra_honey.png" alt="След от элитр" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты шлейфов</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Все 4 шлейфа</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">ELY-01</span>
                         <h3 class="product-title">След от элитр (Elytra Trail)</h3>
                     </div>
                     <p class="product-desc">
-                        Плотный красивый шлейф частиц за вашей спиной во время полета на элитрах (доступны все варианты):
+                        Плотный красивый шлейф частиц за вашей спиной во время полета на элитрах. Вы получаете доступ сразу ко всем 4 стилям шлейфа.
                     </p>
-                    <div class="card-variant-selector" data-param="Тип шлейфа">
-                        <button class="variant-chip active" data-val="Медовый">Медовый</button>
-                        <button class="variant-chip" data-val="Огонь">Огонь</button>
-                        <button class="variant-chip" data-val="Ноты">Ноты</button>
-                        <button class="variant-chip" data-val="Пузыри">Пузыри</button>
+                    <div class="product-inclusive-tag">
+                        ✨ Включает 4 шлейфа: Медовый, Огонь, Ноты, Пузыри (выбор в /menu)
                     </div>
                     <ul class="product-perks">
                         <li>Активируется автоматически только в полете</li>
                         <li>Плавное рассеивание в воздухе</li>
-                        <li>Отключение в меню в любой момент</li>
+                        <li>Отключение и смена шлейфа в любой момент</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">239₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'elytra', 'След от элитр (Elytra Trail)', 239)">
+                        <button class="btn-buy-product" onclick="orderProduct('elytra', 'След от элитр (Elytra Trail)', 239)">
                             Заказать
                         </button>
                     </div>
                 </div>
 
-                <!-- 6. 3D ВЫВЕСКА (ОНЛАЙН ЮKASSA) -->
+                <!-- 6. 3D ВЫВЕСКА -->
                 <div class="product-card" data-category="base">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/basesign_1.png,./assets/products/basesign_2.png" 
+                         data-title="Именная вывеска для базы">
+                        <span class="media-badge-count">2 фото</span>
+                        <img src="./assets/products/basesign_1.png" alt="Именная вывеска" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншот 3D-вывески</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Посмотреть</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">TXT-01</span>
                         <h3 class="product-title">Именная вывеска для базы</h3>
@@ -277,9 +371,24 @@
                     </div>
                 </div>
 
-                <!-- 7. ДВЕРНОЙ ЗВОНОК (ОНЛАЙН ЮKASSA) -->
+                <!-- 7. ДВЕРНОЙ ЗВОНОК -->
                 <div class="product-card" data-category="base">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/doorbell.png" 
+                         data-title="Дверной звонок у дома">
+                        <img src="./assets/products/doorbell.png" alt="Дверной звонок" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншот звонка</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Посмотреть</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">BEL-01</span>
                         <h3 class="product-title">Дверной звонок у дома</h3>
@@ -290,7 +399,7 @@
                     <ul class="product-perks">
                         <li>Оповещение хозяина базы в сети</li>
                         <li>Персональный защищенный предмет</li>
-                        <li>Выдача предмета кнопкой в меню /cosmetics</li>
+                        <li>Выдача предмета кнопкой в меню /menu</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">129₽ <span class="price-type">/ сезон</span></div>
@@ -300,9 +409,25 @@
                     </div>
                 </div>
 
-                <!-- 8. ГРАВИРОВЩИК / КАЗУАЛ (ОНЛАЙН ЮKASSA) -->
+                <!-- 8. ГРАВИРОВЩИК / КАЗУАЛ -->
                 <div class="product-card" data-category="base">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/lore_1.png,./assets/products/lore_2.png" 
+                         data-title="Гравировщик предметов (/lore)">
+                        <span class="media-badge-count">2 фото</span>
+                        <img src="./assets/products/lore_1.png" alt="Гравировщик предметов" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты предметов</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Посмотреть</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">LOR-01</span>
                         <h3 class="product-title">Гравировщик предметов (/lore)</h3>
@@ -323,9 +448,24 @@
                     </div>
                 </div>
 
-                <!-- 9. ПРАЗДНИЧНАЯ ХЛОПУШКА (ОНЛАЙН ЮKASSA) -->
+                <!-- 9. ПРАЗДНИЧНАЯ ХЛОПУШКА -->
                 <div class="product-card" data-category="base">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/popper.png" 
+                         data-title="Праздничная хлопушка">
+                        <img src="./assets/products/popper.png" alt="Праздничная хлопушка" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншот хлопушки</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Посмотреть</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">FUN-01</span>
                         <h3 class="product-title">Праздничная хлопушка</h3>
@@ -346,9 +486,34 @@
                     </div>
                 </div>
 
-                <!-- 10. ПРЕФИКС В TAB + DISCORD (ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM) -->
+                <!-- 10. ПРЕФИКС В TAB + DISCORD -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Через менеджера</div>
+
+                    <!-- ВИЗУАЛЬНЫЙ МОКАП ДИСКОРД + МАЙНКРАФТ -->
+                    <div class="product-media media-visual-card visual-prefix" onclick="scrollToSandbox()" title="Кликните, чтобы примерить в песочнице">
+                        <div class="prefix-mockup-box">
+                            <!-- ДИСКОРД СТРОКА -->
+                            <div class="mock-line mock-discord">
+                                <span class="mock-platform-tag">Discord</span>
+                                <div class="discord-pill">
+                                    <span class="discord-dot"></span>
+                                    <span class="discord-role-text">@Бортник</span>
+                                </div>
+                            </div>
+                            <!-- МАЙНКРАФТ ТАБ -->
+                            <div class="mock-line mock-mc">
+                                <span class="mock-platform-tag">Minecraft</span>
+                                <div class="mc-pill">
+                                    <span class="mc-prefix-text">[Бортник]</span>
+                                    <span class="mc-nick-text">Notch</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-overlay" style="opacity: 1; background: rgba(14, 13, 11, 0.45);">
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">PRF-01</span>
                         <h3 class="product-title">Кастомный префикс + Discord</h3>
@@ -369,29 +534,43 @@
                     </div>
                 </div>
 
-                <!-- 11. ТРЕЙЛЫ ШАГОВ (ОНЛАЙН ЮKASSA) -->
+                <!-- 11. ТРЕЙЛЫ ШАГОВ (3 ФОТО) -->
                 <div class="product-card" data-category="character">
                     <div class="card-status-badge badge-now">Доступно сразу</div>
+
+                    <div class="product-media" onclick="openLightbox(this)" 
+                         data-images="./assets/products/trails_end.png,./assets/products/trails_flame.png,./assets/products/trails_smoke.png" 
+                         data-title="Эффекты поступи (Трейлы шагов)">
+                        <span class="media-badge-count">3 фото</span>
+                        <img src="./assets/products/trails_end.png" alt="Трейлы шагов" loading="lazy" onerror="handleImgError(this)">
+                        <div class="media-fallback">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>Скриншоты поступи</span>
+                        </div>
+                        <div class="media-overlay">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            <span>Все 3 эффекта</span>
+                        </div>
+                    </div>
+
                     <div class="product-header">
                         <span class="product-code-tag">TRL-01</span>
                         <h3 class="product-title">Эффекты поступи (Трейлы)</h3>
                     </div>
                     <p class="product-desc">
-                        Визуальные следы под ногами персонажа при ходьбе и беге. Выберите тип частиц (доступны все сразу):
+                        Визуальные следы под ногами персонажа при ходьбе и беге. При покупке открываются сразу все 3 стиля (Край, Пламя, Дым).
                     </p>
-                    <div class="card-variant-selector" data-param="Тип поступи">
-                        <button class="variant-chip active" data-val="Край">Край</button>
-                        <button class="variant-chip" data-val="Пламя">Пламя</button>
-                        <button class="variant-chip" data-val="Дым">Дым</button>
+                    <div class="product-inclusive-tag">
+                        ✨ Включает все 3 стиля: Край, Пламя, Дым (выбор в /menu)
                     </div>
                     <ul class="product-perks">
                         <li>Плотные красивые следы при движении</li>
                         <li>Автоматически отключаются при полете</li>
-                        <li>Удобное меню переключения /cosmetics</li>
+                        <li>Удобное меню переключения /menu</li>
                     </ul>
                     <div class="product-bottom">
                         <div class="product-price">249₽ <span class="price-type">/ сезон</span></div>
-                        <button class="btn-buy-product" onclick="orderProductWithVariant(this, 'trails', 'Эффекты поступи (Трейлы шагов)', 249)">
+                        <button class="btn-buy-product" onclick="orderProduct('trails', 'Эффекты поступи (Трейлы шагов)', 249)">
                             Заказать
                         </button>
                     </div>
@@ -420,7 +599,7 @@
                     <div class="step-card">
                         <span class="step-num">03</span>
                         <h4>Моментальная доставка</h4>
-                        <p>Сервер автоматически начисляет права. Заходите в игру, вводите <strong>/cosmetics</strong> и включайте косметику!</p>
+                        <p>Сервер автоматически начисляет права. Заходите в игру, вводите <strong>/menu</strong> и включайте косметику!</p>
                     </div>
                 </div>
             </div>
@@ -434,7 +613,10 @@
                 <div class="footer-cell cell-brand">
                     <div class="footer-logo">Apiary<span class="text-accent">SMP</span></div>
                     <p class="footer-desc">Независимый ванильный сервер Minecraft. Создан игроками для игроков.</p>
-                    <span class="footer-legal-note">Не является аффилированным продуктом Mojang AB или Microsoft.</span>
+                    <span class="footer-legal-note">
+                        NOT AN OFFICIAL MINECRAFT PRODUCT/SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
+                        <br>НЕ ЯВЛЯЕТСЯ ОФИЦИАЛЬНЫМ СЕРВИСОМ MINECRAFT. НЕ ОДОБРЕНО И НЕ СВЯЗАНО С MOJANG ИЛИ MICROSOFT.
+                    </span>
                 </div>
 
                 <div class="footer-cell">
@@ -456,6 +638,7 @@
                     <a href="index.html" class="footer-link">Главная страница →</a>
                     <a href="rules-main.html" class="footer-link link-rules">Свод правил сервера →</a>
                     <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
+                    <a href="#" class="footer-link" data-modal="privacyModal">Политика конфиденциальности</a>
                     <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
                     <a href="#" class="footer-link" data-modal="deliveryModal">Получение услуги</a>
                 </div>
@@ -479,6 +662,22 @@
         </a>
     </nav>
 
+    <!-- ПОЛНОЭКРАННЫЙ ЛАЙТБОКС С ГАЛЕРЕЕЙ -->
+    <div id="imageLightboxModal" class="overlay lightbox-overlay" onclick="closeLightbox(event)">
+        <div class="lightbox-container">
+            <span class="lightbox-close-btn" onclick="forceCloseLightbox()">&times;</span>
+            <button class="lightbox-arrow lightbox-prev" id="lightboxPrevBtn" onclick="prevLightboxImage(event)">&#10094;</button>
+            <div class="lightbox-img-wrap">
+                <img id="lightboxImage" src="" alt="Просмотр товара">
+            </div>
+            <button class="lightbox-arrow lightbox-next" id="lightboxNextBtn" onclick="nextLightboxImage(event)">&#10095;</button>
+            <div class="lightbox-meta">
+                <div class="lightbox-caption" id="lightboxCaption"></div>
+                <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+            </div>
+        </div>
+    </div>
+
     <!-- МОДАЛКА 1: ОНЛАЙН-ОПЛАТА ЮKASSA -->
     <div id="orderModal" class="overlay">
         <div class="sheet-modal">
@@ -489,7 +688,6 @@
             
             <form id="shopPaymentForm">
                 <input type="hidden" id="orderProductKey" value="">
-                <input type="hidden" id="orderProductVariant" value="">
 
                 <div class="form-row">
                     <label for="orderNickField">Ваш игровой никнейм Minecraft</label>
@@ -501,16 +699,23 @@
                     <input type="text" id="orderPromoField" class="sheet-input" placeholder="Необязательно">
                 </div>
 
+                <div class="form-legal-agree">
+                    Нажимая кнопку оплаты, вы соглашаетесь с условиями 
+                    <a href="#" data-modal="offerModal">Публичной оферты</a> 
+                    и даете согласие на обработку персональных данных в соответствии с 
+                    <a href="#" data-modal="privacyModal">Политикой конфиденциальности</a>.
+                </div>
+
                 <button type="submit" id="shopSubmitPayBtn" class="modal-submit-btn">
                     Оплатить через ЮKassa
                 </button>
             </form>
 
-            <span class="modal-footnote" style="margin-top: 16px;">Доступ и права начисляются автоматически сразу после подтверждения транзакции.</span>
+            <span class="modal-footnote" style="margin-top: 16px;">Доступ и права начисляются сервером автоматически сразу после подтверждения транзакции.</span>
         </div>
     </div>
 
-    <!-- МОДАЛКА 2: ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM (СПОНСОР И ПРЕФИКС) -->
+    <!-- МОДАЛКА 2: ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM -->
     <div id="tgOrderModal" class="overlay">
         <div class="sheet-modal">
             <span class="close-button" id="closeTgOrderModal">&times;</span>
@@ -548,15 +753,42 @@
                 Исполнитель предоставляет Заказчику право доступа к игровому серверу ApiarySMP (добавление никнейма в белый список) и/или активирует внутриигровые декоративные права и косметические эффекты в системе сервера. Все услуги носят исключительно виртуальный нематериальный характер.</p>
 
                 <p><strong>3. Акцепт и стоимость</strong><br>
-                Оплата заказа признается полным и безоговорочным акцептом условий настоящей Оферты (ст. 438 ГК РФ). Цены на услуги указаны на страницах каталога в рублях РФ.</p>
+                Оплата заказа через сайт или платежный шлюз признается полным и безоговорочным акцептом условий настоящей Оферты (ст. 438 ГК РФ). Цены на услуги указаны на страницах каталога в рублях РФ.</p>
 
                 <p><strong>4. Условия исполнения и невозвратность</strong><br>
-                В соответствии со ст. 26.1 Закона РФ «О защите прав потребителей», цифровая услуга считается полностью оказанной в момент предоставления доступа или регистрации прав учетной записи через RCON/LuckPerms. Блокировка аккаунта за нарушение установленных правил сервера не влечет за собой возврат денежных средств.</p>
+                В соответствии со ст. 779 Гражданского кодекса РФ (договор возмездного оказания услуг) и ст. 32 Закона РФ «О защите прав потребителей», услуга по предоставлению доступа к функционалу сервера считается полностью оказанной Исполнителем в полном объеме в момент внесения учетной записи Заказчика в список доступа (вайтлист) или начисления внутриигровых прав через систему RCON/LuckPerms. В случае одностороннего расторжения договора со стороны Исполнителя по причине нарушения Заказчиком Правил сервера, денежные средства возврату не подлежат в связи с полным исполнением обязательств Исполнителем на момент предоставления доступа.</p>
 
-                <p><strong>5. Реквизиты</strong><br>
+               <p><strong>5. Фискальные чеки (422-ФЗ)</strong><br>
+В соответствии с Федеральным законом № 422-ФЗ электронный чек, сформированный Исполнителем в приложении «Мой налог», предоставляется Заказчику в электронной форме по запросу, направленному на адрес электронной почты: pizduke13@gmail.com.</p>
+
+                <p><strong>6. Реквизиты</strong><br>
                 Самозанятый: Бризицкий Михаил Романович<br>
                 ИНН: 253609705426<br>
                 Email: pizduke13@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ (152-ФЗ) -->
+    <div class="overlay" id="privacyModal">
+        <div class="sheet-modal sheet-modal-large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Политика конфиденциальности</h2>
+            <div class="modal-text">
+                <p><strong>1. Общие положения</strong><br>
+                Оператор персональных данных: плательщик налога на профессиональный доход (самозанятый) <strong>Бризицкий Михаил Романович</strong> (ИНН <strong>253609705426</strong>). Настоящая Политика определяет порядок обработки и защиты персональных данных пользователей сайта и сервера ApiarySMP в строгом соответствии с Федеральным законом РФ № 152-ФЗ «О персональных данных».</p>
+                
+                <p><strong>2. Состав обрабатываемых данных</strong><br>
+                В рамках функционирования сайта и активации услуг обрабатываются следующие данные: игровой никнейм Minecraft, Telegram-username (при обращении к боту или поддержке), технические обезличенные идентификаторы (файлы cookie, IP-адрес сетевого соединения), а также данные об успешных транзакциях, передаваемые платежным шлюзом.</p>
+
+                <p><strong>3. Цели сбора и обработки</strong><br>
+                Идентификация Заказчика для автоматического занесения в список доступа (вайтлист), выдача купленных косметических прав через серверную систему LuckPerms, исполнение публичной оферты, защита от мошеннических действий и обеспечение обратной связи.</p>
+
+                <p><strong>4. Передача третьим лицам и безопасность</strong><br>
+                Оператор не передает и не раскрывает данные пользователей третьим лицам, за исключением официального оператора платежей (ЮKassa / ООО НКО «ЮМани») исключительно для проведения расчета. Все данные обрабатываются с применением современных стандартов шифрования.</p>
+
+                <p><strong>5. Сроки хранения и отзыв согласия</strong><br>
+                Данные хранятся в течение срока функционирования учетной записи на сервере. Согласие может быть отозвано пользователем в любой момент путем направления электронного заявления на адрес: <strong>pizduke13@gmail.com</strong>.</p>
             </div>
         </div>
     </div>
@@ -570,8 +802,8 @@
                 <p><strong>1. Общие правила</strong><br>
                 Пользуясь сайтом и игровым сервером ApiarySMP, Пользователь соглашается соблюдать установленный Свод правил сервера (размещенный по адресу rules-main.html) и не нарушать баланс игры.</p>
 
-                <p><strong>2. Ограничение ответственности</strong><br>
-                Сервер ApiarySMP является независимым любительским проектом и никак не аффилирован с компаниями Mojang AB или Microsoft. Все донат-услуги проекта предоставляются «как есть» и не дают игроку неуязвимости или нечестных преимуществ перед другими (Non-P2W).</p>
+                <p><strong>2. Ограничение ответственности и правила Mojang</strong><br>
+                Сервер ApiarySMP является независимым проектом сообщества и никак не связан с компаниями Mojang AB или Microsoft. Все донат-услуги проекта носят декоративный характер, предоставляются «как есть» и строго соответствуют требованиям Minecraft Commercial Usage Guidelines (Non-P2W).</p>
             </div>
         </div>
     </div>
@@ -583,9 +815,9 @@
             <h2 class="modal-title">Порядок получения услуги</h2>
             <div class="modal-text">
                 <p><strong>Регламент доставки:</strong><br>
-                1. <strong>Вайтлист:</strong> никнейм моментально заносится в список доступа сервера в течение 1–2 минут после оплаты.<br>
-                2. <strong>Косметика и донат:</strong> права на эффекты применяются автоматически. Для управления активированными предметами введите команду <code>/cosmetics</code> в чате сервера.<br>
-                3. Если при оплате была допущена опечатка в никнейме, напишите на почту <strong>pizduke13@gmail.com</strong> для корректировки.</p>
+                1. <strong>Вайтлист:</strong> никнейм моментально заносится в список доступа сервера в течение 1–2 минут после подтверждения оплаты шлюзом.<br>
+                2. <strong>Косметика и донат:</strong> права на эффекты применяются автоматически. Для управления активированными предметами введите команду <code>/menu</code> в чате сервера.<br>
+                3. Если при оплате была допущена опечатка в никнейме, напишите на почту <strong>pizduke13@gmail.com</strong> или менеджеру в Telegram для оперативной корректировки.</p>
             </div>
         </div>
     </div>

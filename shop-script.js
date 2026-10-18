@@ -5,10 +5,17 @@ const MANAGER_TG = "Apiary_SMP";
 let currentProductKey = "";
 let currentSelectedProduct = "";
 let currentSelectedPrice = 0;
-let currentSelectedVariant = "";
 
 let currentTgProductTitle = "";
 let currentTgProductPrice = 0;
+
+// --- СОСТОЯНИЕ ЛАЙТБОКСА / ГАЛЕРЕИ ---
+let galleryImages = [];
+let galleryIndex = 0;
+let galleryTitle = "";
+
+let touchStartX = 0;
+let touchEndX = 0;
 
 // --- УВЕДОМЛЕНИЯ ---
 function triggerToast(text) {
@@ -28,6 +35,93 @@ function copyIP() {
     }).catch(() => {
         triggerToast("Адрес: " + SERVER_IP);
     });
+}
+
+// --- ОБРАБОТКА СКРИНШОТОВ (ФОЛБЭК + МУЛЬТИ-ГАЛЕРЕЯ) ---
+function handleImgError(imgElement) {
+    imgElement.style.display = 'none';
+    const parent = imgElement.parentElement;
+    if (!parent) return;
+
+    const fallback = parent.querySelector('.media-fallback');
+    if (fallback) fallback.style.display = 'flex';
+
+    const badge = parent.querySelector('.media-badge-count');
+    if (badge) badge.style.display = 'none';
+
+    // Скрываем ховер-оверлей, если картинка не загружена
+    const overlay = parent.querySelector('.media-overlay');
+    if (overlay) overlay.style.display = 'none';
+}
+
+function openLightbox(mediaEl) {
+    const rawImages = mediaEl.dataset.images || "";
+    galleryImages = rawImages.split(',').map(s => s.trim()).filter(Boolean);
+    galleryTitle = mediaEl.dataset.title || 'Скриншот позиции';
+    galleryIndex = 0;
+
+    const imgEl = mediaEl.querySelector('img');
+    if (imgEl && imgEl.style.display === 'none') {
+        triggerToast("Скриншоты для этой позиции скоро будут загружены!");
+        return;
+    }
+
+    if (galleryImages.length === 0) return;
+
+    updateLightboxView();
+
+    const modal = document.getElementById('imageLightboxModal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function updateLightboxView() {
+    const lbImg = document.getElementById('lightboxImage');
+    const lbCap = document.getElementById('lightboxCaption');
+    const lbCounter = document.getElementById('lightboxCounter');
+    const prevBtn = document.getElementById('lightboxPrevBtn');
+    const nextBtn = document.getElementById('lightboxNextBtn');
+
+    if (lbImg) lbImg.src = galleryImages[galleryIndex];
+    if (lbCap) lbCap.textContent = galleryTitle;
+    
+    if (galleryImages.length > 1) {
+        if (lbCounter) {
+            lbCounter.textContent = `${galleryIndex + 1} / ${galleryImages.length}`;
+            lbCounter.style.display = 'inline-block';
+        }
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
+    } else {
+        if (lbCounter) lbCounter.style.display = 'none';
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+    }
+}
+
+function prevLightboxImage(e) {
+    if (e) e.stopPropagation();
+    if (galleryImages.length <= 1) return;
+    galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateLightboxView();
+}
+
+function nextLightboxImage(e) {
+    if (e) e.stopPropagation();
+    if (galleryImages.length <= 1) return;
+    galleryIndex = (galleryIndex + 1) % galleryImages.length;
+    updateLightboxView();
+}
+
+function closeLightbox(e) {
+    const modal = document.getElementById('imageLightboxModal');
+    if (e.target.id === 'imageLightboxModal') {
+        if (modal) modal.style.display = 'none';
+    }
+}
+
+function forceCloseLightbox() {
+    const modal = document.getElementById('imageLightboxModal');
+    if (modal) modal.style.display = 'none';
 }
 
 // --- ФИЛЬТРАЦИЯ И ПОИСК ТОВАРОВ ---
@@ -71,19 +165,6 @@ function initCatalogFilters() {
             applyFilters();
         });
     }
-}
-
-// --- ВЫБОР ВАРИАНТОВ В КАРТОЧКАХ ---
-function initCardVariants() {
-    document.querySelectorAll('.card-variant-selector').forEach(selector => {
-        const chips = selector.querySelectorAll('.variant-chip');
-        chips.forEach(chip => {
-            chip.addEventListener('click', () => {
-                chips.forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-            });
-        });
-    });
 }
 
 // --- ИНТЕРАКТИВНЫЙ СИМУЛЯТОР ЧАТА И TAB ---
@@ -131,52 +212,29 @@ function initSandboxSimulator() {
     updatePreview();
 }
 
-// --- 1. ОНЛАЙН-ОПЛАТА ЧЕРЕЗ ЮKASSA (КАРТОЧКИ КАТАЛОГА) ---
+// --- 1. ПРЯМАЯ ОНЛАЙН-ОПЛАТА ЧЕРЕЗ ЮKASSA ---
 function orderProduct(key, title, price) {
     currentProductKey = key;
     currentSelectedProduct = title;
     currentSelectedPrice = price;
-    currentSelectedVariant = "";
-    openOrderModal();
-}
 
-function orderProductWithVariant(btnElement, key, baseTitle, price) {
-    const card = btnElement.closest('.product-card');
-    const activeChip = card ? card.querySelector('.variant-chip.active') : null;
-    const variantName = activeChip ? activeChip.dataset.val : "";
-
-    currentProductKey = key;
-    currentSelectedProduct = baseTitle;
-    currentSelectedPrice = price;
-    currentSelectedVariant = variantName;
-
-    openOrderModal();
-}
-
-function openOrderModal() {
     const modal = document.getElementById('orderModal');
     const titleEl = document.getElementById('orderModalItemTitle');
     const priceEl = document.getElementById('orderModalItemPrice');
     const nickInput = document.getElementById('orderNickField');
     const promoInput = document.getElementById('orderPromoField');
     const keyField = document.getElementById('orderProductKey');
-    const varField = document.getElementById('orderProductVariant');
 
-    const fullTitle = currentSelectedVariant 
-        ? `${currentSelectedProduct} (${currentSelectedVariant})` 
-        : currentSelectedProduct;
-
-    if (titleEl) titleEl.textContent = fullTitle;
+    if (titleEl) titleEl.textContent = currentSelectedProduct;
     if (priceEl) priceEl.textContent = `${currentSelectedPrice}₽`;
     if (nickInput) nickInput.value = '';
     if (promoInput) promoInput.value = '';
     if (keyField) keyField.value = currentProductKey;
-    if (varField) varField.value = currentSelectedVariant;
 
     if (modal) modal.style.display = 'flex';
 }
 
-// --- 2. ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM (СПОНСОР И ПРЕФИКС) ---
+// --- 2. ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM ---
 function orderViaTelegram(title, price) {
     currentTgProductTitle = title;
     currentTgProductPrice = price;
@@ -206,6 +264,19 @@ function updateTgDirectLink() {
     tgBtn.href = `https://t.me/${MANAGER_TG}?text=${encodeURIComponent(textMsg)}`;
 }
 
+// --- ПЛАВНЫЙ СКРОЛЛ К ПЕСОЧНИЦЕ С АВТОФОКУСОМ ---
+function scrollToSandbox() {
+    const sandbox = document.querySelector('.sandbox-section');
+    if (sandbox) {
+        sandbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        triggerToast("Примерьте свой префикс и цвет в симуляторе!");
+        setTimeout(() => {
+            const pInput = document.getElementById('previewPrefix');
+            if (pInput) pInput.focus();
+        }, 400);
+    }
+}
+
 // --- ИНИЦИАЛИЗАЦИЯ ВСЕХ МОДАЛОК И СОБЫТИЙ ---
 function initModals() {
     const orderModal = document.getElementById('orderModal');
@@ -215,6 +286,7 @@ function initModals() {
     const tgOrderModal = document.getElementById('tgOrderModal');
     const closeTgOrderBtn = document.getElementById('closeTgOrderModal');
     const tgNickInput = document.getElementById('tgNickField');
+    const lbContainer = document.querySelector('.lightbox-container');
 
     if (closeOrderBtn && orderModal) {
         closeOrderBtn.onclick = () => { orderModal.style.display = 'none'; };
@@ -228,14 +300,39 @@ function initModals() {
         tgNickInput.addEventListener('input', updateTgDirectLink);
     }
 
-    // Отправка формы ЮKassa на бэкенд pay.apiarysmp.online
+    // Клавиши для лайтбокса (Esc, влево, вправо)
+    window.addEventListener('keydown', (e) => {
+        const lb = document.getElementById('imageLightboxModal');
+        if (!lb || lb.style.display !== 'flex') return;
+
+        if (e.key === 'Escape') forceCloseLightbox();
+        if (e.key === 'ArrowLeft') prevLightboxImage();
+        if (e.key === 'ArrowRight') nextLightboxImage();
+    });
+
+    // Мобильные свайпы в лайтбоксе
+    if (lbContainer) {
+        lbContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lbContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 40) {
+                if (diff < 0) nextLightboxImage();
+                else prevLightboxImage();
+            }
+        }, { passive: true });
+    }
+
+    // Отправка формы ЮKassa на бэкенд
     if (shopForm) {
         shopForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const nickname = document.getElementById('orderNickField').value.trim();
             const promocode = document.getElementById('orderPromoField').value.trim();
             const pType = document.getElementById('orderProductKey').value;
-            const variant = document.getElementById('orderProductVariant').value;
             const submitBtn = document.getElementById('shopSubmitPayBtn');
 
             if (!nickname) {
@@ -254,8 +351,7 @@ function initModals() {
                     body: JSON.stringify({
                         nickname: nickname,
                         type: pType,
-                        promocode: promocode,
-                        variant: variant
+                        promocode: promocode
                     })
                 });
 
@@ -275,7 +371,8 @@ function initModals() {
     }
 
     // Модалки документов в футере
-    document.querySelectorAll(".footer-link[data-modal]").forEach(link => {
+// Открытие любых юридических окон по атрибуту data-modal
+    document.querySelectorAll("[data-modal]").forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
             const targetModal = document.getElementById(link.dataset.modal);
@@ -291,7 +388,7 @@ function initModals() {
     });
 
     window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('overlay')) {
+        if (e.target.classList.contains('overlay') && e.target.id !== 'imageLightboxModal') {
             e.target.style.display = 'none';
         }
     });
@@ -300,7 +397,6 @@ function initModals() {
 // --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
     initCatalogFilters();
-    initCardVariants();
     initSandboxSimulator();
     initModals();
 });

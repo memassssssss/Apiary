@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Правила сервера ApiarySMP</title>
     <link rel="stylesheet" href="./rules-style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- Полоска прогресса чтения -->
+    <div id="readingProgress" class="reading-progress-bar"></div>
 
     <!-- Живой анимированный фон (светящиеся сферы) -->
     <div class="bg-animation">
@@ -17,119 +22,559 @@
         <div class="orb orb-4"></div>
     </div>
 
+    <!-- Затемнение для мобильного меню -->
+    <div id="navBackdrop" class="nav-backdrop"></div>
+
     <header class="rules-header">
-        <a href="index.html" class="back-button">← На главную</a>
-        <h1>Правила Apiary SMP</h1>
+        <a href="index.html" class="back-button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            На главную
+        </a>
+        <h1>Правила <span class="text-accent">Apiary SMP</span></h1>
+        <p class="rules-subtitle">Свод законов и порядков улья • Сезонная редакция</p>
     </header>
 
-    <!-- Кнопка выдвижения меню (только для телефонов) -->
-    <button id="navToggle" class="nav-toggle-btn">❯</button>
+    <!-- Кнопка выдвижения меню (мобилки) -->
+    <button id="navToggle" class="nav-toggle-btn" aria-label="Открыть оглавление">❯</button>
 
-    <!-- Боковая навигация -->
+    <!-- Боковая навигация с трекингом -->
     <nav id="sideNav" class="side-nav">
         <h3 class="nav-title">Оглавление</h3>
         <ul class="nav-links">
-            <li><a href="#general">Общие запреты</a></li>
-            <li><a href="#territory">Территории и собственность</a></li>
-            <li><a href="#communication">Коммуникация игроков</a></li>
-            <li><a href="#clans">Кланы</a></li>
-            <li><a href="#punishments">Меры наказания</a></li>
+            <li><a href="#general" class="nav-link-item active">1. Общие запреты</a></li>
+            <li><a href="#territory" class="nav-link-item">2. Территории и земля</a></li>
+            <li><a href="#communication" class="nav-link-item">3. Коммуникация и PvP</a></li>
+            <li><a href="#clans" class="nav-link-item">4. Кланы улья</a></li>
+            <li><a href="#punishments" class="nav-link-item">5. Меры наказания</a></li>
         </ul>
+        <div class="side-nav-footer">
+            <span>Незнание правил не освобождает от ответственности</span>
+        </div>
     </nav>
 
     <main class="rules-container">
+
+        <!-- ИНТЕРАКТИВНЫЙ БАР ПОИСКА И ФИЛЬТРОВ -->
+        <div class="rules-search-section">
+            <div class="rules-search-box">
+                <svg class="rules-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="rulesSearchInput" placeholder="Поиск по номеру, слову (гриф, пвп, дюп, бан)..." autocomplete="off">
+                <button id="rulesClearSearch" class="rules-clear-btn" title="Сбросить поиск">&times;</button>
+            </div>
+            
+            <div class="rules-tags-bar">
+                <span class="tags-label">Быстрые темы:</span>
+                <button class="rule-tag-chip active" data-filter="all">Все</button>
+                <button class="rule-tag-chip" data-filter="гриф">Гриферство</button>
+                <button class="rule-tag-chip" data-filter="pvp">PvP & Зоны</button>
+                <button class="rule-tag-chip" data-filter="чит">Читы & Дюпы</button>
+                <button class="rule-tag-chip" data-filter="территори">Приваты</button>
+                <button class="rule-tag-chip" data-filter="бан">Наказания</button>
+            </div>
+
+            <div id="searchStats" class="rules-search-stats"></div>
+        </div>
         
-        <h2 id="general" class="category-title">Общие запреты</h2>
-        <ol class="rules-list" start="1">
-            <li>Игроки, которые хоть раз были забанены на сервере за пункты: 2, 3, 4, 5, то вы лишаетесь права на бесплатную проходку путями: выигрыша в розыгрышах в ТГК Apiary, а также выигрыша в розыгрыше на стримах MeMas'a и других путей розыгрыша бесплатных проходок на сезон.</li>
-            <li>Запрещены в чате (Discord и игра): спам, любые виды флуда, оскорбления, реклама, провокации, бессмысленные сообщения, чрезмерный капс, повторяющиеся фразы и набор символов.</li>
-            <li>Запрещенно угрожать Доксом, Сватом, Деаноном, Снипиннгом в общем, в том числе и для получения ресурсов или иных услуг - наказание: перманетный бан.</li>
-            <li>Строжайше запрещены любые виды читов и дюпов (разрешен дюп на ковры).</li>
-            <li>Запрещены автошахтёры, боты и так далее (Baritone). LiteMatica разрешена.</li>
-            <li>Запрещены любые виды гриферства, в том числе лавакасты, подрыв территории и поджог построек, воровство ресурсов, убийство чужих мобов и т.д.</li>
-            <li>Запрещено засорение территории мусорными постройками на территории спавна, хаба (спам блоками, коробками, хаотичное размещение случайных блоков и т.д.).</li>
-            <li>Запрещены любые лагающие постройки. Если такая будет замечена, то будет удалена без возмещения ресурсов.</li>
-            <li>Передача своего игрового аккаунта другому человеку должна быть согласованна с модерацией.</li>
-            <li>Запрещен ввод модерации в заблуждение и попытки нечестным путём вернуть ресурсы. Карается баном.</li>
-            <li>Запрещены любые моды/способы для определения сида мира и дальнейшего пользования с целью нахождения тех или иных структур.</li>
-            <li>Модерация оставляет за собой право применять санкции за действия, которые явно направлены на разрушение комфортной игры других участников.</li>
-            <li>В спорных ситуациях решение принимается коллегиально (не менее 2 модераторов) либо единолично администратором.</li>
-            <li>Модератор играющий на своем твинк-аккаунте без прав модератора игрок.</li>
-            <li>Модератор не обязан решать вашу проблему если он играет на своем твинк-аккаунте без прав модератора только если вы не подали тикет.</li>
-        </ol>
+        <!-- РАЗДЕЛ 1: ОБЩИЕ ЗАПРЕТЫ -->
+        <section class="rules-section" data-section="general">
+            <h2 id="general" class="category-title">
+                <span class="category-num">01</span>
+                <span>Общие запреты</span>
+            </h2>
+            <ol class="rules-list">
+                <li id="rule-1" class="rule-item">
+                    <span class="rule-badge">#1</span>
+                    <div class="rule-content">
+                        Игроки, которые хоть раз были забанены на сервере за пункты 2, 3, 4, лишаются права на бесплатную проходку путями выигрыша в розыгрышах в ТГК Apiary, на стримах MeMas'a и других акций бесплатных проходок на сезон.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(1)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-2" class="rule-item">
+                    <span class="rule-badge">#2</span>
+                    <div class="rule-content">
+                        Запрещены в чате (Discord и игра): спам, любые виды флуда, оскорбления, реклама, провокации, бессмысленные сообщения, чрезмерный капс, повторяющиеся фразы и набор символов.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(2)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-3" class="rule-item">
+                    <span class="rule-badge">#3</span>
+                    <div class="rule-content">
+                        Строго запрещено угрожать Доксом, Сватом, Деаноном, Сниппингом в любом виде, в том числе для вымогательства ресурсов или иных услуг. 
+                        <strong class="severity-tag tag-perma">Наказание: перманентный бан</strong>.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(3)" title="Скопировать ссылку на правило">#</button>
+                </li>
 
-        <h2 id="territory" class="category-title">Территории и право собственности</h2>
-        <ol class="rules-list" start="17">
-            <li>Право на строение определяется, когда игрок сам построил дом, ферму, рукотворный ландшафт и т.д. Либо если другой игрок передаёт её ему (подтверждать можно тикетом).</li>
-            <li>Право на территорию (в т.ч деревни и другие структуры данжей) определяется табличкой с Ником владельца и информацией где очертаны границы привата (если территория не определяется данжем или строением) или же наименованием данжа/строения.</li>
-            <li>Автоматическое освобождение территории при длительном отсутствии. Если владелец постройки или фермы не заходил на сервер более 30 дней, его территория может быть переоформлена на другого игрока через тикет.Администрация имеет право снести старую постройку или передать права новому владельцу.</li>
-            <li>Право на территорию привязано к праву на строение. Площадь определяется типом постройки: фермы, маленькие дома (до 16x16 блоков) — 32 блока; дома больше 16x16 — 48 блоков; целый город из разных домов — 64 блока; рукотворный ландшафт — 64 блока; отстроенный остров — вся его территория + 128 блоков; малые декорации — 24 блока.</li>
-            <li>Общественные зоны неприкосновенны. Ваша частная территория ни в коем случае не должна включать, пересекать или блокировать доступ к общественным постройкам (спавн, магазины, дороги). Оставляйте проход не менее 5 блоков.</li>
-            <li>Территория спавна и хаба является нейтральной зоной. PvP на спавне (30 блоков по x и y от нулевых координат) запрещено всегда.</li>
-            <li>Размеры территории измеряются от фундамента по горизонтали. По вертикали владение распространяется от бедрока до верхнего предела мира.</li>
-            <li>Запрещено прокладывать туннели, шахты или скрытые проходы в непосредственной близости (менее 16 блоков) от чужой заприваченной территории без согласия владельца.</li>
-            <li>Можно занимать некоторые структуры (все спавнеры, кроме чешуйниц и ифритов; аванпосты, морской монумент). После постройки полноценной структуры территория 32 блока во все стороны считается вашей.</li>
-            <li>Запрещено занимать некоторые структуры (Адская крепость, дворец испытаний, портал в эндер.мир и его крепость).</li>
-            <li>Остров Эндер дракона является общественной зоной. Во время убийства Эндер дракона запрещено мусорить блоками (в т.ч строится вверх ради попытки заполучить яйцо эндер дракона или убить дракона с булавы).</li>
-        </ol>
+                <!-- ОБЪЕДИНЕННЫЙ ПУНКТ 4 И 5 -->
+                <li id="rule-4" class="rule-item">
+                    <span class="rule-badge">#4</span>
+                    <div class="rule-content">
+                        Строжайше запрещены любые виды читов, дюпов (<span class="rule-exception">разрешен только дюп на ковры</span>), использование ботов, автошахтеров (Baritone), а также <strong class="severity-tag tag-perma">отключение рендера жидкостей (воды или лавы)</strong>. Мод <span class="rule-allowed">Litematica разрешен</span>.
+                        <div class="rule-mod-disclaimer">
+                            Полные списки не разглашаются во избежание абуза правил. Если вы не уверены, разрешён ли конкретный мод или ресурспак на сервере, откройте тикет на сервере Discord и спросите о нем.
+                        </div>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(4)" title="Скопировать ссылку на правило">#</button>
+                </li>
 
-        <h2 id="communication" class="category-title">Коммуникация игроков</h2>
-        <ol class="rules-list" start="28">
-            <li>PvP разрешено только с согласия обеих сторон.</li>
-            <li>Разрешено противодействовать грифу своих построек и ресурсов (играть от защиты). Запрещено гриферить в ответ или воровать. Всегда нужно подавать тикет.</li>
-            <li>Разрешена самозащита в случае нападения (атаки оружием, ловушки, утрата тотема). Удар рукой, яйцом или снежком нападением не считается.</li>
-            <li>Запретные территории (запретки). На запретной территории (ферма или склад) вы можете убивать игроков без предупреждения, если территория огорожена и есть табличка: «Запретная зона. Вход без разрешения = PvP».</li>
-            <li>Вы имеете право выдворить игрока с обычной территории, если он не ушёл сам после 3 чётких предупреждений в чате.</li>
-            <li>Если вы убили игрока, вы обязаны вернуть ему ресурсы (сохранить выпавшие вещи) и оставить их в доступном месте, где он сможет их забрать (не на вашей территории).</li>
-        </ol>
+                <li id="rule-5" class="rule-item">
+                    <span class="rule-badge">#5</span>
+                    <div class="rule-content">
+                        Запрещены любые виды гриферства, в том числе лавакасты, подрыв территории и поджог построек, воровство ресурсов, убийство чужих мобов и жителей.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(5)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-6" class="rule-item">
+                    <span class="rule-badge">#6</span>
+                    <div class="rule-content">
+                        Запрещено засорение территории мусорными постройками на спавне и в хабе (столбы, коробки из грязи, хаотичное размещение случайных блоков).
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(6)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-7" class="rule-item">
+                    <span class="rule-badge">#7</span>
+                    <div class="rule-content">
+                        Запрещены любые лагающие постройки и лаг-машины. При обнаружении постройка удаляется администрацией без возмещения ресурсов.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(7)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-8" class="rule-item">
+                    <span class="rule-badge">#8</span>
+                    <div class="rule-content">
+                        Передача своего игрового аккаунта другому человеку должна быть обязательно заранее согласована с модерацией.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(8)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-9" class="rule-item">
+                    <span class="rule-badge">#9</span>
+                    <div class="rule-content">
+                        Запрещен ввод модерации в заблуждение и попытки нечестным путём вернуть ресурсы. Карается баном.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(9)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-10" class="rule-item">
+                    <span class="rule-badge">#10</span>
+                    <div class="rule-content">
+                        Запрещены любые моды и способы для определения сида мира и дальнейшего пользования с целью нахождения тех или иных структур.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(10)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-11" class="rule-item">
+                    <span class="rule-badge">#11</span>
+                    <div class="rule-content">
+                        Модерация оставляет за собой право применять санкции за действия, которые явно направлены на разрушение комфортной игры других участников.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(11)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-12" class="rule-item">
+                    <span class="rule-badge">#12</span>
+                    <div class="rule-content">
+                        В спорных ситуациях решение принимается коллегиально (не менее 2 модераторов) либо единолично главным администратором.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(12)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-13" class="rule-item">
+                    <span class="rule-badge">#13</span>
+                    <div class="rule-content">
+                        Модератор, играющий на своем твинк-аккаунте без прав модератора, приравнивается к обычному игроку.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(13)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-14" class="rule-item">
+                    <span class="rule-badge">#14</span>
+                    <div class="rule-content">
+                        Модератор не обязан решать вашу проблему, если он играет на твинк-аккаунте без прав, пока вы официально не подали тикет в Discord.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(14)" title="Скопировать ссылку на правило">#</button>
+                </li>
+            </ol>
+        </section>
 
-        <h2 id="clans" class="category-title">Кланы</h2>
-        <ol class="rules-list" start="34">
-            <li>Кланом считается объединение от 3 человек, подавшее анкету в тикет.</li>
-            <li>При выходе из клана игроку предоставляется 24 часа на вывоз личного имущества. Клан не имеет права блокировать доступ или уничтожать вещи игрока в этот период.</li>
-            <li>По умолчанию ресурсы в общих клановых сундуках считаются общими. Личным имуществом признаются ресурсы в Эндер-сундуке, личном доме или те, что можно доказать логами.</li>
-            <li>Кланы могут воевать друг с другом только после подачи заявки на войну в тикете и согласия обоих лидеров с условиями.</li>
-        </ol>
+        <!-- РАЗДЕЛ 2: ТЕРРИТОРИИ -->
+        <section class="rules-section" data-section="territory">
+            <h2 id="territory" class="category-title">
+                <span class="category-num">02</span>
+                <span>Территории и право собственности</span>
+            </h2>
+            <ol class="rules-list">
+                <li id="rule-17" class="rule-item">
+                    <span class="rule-badge">#17</span>
+                    <div class="rule-content">
+                        Право на строение возникает, когда игрок сам построил дом, ферму, рукотворный ландшафт и т.д., либо если другой игрок передал её ему (передачу можно подтверждать тикетом).
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(17)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-18" class="rule-item">
+                    <span class="rule-badge">#18</span>
+                    <div class="rule-content">
+                        Право на территорию (в т.ч. деревни и структуры) определяется табличкой с ником владельца и информацией о границах владения (либо наименованием данжа/строения).
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(18)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-19" class="rule-item">
+                    <span class="rule-badge">#19</span>
+                    <div class="rule-content">
+                        <strong>Автоматическое освобождение при неактиве:</strong> если владелец постройки или фермы не заходил на сервер <strong>более 30 дней</strong>, его территория может быть переоформлена на другого игрока через тикет. Администрация вправе снести старую постройку или передать права новому владельцу.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(19)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-20" class="rule-item">
+                    <span class="rule-badge">#20</span>
+                    <div class="rule-content">
+                        Право на территорию привязано к типу постройки:
+                        <ul class="rule-sublist">
+                            <li>Фермы, маленькие дома (до 16x16) — <strong>32 блока</strong> во все стороны;</li>
+                            <li>Дома больше 16x16 — <strong>48 блоков</strong>;</li>
+                            <li>Целый город из разных домов — <strong>64 блока</strong>;</li>
+                            <li>Рукотворный ландшафт — <strong>64 блока</strong>;</li>
+                            <li>Отстроенный остров — вся его территория + <strong>128 блоков</strong> вокруг;</li>
+                            <li>Малые декорации — <strong>24 блока</strong>.</li>
+                        </ul>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(20)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-21" class="rule-item">
+                    <span class="rule-badge">#21</span>
+                    <div class="rule-content">
+                        <strong>Общественные зоны неприкосновенны.</strong> Ваша частная территория ни в коем случае не должна перекрывать или блокировать спавн, общие магазины и дороги. Всегда оставляйте сквозной проход не менее 5 блоков.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(21)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-22" class="rule-item">
+                    <span class="rule-badge">#22</span>
+                    <div class="rule-content">
+                        Спавн и хаб — нейтральная зона. <strong>PvP на спавне</strong> (радиус 30 блоков по X и Z от нулевых координат) строго запрещено в любое время.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(22)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-23" class="rule-item">
+                    <span class="rule-badge">#23</span>
+                    <div class="rule-content">
+                        Размеры владений отсчитываются от фундамента по горизонтали. По вертикали владение распространяется от самого бедрока до верхнего предела мира.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(23)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-24" class="rule-item">
+                    <span class="rule-badge">#24</span>
+                    <div class="rule-content">
+                        Запрещено копать туннели, шахты или скрытые ходы ближе чем в <strong>16 блоках</strong> от чужой заприваченной территории без прямого согласия соседа.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(24)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-25" class="rule-item">
+                    <span class="rule-badge">#25</span>
+                    <div class="rule-content">
+                        <strong>Разрешено занимать структуры:</strong> все спавнеры (кроме чешуйниц и ифритов), аванпосты разбойников, морской монумент. После постройки базы территория в 32 блока во все стороны считается вашей.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(25)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-26" class="rule-item">
+                    <span class="rule-badge">#26</span>
+                    <div class="rule-content">
+                        <strong>Запрещено единолично занимать структуры:</strong> Адские крепости, Дворцы испытаний (Trial Chambers), Портал в Эндер-мир и его крепость.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(26)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-27" class="rule-item">
+                    <span class="rule-badge">#27</span>
+                    <div class="rule-content">
+                        Остров Эндер-дракона является общественной зоной. Во время битвы запрещено мусорить столбами и блоками (в том числе строиться вверх ради булавы или яйца).
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(27)" title="Скопировать ссылку на правило">#</button>
+                </li>
+            </ol>
+        </section>
 
-        <h2 id="punishments" class="category-title">Меры наказания</h2>
-        <ol class="rules-list" start="38">
-            <li>Флуд и спам: предупреждение → бан на 1 день → бан на 7 дней.</li>
-            <li>Оскорбления, провокации, троллинг: предупреждение → бан на 3 дня → бан на 7 дней.</li>
-            <li>Несанкционированная реклама: предупреждение → бан на 3 дня → бан на 14 дней.</li>
-            <li>NSFW-контент: предупреждение → бан (мут в дс) на 3 дня → бан (мут в дс) на 7 дней.</li>
-            <li>Контент с чрезмерным насилием, пропаганда чего-либо, оскорбление администрации: бан (мут в дс) на 14 дней → перманентный бан.</li>
-            <li>Гриферство: бан на 7 дней (с обязательным возмещением урона) → перманентный бан.</li>
-            <li>Читы, дюпы, лаг-машины: перманентный бан без права обжалования.</li>
-            <li>Обман администрации: бан на 7 дней → перманентный бан.</li>
-            <li>Обход нарушения (абуз правил): увеличение срока блокировки.</li>
-            <li>В крайних случаях администрация имеет право вынести наказание какое считает нужным.</li>
-        </ol>
+        <!-- РАЗДЕЛ 3: КОММУНИКАЦИЯ И PVP -->
+        <section class="rules-section" data-section="communication">
+            <h2 id="communication" class="category-title">
+                <span class="category-num">03</span>
+                <span>Коммуникация игроков и PvP</span>
+            </h2>
+            <ol class="rules-list">
+                <li id="rule-28" class="rule-item">
+                    <span class="rule-badge">#28</span>
+                    <div class="rule-content">
+                        PvP на сервере разрешено <strong>исключительно по обоюдному согласию</strong> обеих сторон.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(28)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-29" class="rule-item">
+                    <span class="rule-badge">#29</span>
+                    <div class="rule-content">
+                        Разрешено защищать свои постройки и ресурсы от гриферов в реальном времени. При этом <strong>запрещено гриферить или воровать в ответ</strong> — всегда сразу создавайте тикет.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(29)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-30" class="rule-item">
+                    <span class="rule-badge">#30</span>
+                    <div class="rule-content">
+                        Разрешена самозащита при нападении (атаки оружием, ловушки, снятие тотема). Случайный удар голой рукой, снежком или яйцом нападением не считается.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(30)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-31" class="rule-item">
+                    <span class="rule-badge">#31</span>
+                    <div class="rule-content">
+                        <strong>Запретные зоны (запретки):</strong> на личной огороженной ферме или складе вы имеете право убивать незваных гостей без предупреждения, если висит табличка: <em>«Запретная зона. Вход без разрешения = PvP»</em>.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(31)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-32" class="rule-item">
+                    <span class="rule-badge">#32</span>
+                    <div class="rule-content">
+                        Вы имеете право выдворить игрока со своей обычной территории силой, если он проигнорировал <strong>3 четких предупреждения</strong> покинуть базу в чате.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(32)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-33" class="rule-item">
+                    <span class="rule-badge">#33</span>
+                    <div class="rule-content">
+                        Если вы случайно или при защите убили игрока, <strong>вы обязаны бережно сохранить и вернуть все его ресурсы</strong>, оставив их в безопасном сундуке за пределами своей базы.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(33)" title="Скопировать ссылку на правило">#</button>
+                </li>
+            </ol>
+        </section>
+
+        <!-- РАЗДЕЛ 4: КЛАНЫ -->
+        <section class="rules-section" data-section="clans">
+            <h2 id="clans" class="category-title">
+                <span class="category-num">04</span>
+                <span>Кланы улья</span>
+            </h2>
+            <ol class="rules-list">
+                <li id="rule-34" class="rule-item">
+                    <span class="rule-badge">#34</span>
+                    <div class="rule-content">
+                        Кланом признается официальное объединение от 3 игроков, подавшее анкету через тикет-систему в Discord.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(34)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-35" class="rule-item">
+                    <span class="rule-badge">#35</span>
+                    <div class="rule-content">
+                        При выходе участника из клана ему выделяются <strong>24 часа на вывоз личных вещей</strong>. Клан не имеет права удерживать или сжигать его имущество в этот срок.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(35)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-36" class="rule-item">
+                    <span class="rule-badge">#36</span>
+                    <div class="rule-content">
+                        Ресурсы в общих клановых сундуках считаются общей собственностью. Личным имуществом считаются вещи в Эндер-сундуке, личном отдельном доме либо подтвержденные логами сервера CoreProtect.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(36)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-37" class="rule-item">
+                    <span class="rule-badge">#37</span>
+                    <div class="rule-content">
+                        Войны между кланами проводятся исключительно после согласования условий и регламента в тикете при согласии обоих лидеров.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(37)" title="Скопировать ссылку на правило">#</button>
+                </li>
+            </ol>
+        </section>
+
+        <!-- РАЗДЕЛ 5: МЕРЫ НАКАЗАНИЯ -->
+        <section class="rules-section" data-section="punishments">
+            <h2 id="punishments" class="category-title">
+                <span class="category-num">05</span>
+                <span>Меры наказания</span>
+            </h2>
+            <ol class="rules-list">
+                <li id="rule-38" class="rule-item">
+                    <span class="rule-badge">#38</span>
+                    <div class="rule-content">
+                        <strong>Флуд и спам в чатах:</strong> 
+                        <span class="punish-flow">Предупреждение ➔ Бан на 1 день ➔ Бан на 7 дней</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(38)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-39" class="rule-item">
+                    <span class="rule-badge">#39</span>
+                    <div class="rule-content">
+                        <strong>Оскорбления, провокации, токсичный троллинг:</strong> 
+                        <span class="punish-flow">Предупреждение ➔ Бан на 3 дня ➔ Бан на 7 дней</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(39)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-40" class="rule-item">
+                    <span class="rule-badge">#40</span>
+                    <div class="rule-content">
+                        <strong>Несанкционированная реклама других проектов:</strong> 
+                        <span class="punish-flow">Предупреждение ➔ Бан на 3 дня ➔ Бан на 14 дней</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(40)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-41" class="rule-item">
+                    <span class="rule-badge">#41</span>
+                    <div class="rule-content">
+                        <strong>Публикация NSFW-контента (18+):</strong> 
+                        <span class="punish-flow">Предупреждение ➔ Бан/мут на 3 дня ➔ Бан/мут на 7 дней</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(41)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-42" class="rule-item">
+                    <span class="rule-badge">#42</span>
+                    <div class="rule-content">
+                        <strong>Чрезмерная жестокость, запрещенная пропаганда, грубое оскорбление администрации:</strong> 
+                        <span class="punish-flow">Бан/мут на 14 дней ➔ Перманентный бан</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(42)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-43" class="rule-item">
+                    <span class="rule-badge">#43</span>
+                    <div class="rule-content">
+                        <strong>Гриферство, воровство:</strong> 
+                        <span class="punish-flow">Бан на 7 дней (с обязательным откатом урона) ➔ Перманентный бан</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(43)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-44" class="rule-item">
+                    <span class="rule-badge">#44</span>
+                    <div class="rule-content">
+                        <strong>Читы, вредоносные дюпы, умышленные лаг-машины:</strong> 
+                        <strong class="severity-tag tag-perma">Перманентный бан без права на амнистию</strong>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(44)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-45" class="rule-item">
+                    <span class="rule-badge">#45</span>
+                    <div class="rule-content">
+                        <strong>Обман администрации при проверках и тикетах:</strong> 
+                        <span class="punish-flow">Бан на 7 дней ➔ Перманентный бан</span>
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(45)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-46" class="rule-item">
+                    <span class="rule-badge">#46</span>
+                    <div class="rule-content">
+                        <strong>Попытки обхода блокировок и абуз дыр в формулировках правил:</strong> 
+                        увеличение исходного срока бана либо перманентное исключение.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(46)" title="Скопировать ссылку на правило">#</button>
+                </li>
+                <li id="rule-47" class="rule-item">
+                    <span class="rule-badge">#47</span>
+                    <div class="rule-content">
+                        В непредвиденных или критических ситуациях администрация оставляет за собой право применить индивидуальную меру наказания.
+                    </div>
+                    <button class="rule-copy-btn" onclick="copyRuleLink(47)" title="Скопировать ссылку на правило">#</button>
+                </li>
+            </ol>
+        </section>
+
     </main>
 
-    <!-- Скрипт для работы мобильного меню -->
-    <script>
-        const nav = document.getElementById('sideNav');
-        const toggleBtn = document.getElementById('navToggle');
-        const navLinks = document.querySelectorAll('.nav-links a');
+    <!-- ПОДВАЛ ПРАВИЛ С ЮРИДИЧЕСКИМИ ССЫЛКАМИ -->
+    <footer class="footer-wrap">
+        <div class="site-container">
+            <div class="footer-grid">
+                <div class="footer-cell cell-brand">
+                    <div class="footer-logo">Apiary<span class="text-accent">SMP</span></div>
+                    <p class="footer-desc">Независимый ванильный сервер Minecraft. Создан игроками для игроков.</p>
+                    <span class="footer-legal-note">
+                        NOT AN OFFICIAL MINECRAFT PRODUCT/SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
+                        <br>НЕ ЯВЛЯЕТСЯ ОФИЦИАЛЬНЫМ СЕРВИСОМ MINECRAFT. НЕ ОДОБРЕНО И НЕ СВЯЗАНО С MOJANG ИЛИ MICROSOFT.
+                    </span>
+                </div>
 
-        // Открытие/закрытие по клику на кнопку
-        toggleBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            toggleBtn.classList.toggle('active');
-            toggleBtn.textContent = nav.classList.contains('active') ? '✕' : '❯';
-        });
+                <div class="footer-cell">
+                    <h4>Контакты</h4>
+                    <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
+                    <p>Telegram: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
+                </div>
 
-        // Прячем меню, если на мобилке кликнули по ссылке
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1500) {
-                    nav.classList.remove('active');
-                    toggleBtn.classList.remove('active');
-                    toggleBtn.textContent = '❯';
-                }
-            });
-        });
-    </script>
+                <div class="footer-cell">
+                    <h4>Реквизиты</h4>
+                    <p>Самозанятый</p>
+                    <p>Бризицкий Михаил Романович</p>
+                    <p>ИНН: 253609705426</p>
+                </div>
 
+                <div class="footer-cell">
+                    <h4>Навигация и документы</h4>
+                    <a href="index.html" class="footer-link">Главная страница →</a>
+                    <a href="shop.html" class="footer-link">Магазин товаров →</a>
+                    <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
+                    <a href="#" class="footer-link" data-modal="privacyModal">Политика конфиденциальности</a>
+                    <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
+    <div class="overlay" id="offerModal">
+        <div class="sheet-modal sheet-modal-large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Публичная оферта</h2>
+            <div class="modal-text">
+                <p><strong>1. Общие положения</strong><br>
+                Настоящий документ является официальным публичным предложением (публичной офертой согласно ст. 437 ГК РФ) плательщика налога на профессиональный доход (самозанятого) <strong>Бризицкого Михаила Романовича</strong> (ИНН <strong>253609705426</strong>), именуемого в дальнейшем «Исполнитель», заключить договор оказания цифровых услуг с любым физическим лицом («Заказчик»).</p>
+
+                <p><strong>2. Предмет соглашения</strong><br>
+                Исполнитель предоставляет Заказчику право доступа к игровому серверу ApiarySMP (добавление никнейма в белый список) и/или активирует внутриигровые декоративные права и косметические эффекты в системе сервера. Все услуги носят исключительно виртуальный нематериальный характер.</p>
+
+                <p><strong>3. Акцепт и стоимость</strong><br>
+                Оплата заказа через интерфейс сайта признается полным и безоговорочным акцептом условий настоящей Оферты (ст. 438 ГК РФ).</p>
+
+                <p><strong>4. Условия исполнения и невозвратность</strong><br>
+                В соответствии со ст. 779 Гражданского кодекса РФ (договор возмездного оказания услуг) и ст. 32 Закона РФ «О защите прав потребителей», услуга по предоставлению доступа к функционалу сервера считается полностью оказанной Исполнителем в полном объеме в момент внесения учетной записи Заказчика в список доступа (вайтлист) или начисления внутриигровых прав через систему RCON/LuckPerms. В случае одностороннего расторжения договора со стороны Исполнителя по причине нарушения Заказчиком Правил сервера, денежные средства возврату не подлежат в связи с полным исполнением обязательств Исполнителем на момент предоставления доступа.</p>
+
+                <p><strong>5. Фискальные чеки (422-ФЗ)</strong><br>
+                В соответствии с Федеральным законом № 422-ФЗ электронный чек, сформированный Исполнителем в приложении «Мой налог», предоставляется Заказчику в электронной форме по запросу, направленному на адрес электронной почты: pizduke13@gmail.com.</p>
+
+                <p><strong>6. Реквизиты</strong><br>
+                Самозанятый: Бризицкий Михаил Романович<br>
+                ИНН: 253609705426<br>
+                Email: pizduke13@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ (152-ФЗ) -->
+    <div class="overlay" id="privacyModal">
+        <div class="sheet-modal sheet-modal-large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Политика конфиденциальности</h2>
+            <div class="modal-text">
+                <p><strong>1. Общие положения</strong><br>
+                Оператор персональных данных: плательщик налога на профессиональный доход (самозанятый) <strong>Бризицкий Михаил Романович</strong> (ИНН <strong>253609705426</strong>). Настоящая Политика определяет порядок обработки и защиты персональных данных пользователей сайта и сервера ApiarySMP в строгом соответствии с Федеральным законом РФ № 152-ФЗ «О персональных данных».</p>
+                
+                <p><strong>2. Состав обрабатываемых данных</strong><br>
+                В рамках функционирования сайта и активации услуг обрабатываются следующие данные: игровой никнейм Minecraft, Telegram-username (при обращении к боту или поддержке), технические обезличенные идентификаторы (файлы cookie, IP-адрес сетевого соединения), а также данные об успешных транзакциях, передаваемые платежным шлюзом.</p>
+
+                <p><strong>3. Цели сбора и обработки</strong><br>
+                Идентификация Заказчика для автоматического занесения в список доступа (вайтлист), выдача купленных прав, исполнение публичной оферты, защита от мошеннических действий и обеспечение обратной связи.</p>
+
+                <p><strong>4. Передача третьим лицам и безопасность</strong><br>
+                Оператор не передает и не раскрывает данные пользователей третьим лицам, за исключением официального оператора платежей (ЮKassa / ООО НКО «ЮМани») исключительно для проведения расчета. Все данные обрабатываются с применением современных стандартов шифрования.</p>
+
+                <p><strong>5. Сроки хранения и отзыв согласия</strong><br>
+                Данные хранятся в течение срока функционирования учетной записи на сервере. Согласие может быть отозвано пользователем в любой момент путем направления электронного заявления на адрес: <strong>pizduke13@gmail.com</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ -->
+    <div class="overlay" id="termsModal">
+        <div class="sheet-modal sheet-modal-large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Пользовательское соглашение</h2>
+            <div class="modal-text">
+                <p><strong>1. Общие правила</strong><br>
+                Пользуясь сайтом и игровым сервером ApiarySMP, Пользователь соглашается соблюдать установленный Свод правил сервера (размещенный по адресу rules-main.html) и не нарушать баланс игры.</p>
+
+                <p><strong>2. Ограничение ответственности и правила Mojang</strong><br>
+                Сервер ApiarySMP является независимым любительским проектом и никак не аффилирован с компаниями Mojang AB или Microsoft. Все донат-услуги проекта носят декоративный характер, предоставляются «как есть» и не дают игроку нечестных преимуществ перед другими (Non-P2W).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Всплывающее уведомление (Toast) -->
+    <div id="toastMessage" class="toast-strip"></div>
+
+    <script src="./rules-script.js"></script>
 </body>
 </html>

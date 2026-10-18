@@ -1,57 +1,87 @@
-/* Делаем обнуление стандартных отступов, чтобы браузер ничего не ломал */
+/* --- СБРОС И БАЗОВЫЕ НАСТРОЙКИ --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Настройки для всей страницы с живым фоном */
-/* --- ОСНОВНОЙ ФОН --- */
+:root {
+    --honey-primary: #FFC300;
+    --honey-bright: #f2a829;
+    --honey-dark: #c98a00;
+    --bg-dark: #0a0a0a;
+    --text-main: #f5f3ef;
+    --text-muted: #aca396;
+    --border-glass: rgba(255, 195, 0, 0.16);
+    --surface-glass: rgba(18, 16, 14, 0.55);
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-dark);
+}
+
 body {
-    background-color: #0a0a0a; /* Очень темный, почти черный фон */
-    color: #ffffff;            
-    font-family: 'Inter', sans-serif; 
-    line-height: 1.6;          
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.65;
     min-height: 100vh;
     position: relative;
     z-index: 1;
-    overflow-x: hidden; /* Блокируем появление горизонтального скролла от шариков */
+    overflow-x: hidden;
 }
 
-/* --- КОНТЕЙНЕР АНИМАЦИИ --- */
+.text-accent {
+    color: var(--honey-primary);
+}
+
+/* --- ПОЛОСКА ПРОГРЕССА ЧТЕНИЯ --- */
+.reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--honey-dark), var(--honey-primary));
+    z-index: 9999;
+    box-shadow: 0 0 12px rgba(255, 195, 0, 0.7);
+    transition: width 0.08s ease-out;
+}
+
+/* --- ФОНОВЫЕ СФЕРЫ --- */
 .bg-animation {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1; /* Отправляем на самый задний план */
+    z-index: -1;
     overflow: hidden;
+    pointer-events: none;
 }
 
-/* --- ОБЩИЕ СТИЛИ СВЕТЯЩИХСЯ СФЕР --- */
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(90px); /* Сильное размытие создает эффект свечения */
-    opacity: 0.6;
+    filter: blur(100px);
+    opacity: 0.45;
     animation: float infinite alternate ease-in-out;
 }
 
-/* Индивидуальные настройки каждого шарика (цвета, размер, позиция) */
 .orb-1 {
     width: 450px;
     height: 450px;
-    background: #FFC300; /* Твой фирменный желтый */
+    background: #FFC300;
     top: -10%;
     left: -10%;
     animation-duration: 14s;
 }
 
 .orb-2 {
-    width: 350px;
-    height: 350px;
-    background: #e67e22; /* Янтарный/оранжевый */
+    width: 380px;
+    height: 380px;
+    background: #e67e22;
     top: 40%;
     right: -10%;
     animation-duration: 18s;
@@ -61,7 +91,7 @@ body {
 .orb-3 {
     width: 550px;
     height: 550px;
-    background: #8b6b00; /* Темно-золотой */
+    background: #8b6b00;
     bottom: -20%;
     left: 20%;
     animation-duration: 22s;
@@ -69,270 +99,481 @@ body {
 }
 
 .orb-4 {
-    width: 250px;
-    height: 250px;
-    background: #f1c40f; /* Яркий светлячок */
+    width: 280px;
+    height: 280px;
+    background: #f1c40f;
     top: 20%;
     left: 50%;
     animation-duration: 12s;
     animation-delay: -5s;
 }
 
-/* --- АНИМАЦИЯ ПЛАВНОГО ПОЛЕТА --- */
 @keyframes float {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    50% {
-        transform: translate(15vw, 15vh) scale(1.3); /* Шарики немного растут и смещаются */
-    }
-    100% {
-        transform: translate(-10vw, -10vh) scale(0.9); /* Шарики уменьшаются и летят обратно */
-    }
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(12vw, 12vh) scale(1.2); }
+    100% { transform: translate(-8vw, -8vh) scale(0.9); }
 }
 
-/* --- ЭФФЕКТ МАТОВОГО СТЕКЛА ДЛЯ ТЕКСТА --- */
-/* (Замени свой старый .rules-container на этот) */
-.rules-container {
-    max-width: 900px;
-    margin: 40px auto 60px auto;
-    padding: 50px;
-    
-    /* Делаем плашку под текстом полупрозрачной */
-    background: rgba(20, 20, 20, 0.4); 
-    
-    /* Главная магия — размытие того, что находится ПОД контейнером */
-    backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px); 
-    
-    /* Красивые границы и тени */
-    border: 1px solid rgba(255, 195, 0, 0.15);
-    border-radius: 24px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-}
-
-/* Адаптив матового стекла под мобилки */
-@media (max-width: 768px) {
-    .rules-container {
-        padding: 30px 20px;
-        margin: 20px;
-        border-radius: 16px;
-    }
-}
-
-/* Настраиваем шапку страницы */
+/* --- ШАПКА СТРАНИЦЫ --- */
 .rules-header {
-    background-color: #1a1a1a; /* Чуть светлее фона */
-    padding: 30px 20px;
+    background: rgba(18, 16, 14, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 38px 24px 30px;
     text-align: center;
-    border-bottom: 2px solid #FFC300; /* Твоя фирменная желтая полоска */
-    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-glass);
+    margin-bottom: 35px;
     position: relative;
 }
 
-/* Кнопка "Назад" в левом верхнем углу */
 .back-button {
     position: absolute;
-    left: 40px;
-    top: 45px;
-    color: #FFC300;
+    left: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--honey-primary);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    transition: 0.3s; /* Плавность для ховера */
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(255, 195, 0, 0.08);
+    border: 1px solid rgba(255, 195, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
-/* Эффект при наведении на кнопку "Назад" */
 .back-button:hover {
-    color: #ffffff;
-    text-shadow: 0 0 10px #FFC300; /* Легкое свечение */
+    color: #120e08;
+    background: var(--honey-primary);
+    box-shadow: 0 0 16px rgba(255, 195, 0, 0.4);
 }
 
-/* Заголовок в шапке */
 .rules-header h1 {
-    font-size: 36px;
-    color: #FFC300;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 5vw, 2.7rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
 }
 
-/* Контейнер по центру, чтобы текст не растягивался на весь широкий монитор */
-.rules-container {
-    max-width: 900px; /* Ограничиваем ширину */
-    margin: 0 auto;   /* Центрируем блок на странице */
-    padding: 0 20px 60px 20px; /* Отступы по бокам и снизу */
+.rules-subtitle {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin-top: 6px;
 }
 
-/* Заголовки категорий (Общие, Территории и т.д.) */
-.category-title {
-    font-size: 28px;
-    color: #FFC300;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #333333; /* Тонкая линия под заголовком */
-}
-
-/* Настройки для самого списка правил */
-.rules-list {
-    margin-left: 20px; /* Отступ слева, чтобы цифры влезли */
-}
-
-/* Настройки для каждого пункта правила */
-.rules-list li {
-    font-size: 18px;
-    margin-bottom: 15px; /* Отступ между правилами, чтобы они не были одной кашей */
-    color: #cccccc;      /* Слегка серый текст, чтобы глаза не уставали */
-    padding-left: 10px;
-}
-
-/* Делаем сами цифры желтыми, чтобы было красиво */
-.rules-list li::marker {
-    color: #FFC300;
-    font-weight: 600;
-}
-
-/* Адаптация под мобильные телефоны */
-@media (max-width: 768px) {
-    .rules-header h1 {
-        font-size: 24px;
-        margin-top: 40px; /* Сдвигаем вниз, чтобы не налезло на кнопку */
-    }
-    
-    .back-button {
-        left: 20px;
-        top: 20px;
-        font-size: 16px;
-    }
-    
-    .category-title {
-        font-size: 24px;
-    }
-    
-    .rules-list li {
-        font-size: 16px;
-    }
-}
-/* Анимация для живого фона */
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* --- ПЛАВНАЯ ПРОКРУТКА И ФИКС ЯКОРЕЙ --- */
-html {
-    scroll-behavior: smooth;
-}
-
-.category-title {
-    scroll-margin-top: 30px; 
-}
-
-/* --- БОКОВАЯ НАВИГАЦИЯ (ПК) --- */
+/* --- БОКОВОЕ МЕНЮ (ПК) --- */
 .side-nav {
     position: fixed;
-    top: 120px;
-    left: 40px;
-    width: 260px;
-    background: rgba(20, 20, 20, 0.4);
+    top: 130px;
+    left: 36px;
+    width: 270px;
+    background: var(--surface-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 195, 0, 0.15);
-    border-radius: 16px;
-    padding: 25px 20px;
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    padding: 24px 20px;
     z-index: 100;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .nav-title {
-    color: #FFC300;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--honey-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 16px;
     padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    letter-spacing: 0.5px;
 }
 
 .nav-links {
     list-style: none;
-    padding: 0;
 }
 
 .nav-links li {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .nav-links a {
-    color: #cccccc;
+    color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    font-weight: 600;
     display: block;
-    transition: 0.2s ease;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
 }
 
 .nav-links a:hover {
     color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 195, 0, 0.4);
-    transform: translateX(8px); 
+    background: rgba(255, 195, 0, 0.08);
+    transform: translateX(4px);
 }
 
+.nav-links a.active {
+    color: var(--honey-primary);
+    background: rgba(255, 195, 0, 0.12);
+    border-left-color: var(--honey-primary);
+}
+
+.side-nav-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.72rem;
+    color: #736b60;
+    line-height: 1.4;
+}
+
+/* --- КОНТЕЙНЕР ПРАВИЛ --- */
+.rules-container {
+    max-width: 880px;
+    margin: 0 auto 80px;
+    padding: 40px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* --- ПОИСК И ТЕГИ --- */
+.rules-search-section {
+    margin-bottom: 36px;
+    background: rgba(10, 9, 8, 0.6);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.rules-search-box {
+    position: relative;
+    width: 100%;
+}
+
+.rules-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7a7266;
+    pointer-events: none;
+}
+
+.rules-search-box input {
+    width: 100%;
+    padding: 13px 44px 13px 46px;
+    background: rgba(22, 20, 16, 0.95);
+    border: 1px solid var(--border-glass);
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rules-search-box input:focus {
+    border-color: var(--honey-primary);
+    box-shadow: 0 0 12px rgba(255, 195, 0, 0.25);
+}
+
+.rules-clear-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    display: none;
+    transition: color 0.15s;
+}
+
+.rules-clear-btn:hover {
+    color: var(--honey-primary);
+}
+
+.rules-tags-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.tags-label {
+    font-size: 0.78rem;
+    color: #8c8273;
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.rule-tag-chip {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rule-tag-chip:hover {
+    color: #ffffff;
+    border-color: var(--honey-primary);
+    background: rgba(255, 195, 0, 0.08);
+}
+
+.rule-tag-chip.active {
+    background: var(--honey-primary);
+    color: #120e08;
+    border-color: var(--honey-primary);
+    font-weight: 700;
+}
+
+.rules-search-stats {
+    font-size: 0.8rem;
+    color: var(--honey-bright);
+    margin-top: 10px;
+    display: none;
+    font-weight: 600;
+}
+
+/* --- ЗАГОЛОВКИ КАТЕГОРИЙ --- */
+.category-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--honey-primary);
+    margin: 45px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 195, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    scroll-margin-top: 40px;
+}
+
+.rules-section:first-of-type .category-title {
+    margin-top: 10px;
+}
+
+.category-num {
+    font-size: 0.95rem;
+    font-weight: 900;
+    background: rgba(255, 195, 0, 0.14);
+    color: var(--honey-primary);
+    border: 1px solid rgba(255, 195, 0, 0.35);
+    padding: 3px 8px;
+    border-radius: 8px;
+}
+
+/* --- КАРТОЧКИ ПУНКТОВ ПРАВИЛ --- */
+.rules-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rule-item {
+    background: rgba(14, 13, 11, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    scroll-margin-top: 60px;
+}
+
+.rule-item:hover {
+    border-color: rgba(255, 195, 0, 0.3);
+    background: rgba(20, 18, 14, 0.75);
+    transform: translateX(3px);
+}
+
+.rule-item.hidden {
+    display: none !important;
+}
+
+.rules-section.all-hidden {
+    display: none !important;
+}
+
+/* Подсветка целевого правила по ссылке */
+.rule-item.target-highlight {
+    border-color: var(--honey-primary);
+    background: rgba(255, 195, 0, 0.16);
+    box-shadow: 0 0 24px rgba(255, 195, 0, 0.35);
+    animation: pulseBorder 2.5s infinite;
+}
+
+@keyframes pulseBorder {
+    0%, 100% { border-color: var(--honey-primary); }
+    50% { border-color: rgba(255, 195, 0, 0.3); }
+}
+
+.rule-badge {
+    background: rgba(255, 195, 0, 0.15);
+    color: var(--honey-primary);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 195, 0, 0.25);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.rule-content {
+    font-size: 0.96rem;
+    color: #d6d1c7;
+    line-height: 1.6;
+    flex-grow: 1;
+    padding-right: 30px;
+}
+
+.rule-content strong {
+    color: #ffffff;
+}
+
+.rule-sublist {
+    margin-top: 8px;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.rule-sublist li {
+    margin-bottom: 4px;
+}
+
+/* Кнопка-ссылка на конкретное правило */
+.rule-copy-btn {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #595349;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.rule-item:hover .rule-copy-btn {
+    color: var(--text-muted);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.rule-copy-btn:hover {
+    color: var(--honey-primary) !important;
+    background: rgba(255, 195, 0, 0.15);
+    border-color: var(--honey-primary) !important;
+}
+
+/* Выделения внутри правил */
+.rule-allowed {
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+.rule-exception {
+    color: #f1c40f;
+    font-weight: 600;
+}
+
+.severity-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.tag-perma {
+    background: rgba(231, 76, 60, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(231, 76, 60, 0.35);
+}
+
+.punish-flow {
+    display: inline-block;
+    color: #f2a829;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+/* --- ВСПЛЫВАЮЩИЙ ТОАСТ --- */
+.toast-strip {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-30px);
+    background: #1c1813;
+    border: 1px solid var(--honey-primary);
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 10001;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.toast-strip.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* --- КНОПКА-ЯЗЫЧОК И ЗАТЕМНЕНИЕ ДЛЯ МОБИЛОК --- */
 .nav-toggle-btn {
     display: none;
 }
 
-/* --- АДАПТИВ НАВИГАЦИИ (НОУТБУКИ И МОБИЛКИ) --- */
-/* Увеличили порог до 1300px, чтобы меню не наезжало на текст по центру */
-@media (max-width: 1500px) {
-    .side-nav {
-        left: 0;
-        top: 0;
-        height: 100vh;
-        width: 260px;
-        border-radius: 0 20px 20px 0;
-        border-left: none;
-        transform: translateX(-100%); 
-    }
-
-    .side-nav.active {
-        transform: translateX(0); 
-    }
-
-    /* Уменьшенная мобильная кнопка-язычок */
-    .nav-toggle-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        width: 16px;          /* Сделали тоньше */
-        height: 40px;         /* Сделали короче */
-        background: rgba(255, 195, 0, 0.85);
-        color: #000;
-        border: none;
-        border-radius: 0 8px 8px 0; /* Чуть меньше скругление */
-        font-size: 14px;      /* Уменьшили саму стрелочку */
-        cursor: pointer;
-        z-index: 101;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
-        transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s;
-    }
-
-    .nav-toggle-btn.active {
-        left: 260px;
-        background: rgba(200, 50, 50, 0.9); 
-        color: #fff;
-    }
+.nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 99;
 }
 
-/* --- АДАПТИВ НАВИГАЦИИ (МОБИЛКИ) --- */
-@media (max-width: 992px) {
+.nav-backdrop.active {
+    display: block;
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 1540px) {
     .side-nav {
         left: 0;
         top: 0;
@@ -340,17 +581,14 @@ html {
         width: 280px;
         border-radius: 0 20px 20px 0;
         border-left: none;
-        
-        /* Прячем за левый край экрана */
-        transform: translateX(-100%); 
+        transform: translateX(-100%);
+        z-index: 101;
     }
 
-    /* Класс, который скрипт вешает при открытии */
     .side-nav.active {
-        transform: translateX(0); 
+        transform: translateX(0);
     }
 
-    /* Мобильная кнопка-язычок */
     .nav-toggle-btn {
         display: flex;
         align-items: center;
@@ -359,25 +597,86 @@ html {
         top: 50%;
         left: 0;
         transform: translateY(-50%);
-        width: 32px;
-        height: 70px;
-        
-        /* Делаем её желтой для заметности */
-        background: rgba(255, 195, 0, 0.85);
-        color: #000;
+        width: 22px;
+        height: 52px;
+        background: var(--honey-primary);
+        color: #120e08;
         border: none;
-        border-radius: 0 12px 12px 0;
-        font-size: 18px;
+        border-radius: 0 10px 10px 0;
+        font-size: 15px;
+        font-weight: 900;
         cursor: pointer;
-        z-index: 101;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
-        transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s;
+        z-index: 102;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+        transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s;
     }
 
-    /* Двигаем кнопку вправо вместе со шторкой, когда она открыта */
     .nav-toggle-btn.active {
         left: 280px;
-        background: rgba(200, 50, 50, 0.9); /* Краснеет при открытии (крестик) */
-        color: #fff;
+        background: #e74c3c;
+        color: #ffffff;
     }
+}
+
+@media (max-width: 768px) {
+    .rules-header {
+        padding: 50px 16px 24px;
+    }
+
+    .back-button {
+        top: 14px;
+        left: 16px;
+        transform: none;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .rules-header h1 {
+        font-size: 1.85rem;
+    }
+
+    .rules-container {
+        padding: 24px 16px;
+        margin: 0 14px 60px;
+        border-radius: 18px;
+    }
+
+    .rules-search-section {
+        padding: 14px;
+        margin-bottom: 24px;
+    }
+
+    .category-title {
+        font-size: 1.25rem;
+        margin: 32px 0 16px;
+    }
+
+    .rule-item {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .rule-content {
+        font-size: 0.88rem;
+        padding-right: 24px;
+    }
+
+    .rule-copy-btn {
+        right: 8px;
+        top: 10px;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Выделенная плашка с предупреждением о модах и тикетах */
+.rule-mod-disclaimer {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 195, 0, 0.08);
+    border-left: 3px solid var(--honey-primary);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    color: #e4ded3;
+    line-height: 1.5;
 }

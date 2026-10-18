@@ -1306,3 +1306,23 @@ section, article, header {
         padding: 7px 11px;
     }
 }
+
+/* Строка подтверждения согласия с офертой и 152-ФЗ в модальных окнах */
+.form-legal-agree {
+    font-size: 0.76rem;
+    color: var(--txt-subtle);
+    margin: 12px 0 6px;
+    text-align: left;
+    line-height: 1.45;
+}
+
+.form-legal-agree a {
+    color: var(--honey-bright);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+}
+
+.form-legal-agree a:hover {
+    color: #ffffff;
+}
