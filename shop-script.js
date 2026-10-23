@@ -245,13 +245,11 @@ function orderProduct(key, title, price) {
     const titleEl = document.getElementById('orderModalItemTitle');
     const priceEl = document.getElementById('orderModalItemPrice');
     const nickInput = document.getElementById('orderNickField');
-    const promoInput = document.getElementById('orderPromoField');
     const keyField = document.getElementById('orderProductKey');
 
     if (titleEl) titleEl.textContent = currentSelectedProduct;
     if (priceEl) priceEl.textContent = `${currentSelectedPrice}₽`;
     if (nickInput) nickInput.value = '';
-    if (promoInput) promoInput.value = '';
     if (keyField) keyField.value = currentProductKey;
 
     if (modal) modal.style.display = 'flex';
@@ -351,7 +349,6 @@ function initModals() {
         shopForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const nickname = document.getElementById('orderNickField').value.trim();
-            const promocode = document.getElementById('orderPromoField').value.trim();
             const pType = document.getElementById('orderProductKey').value;
             const submitBtn = document.getElementById('shopSubmitPayBtn');
 
@@ -371,7 +368,7 @@ function initModals() {
                     body: JSON.stringify({
                         nickname: nickname,
                         type: pType,
-                        promocode: promocode
+                        promocode: ""
                     })
                 });
 
