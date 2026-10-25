@@ -46,6 +46,7 @@
             <li><a href="#communication" class="nav-link-item">3. Коммуникация и PvP</a></li>
             <li><a href="#clans" class="nav-link-item">4. Кланы улья</a></li>
             <li><a href="#punishments" class="nav-link-item">5. Меры наказания</a></li>
+            <li><a href="#mods" class="nav-link-item">6. Запрещённые моды</a></li>
         </ul>
         <div class="side-nav-footer">
             <span>Незнание правил не освобождает от ответственности</span>
@@ -58,13 +59,14 @@
         <div class="rules-search-section">
             <div class="rules-search-box">
                 <svg class="rules-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" id="rulesSearchInput" placeholder="Поиск по номеру, слову (гриф, пвп, дюп, бан)..." autocomplete="off">
+                <input type="text" id="rulesSearchInput" placeholder="Поиск по номеру, слову (гриф, пвп, дюп, xRay, freecam)..." autocomplete="off">
                 <button id="rulesClearSearch" class="rules-clear-btn" title="Сбросить поиск">&times;</button>
             </div>
             
             <div class="rules-tags-bar">
                 <span class="tags-label">Быстрые темы:</span>
                 <button class="rule-tag-chip active" data-filter="all">Все</button>
+                <button class="rule-tag-chip" data-filter="мод">Модификации</button>
                 <button class="rule-tag-chip" data-filter="гриф">Гриферство</button>
                 <button class="rule-tag-chip" data-filter="pvp">PvP & Зоны</button>
                 <button class="rule-tag-chip" data-filter="чит">Читы & Дюпы</button>
@@ -104,8 +106,6 @@
                     </div>
                     <button class="rule-copy-btn" onclick="copyRuleLink(3)" title="Скопировать ссылку на правило">#</button>
                 </li>
-
-                <!-- ОБЪЕДИНЕННЫЙ ПУНКТ 4 И 5 -->
                 <li id="rule-4" class="rule-item">
                     <span class="rule-badge">#4</span>
                     <div class="rule-content">
@@ -116,7 +116,6 @@
                     </div>
                     <button class="rule-copy-btn" onclick="copyRuleLink(4)" title="Скопировать ссылку на правило">#</button>
                 </li>
-
                 <li id="rule-5" class="rule-item">
                     <span class="rule-badge">#5</span>
                     <div class="rule-content">
@@ -464,9 +463,376 @@
             </ol>
         </section>
 
+        <!-- РАЗДЕЛ 6: ЗАПРЕЩЁННЫЕ МОДИФИКАЦИИ -->
+        <section class="rules-section" data-section="mods">
+            <h2 id="mods" class="category-title">
+                <span class="category-num">06</span>
+                <span>Запрещённые модификации</span>
+            </h2>
+
+            <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 18px;">
+                Использование любого мода или софта из списка ниже приравнивается к нарушению честного игрового процесса и наказывается баном.
+            </p>
+
+            <ul class="mods-grid">
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Tweakaroo</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Авто-кликеры, ломание блоков, свободная камера и твик-эксплойты</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Litematica Printer</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Авто-строительство принтером. <span class="rule-allowed">Обычная Litematica разрешена</span></span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Elytra Swap</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Мгновенный авто-свап нагрудника на элитры (и любые аналоги)</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Inventory Profiles Next</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Твики инвентаря, авто-сортировка и любые его форки</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Auto Tool</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматический выбор подходящего инструмента под блок</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Pulse Visuals</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Визуальные чит-подсветки сущностей и блоков</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Freecam</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Выход камеры из тела персонажа для просмотра сквозь стены</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Isometric Render</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Рендер чанков и просвет геометрии мира</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Better PvP</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Комплекс боевых подсказок, авто-прицеливание и радары</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Auto Totem</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматическое взятие тотема бессмертия во вторую руку</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Auto Shield Breaker</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Авто-пробитие щита топором во время боя</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">World Downloader</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Несанкционированное скачивание карты и чужих построек сервера</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">CMDCam</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Камера по точкам без согласования с администрацией</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Flashback / ReplayMod</span>
+                        <span class="mod-badge-warn">С разрешения</span>
+                    </div>
+                    <span class="mod-note">Запись повторов <span class="rule-allowed">разрешена строго по тикету</span> от администрации</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">AutoMining</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматическое копание руд и прокладывание шахт</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Baritone и форки</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Любые боты для перемещения, добычи и авто-строительства</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Replanting Crops</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Авто-пересадка культур при сборе урожая (и все аналоги)</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">AutoHarvest</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматический сбор созревших растений вокруг игрока</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">AutoFish</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматическая рыбалка при поклевке поплавка</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Reap</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Срубание всего дерева в один клик за нижний блок</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Player Spotlight</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Подсветка и отслеживание игроков сквозь ландшафт</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Chest Tracker</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Запоминание и подсветка содержимого чужих контейнеров</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">True Sight</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Видимость невидимых сущностей и игроков</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">xRay</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Просвечивание руд (моды, шейдеры и ресурспаки)</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">WorldEdit CUI</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Клиентские утилиты и сетка WorldEdit</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">neat</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Полоски здоровья (HealthBar) над игроками и мобами</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Re: Entity Outliner</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Эффект Glowing и контурная обводка мобов/игроков</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">AntiInvis</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Снятие эффекта невидимости с моделек персонажей</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">CheatUtils</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Набор читерских утилит и автоматизаций</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">AutoPilot</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Авто-полёты на элитрах и передвижение по координатам</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Inventory Control Tweaks</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Несанкционированное ускоренное перемещение предметов</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Auto Leave</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматический выход с сервера при низком уровне HP</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Foodslot</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматическое поедание еды без выбора слота в руке</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Quickstack</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Мгновенный выброс и сортировка стаков в сундуки</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">ItemSwap</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматическая быстрая замена слотов хотбара</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Movement in GUI / InvMove</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Бег, прыжки и осмотр при открытом интерфейсе инвентаря</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Autojumpreset</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматический сброс спринта и прыжков в PvP</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Don't hit teammates</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Блокировка удара по союзникам при клановых битвах</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">CleanGUI</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Прозрачные интерфейсы и удаление затемнений экранов</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Autoattack / AutoAim</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Автоматические удары по КД и доводка прицела на цель</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Effortless Building</span>
+                        <span class="mod-badge-ban">Запрещён</span>
+                    </div>
+                    <span class="mod-note">Ускоренная массовая расстановка блоков в выживании</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Чит-клиенты и форки</span>
+                        <span class="mod-badge-ban">Пермабан</span>
+                    </div>
+                    <span class="mod-note">Любые клиенты (Meteor, Wurst, Aristois и др.). Узнавайте функционал до входа</span>
+                </li>
+
+                <li class="rule-item mod-card">
+                    <div class="mod-header">
+                        <span class="mod-name">Аналоги чит-функций</span>
+                        <span class="mod-badge-ban">Пермабан</span>
+                    </div>
+                    <span class="mod-note">Любые моды, дающие нечестное преимущество или эмулирующие читы</span>
+                </li>
+            </ul>
+
+            <div class="mods-disclaimer-box">
+                <p>
+                    <strong>Важная информация:</strong> Полные списки не разглашаются во избежание абуза правил. Если вы не уверены, разрешён ли конкретный мод или ресурспак на сервере, то не используйте его или откройте тикет на сервере Discord и спросите о нем.
+                </p>
+                <p>
+                    Ответственность за скачанные моды или ресурспаки несёт исключительно игрок.
+                </p>
+            </div>
+        </section>
+
     </main>
 
-    <!-- ПОДВАЛ ПРАВИЛ С ЮРИДИЧЕСКИМИ ССЫЛКАМИ -->
+<!-- ПОДВАЛ ПРАВИЛ С ЮРИДИЧЕСКИМИ ССЫЛКАМИ -->
     <footer class="footer-wrap">
         <div class="site-container">
             <div class="footer-grid">
@@ -482,7 +848,8 @@
                 <div class="footer-cell">
                     <h4>Контакты</h4>
                     <p>Email: <a href="mailto:pizduke13@gmail.com">pizduke13@gmail.com</a></p>
-                    <p>Telegram: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
+                    <p>Telegram бота: <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener">@apiary_shop_bot</a></p>
+                    <p>Менеджер в Telegram: <a href="https://t.me/Apiary_SMP" target="_blank" rel="noopener">@Apiary_SMP</a></p>
                 </div>
 
                 <div class="footer-cell">
@@ -499,12 +866,13 @@
                     <a href="#" class="footer-link" data-modal="offerModal">Публичная оферта</a>
                     <a href="#" class="footer-link" data-modal="privacyModal">Политика конфиденциальности</a>
                     <a href="#" class="footer-link" data-modal="termsModal">Пользовательское соглашение</a>
+                    <a href="#" class="footer-link" data-modal="deliveryModal">Получение услуги</a>
                 </div>
             </div>
         </div>
     </footer>
 
-<!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
     <div class="overlay" id="offerModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -568,6 +936,21 @@
 
                 <p><strong>2. Ограничение ответственности и правила Mojang</strong><br>
                 Сервер ApiarySMP является независимым любительским проектом и никак не аффилирован с компаниями Mojang AB или Microsoft. Все донат-услуги проекта носят декоративный характер, предоставляются «как есть» и не дают игроку нечестных преимуществ перед другими (Non-P2W).</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛУЧЕНИЕ УСЛУГИ -->
+    <div class="overlay" id="deliveryModal">
+        <div class="sheet-modal sheet-modal-large">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Порядок получения услуги</h2>
+            <div class="modal-text">
+                <p><strong>Регламент доставки:</strong><br>
+                1. <strong>Вайтлист:</strong> никнейм моментально заносится в список доступа сервера в течение 1–2 минут после оплаты.<br>
+                2. <strong>Косметика и донат:</strong> права на эффекты применяются автоматически. Для управления активированными предметами введите команду <code>/menu</code> в чате сервера.<br>
+                3. Если при оплате была допущена опечатка в никнейме, напишите на почту <strong>pizduke13@gmail.com</strong> или менеджеру в Telegram: <strong>@Apiary_SMP</strong> для ручной корректировки.</p>
             </div>
         </div>
     </div>

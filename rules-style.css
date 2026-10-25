@@ -36,6 +36,14 @@ body {
     color: var(--honey-primary);
 }
 
+.site-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+}
+
 /* --- ПОЛОСКА ПРОГРЕССА ЧТЕНИЯ --- */
 .reading-progress-bar {
     position: fixed;
@@ -417,7 +425,6 @@ body {
     display: none !important;
 }
 
-/* Подсветка целевого правила по ссылке */
 .rule-item.target-highlight {
     border-color: var(--honey-primary);
     background: rgba(255, 195, 0, 0.16);
@@ -466,7 +473,6 @@ body {
     margin-bottom: 4px;
 }
 
-/* Кнопка-ссылка на конкретное правило */
 .rule-copy-btn {
     position: absolute;
     right: 14px;
@@ -497,7 +503,6 @@ body {
     border-color: var(--honey-primary) !important;
 }
 
-/* Выделения внутри правил */
 .rule-allowed {
     color: #2ecc71;
     font-weight: 700;
@@ -572,6 +577,245 @@ body {
     display: block;
 }
 
+/* --- СЕТКА И КАРТОЧКИ ЗАПРЕЩЁННЫХ МОДОВ --- */
+.mods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    list-style: none;
+    margin-bottom: 24px;
+}
+
+.mod-card {
+    background: rgba(14, 13, 11, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.mod-card:hover {
+    border-color: rgba(255, 195, 0, 0.35);
+    background: rgba(22, 19, 14, 0.85);
+    transform: translateY(-2px);
+}
+
+.mod-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mod-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #ffffff;
+}
+
+.mod-badge-ban {
+    background: rgba(231, 76, 60, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(231, 76, 60, 0.35);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+.mod-badge-warn {
+    background: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.35);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+.mod-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.mods-disclaimer-box {
+    background: rgba(255, 195, 0, 0.06);
+    border: 1px solid rgba(255, 195, 0, 0.22);
+    border-left: 4px solid var(--honey-primary);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 20px;
+}
+
+.mods-disclaimer-box p {
+    font-size: 0.88rem;
+    color: #e4ded3;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.mods-disclaimer-box p:last-child {
+    margin-bottom: 0;
+    color: var(--honey-bright);
+    font-weight: 600;
+}
+
+/* --- ПОДВАЛ (FOOTER) --- */
+.footer-wrap {
+    border-top: 1px solid var(--border-glass);
+    background: #080706;
+    padding: 60px 0 35px;
+    margin-top: 70px;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 36px;
+}
+
+.footer-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.footer-desc {
+    color: #736b60;
+    font-size: 0.85rem;
+    max-width: 280px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.footer-legal-note {
+    display: block;
+    font-size: 0.72rem;
+    color: #5c554b;
+    line-height: 1.45;
+}
+
+.footer-cell h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+.footer-cell p,
+.footer-cell a {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 8px;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.footer-cell a:hover {
+    color: var(--honey-primary);
+}
+
+/* --- ЮРИДИЧЕСКИЕ МОДАЛЬНЫЕ ОКНА --- */
+/* --- ЮРИДИЧЕСКИЕ МОДАЛЬНЫЕ ОКНА --- */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 9, 7, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.sheet-modal {
+    background: #171512;
+    border: 1px solid rgba(220, 160, 50, 0.32);
+    border-radius: 20px;
+    padding: clamp(24px, 5vw, 36px);
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.sheet-modal-large {
+    max-width: 640px;
+    text-align: left;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    color: var(--text-muted);
+    font-size: 26px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover {
+    color: var(--text-main);
+}
+
+.modal-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 1.7rem);
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.modal-text {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-top: 14px;
+}
+
+.modal-text p {
+    margin-bottom: 14px;
+}
+
+/* Убираем ядовитый контраст: жирный шрифт сохраняет мягкий цвет абзаца */
+.modal-text strong {
+    color: inherit;
+    font-weight: 600;
+}
+
+.modal-text code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--honey-bright);
+    font-family: monospace;
+}
+
 /* --- АДАПТИВНОСТЬ --- */
 @media (max-width: 1540px) {
     .side-nav {
@@ -615,6 +859,13 @@ body {
         left: 280px;
         background: #e74c3c;
         color: #ffffff;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
     }
 }
 
@@ -669,14 +920,19 @@ body {
     }
 }
 
-/* Выделенная плашка с предупреждением о модах и тикетах */
-.rule-mod-disclaimer {
-    margin-top: 10px;
-    padding: 10px 14px;
-    background: rgba(255, 195, 0, 0.08);
-    border-left: 3px solid var(--honey-primary);
-    border-radius: 8px;
-    font-size: 0.88rem;
-    color: #e4ded3;
-    line-height: 1.5;
+@media (max-width: 600px) {
+    .mods-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footer-wrap {
+        padding: 40px 0 25px;
+        margin-top: 40px;
+    }
 }

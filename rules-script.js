@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearchAndFilters();
     initMobileNav();
     checkUrlHashTarget();
+    initLegalModals();
 });
 
 // 1. ИНДИКАТОР ПРОГРЕССА ЧТЕНИЯ В САМОМ ВЕРХУ
@@ -97,7 +98,6 @@ function initSearchAndFilters() {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             currentQuery = e.target.value;
-            // Сбрасываем активный чип на "Все", если пользователь вводит вручную
             tagChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
             applyFilter();
         });
@@ -113,7 +113,6 @@ function initSearchAndFilters() {
         });
     }
 
-    // Клик по тегам-чипам
     tagChips.forEach(chip => {
         chip.addEventListener('click', () => {
             tagChips.forEach(c => c.classList.remove('active'));
@@ -202,7 +201,37 @@ function initMobileNav() {
     });
 }
 
-// 7. ТОАСТ-УВЕДОМЛЕНИЯ
+// 7. ЮРИДИЧЕСКИЕ МОДАЛЬНЫЕ ОКНА ИЗ ПОДВАЛА
+function initLegalModals() {
+    document.querySelectorAll("[data-modal]").forEach(link => {
+        link.addEventListener("click", e => {
+            e.preventDefault();
+            const targetModal = document.getElementById(link.dataset.modal);
+            if (targetModal) targetModal.style.display = "flex";
+        });
+    });
+
+    document.querySelectorAll(".close-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const overlay = btn.closest(".overlay");
+            if (overlay) overlay.style.display = "none";
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('overlay')) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+        }
+    });
+}
+
+// 8. ТОАСТ-УВЕДОМЛЕНИЯ
 function triggerToast(text) {
     const toast = document.getElementById('toastMessage');
     if (!toast) return;
