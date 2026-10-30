@@ -163,39 +163,311 @@ section, article, header {
     margin: 0 auto 36px;
 }
 
-.access-ways-container {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 35px;
-    max-width: 880px;
-    margin-left: auto;
-    margin-right: auto;
+/* --- ПЕРВЫЙ ЭКРАН (ШИРОКИЙ ГРИД) --- */
+.hero-section {
+    padding: 70px 0 50px;
+    position: relative;
+    z-index: 1;
 }
 
-.access-way-card {
-    flex: 1;
-    background: var(--bg-card);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-block);
-    padding: 30px 24px;
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 48px;
+    align-items: center;
     text-align: left;
+}
+
+/* Левая часть: контент */
+.hero-content {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+}
+
+.server-status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    padding: 6px 16px;
+    border-radius: var(--radius-round);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--txt-muted);
+    margin-bottom: 20px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #27ae60;
+    box-shadow: 0 0 8px #27ae60;
+}
+
+.hero-header {
+    font-family: var(--font-heading);
+    font-size: clamp(2.3rem, 5vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+}
+
+.hero-subhead {
+    display: block;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 500;
+    color: var(--honey-bright);
+    margin-top: 8px;
+    letter-spacing: 0;
+}
+
+.hero-story-text p {
+    font-size: 0.96rem;
+    color: var(--txt-muted);
+    line-height: 1.68;
+    margin-bottom: 14px;
+}
+
+.hero-story-text p:last-child {
+    margin-bottom: 22px;
+}
+
+.hero-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.h-badge {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(220, 160, 50, 0.2);
+    color: var(--txt-main);
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+/* Правая часть: виджет входа и IP */
+.hero-action-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pass-entry-widget {
+    background: linear-gradient(145deg, rgba(30, 26, 20, 0.92) 0%, rgba(16, 14, 11, 0.96) 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-block);
+    padding: clamp(24px, 4vw, 32px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+}
+
+.pass-entry-widget::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(242, 168, 41, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.widget-top {
+    display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 16px;
 }
 
-.way-paid {
-    border-color: var(--border-strong);
-    background: linear-gradient(180deg, rgba(38, 30, 20, 0.7) 0%, rgba(23, 20, 16, 0.85) 100%);
+.widget-kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--txt-subtle);
 }
 
-.access-way-card:hover {
-    transform: translateY(-3px);
+.widget-price-tag {
+    text-align: right;
+}
+
+.price-val {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--honey-bright);
+    line-height: 1;
+    display: block;
+}
+
+.price-sub {
+    font-size: 0.72rem;
+    color: var(--txt-subtle);
+}
+
+.widget-form label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--txt-subtle);
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.widget-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.widget-input-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    background: #090807;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-round);
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.widget-input-row input:focus {
+    border-color: var(--honey-bright);
+    box-shadow: 0 0 14px rgba(242, 168, 41, 0.2);
+}
+
+.widget-btn {
+    width: auto !important;
+    padding: 0 24px !important;
+    white-space: nowrap;
+    border-radius: var(--radius-round);
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.widget-hint {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--txt-subtle);
+    line-height: 1.4;
+}
+
+.hero-ip-box {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 20px;
+    background: rgba(18, 16, 13, 0.85);
+}
+
+/* Адаптивность для мобилок и планшетов */
+@media (max-width: 880px) {
+    .hero-section {
+        padding: 50px 0 35px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .hero-header {
+        font-size: 2.2rem;
+    }
+
+    .widget-input-row {
+        flex-direction: column;
+    }
+
+    .widget-btn {
+        width: 100% !important;
+        padding: 14px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .pass-card {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 22px 18px;
+    }
+
+    .pass-action-side {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--border-light);
+        padding-top: 20px;
+    }
+
+    .pass-price {
+        font-size: 2.2rem;
+    }
+}
+
+.way-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.way-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--honey-bright);
+    background: rgba(224, 146, 20, 0.12);
+    border: 1px solid rgba(224, 146, 20, 0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.way-season-tag {
+    font-size: 0.75rem;
+    color: var(--txt-subtle);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.access-perks-list {
+    list-style: none;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 16px;
+}
+
+.access-perks-list li {
+    font-size: 0.88rem;
+    color: var(--txt-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.access-perks-list li svg {
+    color: var(--honey-bright);
+    flex-shrink: 0;
 }
 
 .way-badge {

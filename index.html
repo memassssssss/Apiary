@@ -15,78 +15,201 @@
     <div class="ambient-spot ambient-spot-2"></div>
 
     <!-- ПЕРВЫЙ ЭКРАН -->
+    <!-- ПЕРВЫЙ ЭКРАН -->
     <header class="hero-section" id="top">
         <div class="site-container">
-            
-            <div class="server-status-tag" id="statusPill">
-                <span class="status-dot"></span>
-                <span id="statusLabel">Опрашиваем сервер...</span>
+            <div class="hero-grid">
+
+                <!-- ЛЕВАЯ КОЛОНКА: СМЫСЛ И СЕРВЕР -->
+                <div class="hero-content">
+                    <div class="server-status-tag" id="statusPill">
+                        <span class="status-dot"></span>
+                        <span id="statusLabel">Опрашиваем сервер...</span>
+                    </div>
+
+                    <h1 class="hero-header">
+                        Apiary<span class="text-accent">SMP</span>
+                        <span class="hero-subhead">Ванилла, где всё строится на доверии</span>
+                    </h1>
+
+                    <div class="hero-story-text">
+    <p>
+        Здесь нет приватов, регионов и запертых сундуков. Любая база или ферма открыта: можно спокойно зайти к соседям в гости, посмотреть постройки или построить рядом свой город.
+    </p>
+    <p>
+        Платный вход нужен только ради порядка. 135 рублей — мелочь, но она отсекает залётных гриферов и читеров. Человек, который заплатил за доступ, бережёт свой аккаунт и вряд ли пойдёт заливать спавн лавой или воровать чужое.
+    </p>
+</div>
+
+                   
+                </div>
+
+                <!-- ПРАВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ВХОД И IP -->
+                <div class="hero-action-pane">
+                    
+                    <div class="pass-entry-widget">
+                        <div class="widget-top">
+                            <span class="widget-kicker">Вход на сервер</span>
+                            <div class="widget-price-tag">
+                                <span class="price-val">135₽</span>
+                                <span class="price-sub">разово на весь сезон</span>
+                            </div>
+                        </div>
+
+                        <div class="widget-form">
+                            <label for="heroNick">Твой ник в Minecraft</label>
+                            <div class="widget-input-row">
+                                <input type="text" id="heroNick" placeholder="Например: MemASS" autocomplete="off" maxlength="16">
+                                <button type="button" class="btn-primary widget-btn" onclick="startPassPurchase()">
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="widget-hint">
+                            Добавление в белый список сервера происходит моментально сразу после оплаты
+                        </span>
+                    </div>
+
+                    <!-- БЛОК СКОПИРОВАТЬ IP -->
+                    <div class="hub-ip-box hero-ip-box" onclick="copyIP(this)">
+                        <div class="ip-meta">
+                            <span class="ip-title">IP адрес сервера:</span>
+                            <span class="ip-code" id="ipValue">play.apiarysmp.online</span>
+                        </div>
+                        <div class="ip-action">
+                            <span class="ip-action-text">Скопировать</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-
-            <h1 class="hero-header">
-                Apiary<span class="text-accent">SMP</span>
-                <span class="hero-subhead">Ламповое сообщество без приватов и грифа</span>
-            </h1>
-
-            <p class="hero-lead">
-                Классическое ванильное выживание на доверии. Мы объединяем игроков, 
-                строим города, судим нарушителей на открытых заседаниях и развиваем честную экономику.
-            </p>
-
-            <div class="access-ways-container">
-                <div class="access-way-card way-paid">
-                    <div class="way-badge">Быстрый старт</div>
-                    <h3>Платная проходка</h3>
-                    <p class="way-desc">
-                        Для тех, кто ценит свое время. Полный скип анкеты: оплачиваешь 135 рублей и моментально попадаешь в вайтлист сервера без собеседований и ожидания.
-                    </p>
-                    <button class="btn-primary" onclick="openModal()">
-                        Купить проходку — 135₽
-                    </button>
-                    <span class="way-note">Автоматическая выдача сразу после оплаты</span>
-                </div>
-
-                <div class="access-way-divider">
-                    <span>или</span>
-                </div>
-
-                <div class="access-way-card way-free">
-                    <div class="way-badge badge-neutral">Бесплатный вход</div>
-                    <h3>Заполнение анкеты</h3>
-                    <p class="way-desc">
-                        Не хочешь платить? Без проблем. Переходи в нашего Telegram-бота, подробно отвечай на вопросы анкеты и жди решения модерации.
-                    </p>
-                    <a href="https://t.me/apiary_shop_bot" target="_blank" rel="noopener noreferrer" class="btn-outline">
-                        Заполнить анкету в боте →
-                    </a>
-                    <span class="way-note">Рассмотрение заявок живыми людьми</span>
-                </div>
-            </div>
-
-            <div class="hub-ip-box" onclick="copyIP(this)">
-                <div class="ip-meta">
-                    <span class="ip-title">Единый адрес сервера:</span>
-                    <span class="ip-code" id="ipValue">play.apiarysmp.online</span>
-                </div>
-                <div class="ip-action">
-                    <span class="ip-action-text">Скопировать</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                </div>
-            </div>
-
         </div>
     </header>
+    <!-- О СЕРВЕРЕ -->
+    <article class="narrative-section" id="story">
+        <div class="site-container">
+            <header class="narrative-header">
+                <span class="section-kicker">Основы нашего мира</span>
+                <h2 class="narrative-title">Как устроен Apiary SMP</h2>
+                <p class="narrative-summary">
+                    Мы принципиально отказались от механик классических публичных серверов с донатом на неуязвимость, 
+                    хаотичным строительством коробок из булыжника и вечным страхом за содержимое сундуков. 
+                    Жизнь нашего сервера держится на четырех фундаментальных столпах.
+                </p>
+            </header>
 
-    <!-- МИНИ-ИГРА ПАСЕКА -->
+            <div class="story-chapters">
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">01</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Мир без приватов и культура взаимного уважения</h3>
+                        <p>
+                            На сервере полностью отсутствуют команды вроде деревянного топора и защиты регионов. 
+                            Каждая база, ферма или дом стоят открытыми. Вы можете свободно путешествовать по постройкам соседей, 
+                            рассматривать их интерьеры и механизмы.
+                        </p>
+                        <p>
+                            Безопасность достигается не системными стенами, а дотошным логированием. Каждый взятый из сундука предмет, 
+                            сломанный блок или открытая дверь записываются базой данных. В случае любого инцидента виновник 
+                            получает перманентную блокировку, а пострадавшая постройка восстанавливается администратором 
+                            до исходного состояния буквально за несколько секунд.
+                        </p>
+                        <blockquote class="chapter-quote">
+                            «Доверие здесь — не пустой звук. Мы играем так, как играли бы с давними друзьями на локальном сервере, 
+                            только масштабируем это на сотни увлеченных людей».
+                        </blockquote>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">02</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Правовая система, тикеты и модерация</h3>
+                        <p>
+                            Наши модераторы следят за порядком на сервере 25/8 поэтому ты никогда не встретишь читера или токсичного игрока.
+                            На нашем дискорд сервере ты всегда можешь создать тикет с вопросом, жалобой на игрока или просто претензией, и один
+                            из наших модераторов решит твою проблему в кратчайшие сроки.
+                        </p>
+                        <p>
+                            У нас свои чётко выверенные правила, игроки уже почти год играют соблюдая их и именно поэтому наш сервер остаётся самым лучшим.
+                            Наши правила написал один из бывших модераторов, и они настолько хороши, что мы до сих пор их ни разу не отредактировали, спасибо тебе,
+                            NotJabockk...
+                        </p>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">03</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Живая экономика на чистых алмазах</h3>
+                        <p>
+                            Никакой виртуальной валюты из воздуха, админшопов и продажи ресурсов за реальные деньги. 
+                            Экономика Apiary SMP абсолютно органична: валютой выступают обычные добытые в шахтах алмазы.
+                        </p>
+                        <p>
+                            Игроки строят торговые районы, открывают собственные лавки, формируют компании и синдикаты. 
+                            Цены на ресурсы определяются исключительно спросом и предложением: от редких пластинок и книг 
+                            с чарами до тонны строительных блоков для возведения очередного монументального города.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="chapter-block">
+                    <div class="chapter-marker">04</div>
+                    <div class="chapter-body">
+                        <h3 class="chapter-heading">Уникальные события и жизнь комьюнити</h3>
+                        <p>
+                            Сервер не превращается в рутинную афк-стоянку у автоферм. Мы регулярно проводим масштабные события: 
+                            рыболовные турниры с авторскими моделями улова, ярмарки, спортивные состязания, лорные ивенты 
+                            и празднование сезонов.
+                        </p>
+                        <p>
+                            Главное — инициатива идет не только от администрации. Любой игрок может анонсировать собственный 
+                            ивент, собрать людей, построить арену и разыграть призовой фонд. Сервер дает почву — вы создаете историю.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- СЕКЦИЯ МАГАЗИНА -->
+    <section class="shop-promo-section" id="shop">
+        <div class="site-container">
+            <div class="shop-promo-card">
+                <div class="shop-promo-glow"></div>
+                <div class="shop-promo-badge">Официальный магазин</div>
+                <h2 class="shop-promo-title">Медовая лавка Apiary</h2>
+                <p class="shop-promo-text">
+                    Поддержите проект и выделитесь на сервере. В нашей лавке доступны эксклюзивные визуальные титулы, 
+                    косметические эффекты и авторский мерч. Никаких ресурсов за рубли, креатива и Pay-to-Win механик — 
+                    только честный баланс и стиль.
+                </p>
+                <div class="shop-promo-actions">
+                    <a href="shop.html" class="btn-primary shop-cta-btn">
+                        Открыть магазин товаров
+                    </a>
+                    <span class="shop-promo-note">Отдельная страница каталога с удобной оплатой</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- МИНИ-ИГРА ПАСЕКА (ПЕРЕНЕСЕНА ПОСЛЕ МАГАЗИНА) -->
     <section class="game-section" id="game">
         <div class="site-container">
             <div class="section-heading text-left">
                 <span class="section-kicker">Интерактивный уголок</span>
                 <h2 class="section-headline">Пасека Apiary: Добыча нектара</h2>
-                <p class="section-subtext">Пока качается ресурспак или проверяется заявка — развивай собственное медовое хозяйство прямо здесь.</p>
+                <p class="section-subtext">Пока качается ресурспак или настраиваются шейдеры — развивай собственное медовое хозяйство прямо здесь.</p>
             </div>
 
             <div class="game-board">
@@ -168,118 +291,6 @@
                     <div class="game-footer-actions">
                         <button class="btn-text-subtle" onclick="resetGameProgress()">Сбросить прогресс пасеки</button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- О СЕРВЕРЕ -->
-    <article class="narrative-section" id="story">
-        <div class="site-container">
-            <header class="narrative-header">
-                <span class="section-kicker">Основы нашего мира</span>
-                <h2 class="narrative-title">Как устроен Apiary SMP</h2>
-                <p class="narrative-summary">
-                    Мы принципиально отказались от механик классических публичных серверов с донатом на неуязвимость, 
-                    хаотичным строительством коробок из булыжника и вечным страхом за содержимое сундуков. 
-                    Жизнь нашего сервера держится на четырех фундаментальных столпах.
-                </p>
-            </header>
-
-            <div class="story-chapters">
-
-                <section class="chapter-block">
-                    <div class="chapter-marker">01</div>
-                    <div class="chapter-body">
-                        <h3 class="chapter-heading">Мир без приватов и культура взаимного уважения</h3>
-                        <p>
-                            На сервере полностью отсутствуют команды вроде деревянного топора и защиты регионов. 
-                            Каждая база, ферма или дом стоят открытыми. Вы можете свободно путешествовать по постройкам соседей, 
-                            рассматривать их интерьеры и механизмы.
-                        </p>
-                        <p>
-                            Безопасность достигается не системными стенами, а дотошным логированием. Каждый взятый из сундука предмет, 
-                            сломанный блок или открытая дверь записываются базой данных. В случае любого инцидента виновник 
-                            получает перманентную блокировку, а пострадавшая постройка восстанавливается администратором 
-                            до исходного состояния буквально за несколько секунд.
-                        </p>
-                        <blockquote class="chapter-quote">
-                            «Доверие здесь — не пустой звук. Мы играем так, как играли бы с давними друзьями на локальном сервере, 
-                            только масштабируем это на сотни увлеченных людей».
-                        </blockquote>
-                    </div>
-                </section>
-
-                <section class="chapter-block">
-                    <div class="chapter-marker">02</div>
-                    <div class="chapter-body">
-                        <h3 class="chapter-heading">Правовая система, тикеты и модерация</h3>
-                        <p>
-                            Наши модераторы следят за порядком на сервере 25/8 поэтому ты никогда не встретишь читера или токсичного игрока.
-                            На нашем дискорд сервере ты всегда можшь создать тикет с вопросом, жалобой на игрока или просто притензией, и один
-                            из наших модераторов решит твою проблему в кратчайшие сроки.
-                        </p>
-                        <p>
-                            У нас свои чётко выверенные правила, игроки уже почти год играют соблюдая их и именно поэтому наш сервер остаётся самым лучшим.
-                            Наши правила написал один из бывших модераторов, и они настолько хороши, что мы до сих пор их ниразу неотредактировали, спасибо тебе,
-                            NotJabockk...
-                        </p>
-                    </div>
-                </section>
-
-                <section class="chapter-block">
-                    <div class="chapter-marker">03</div>
-                    <div class="chapter-body">
-                        <h3 class="chapter-heading">Живая экономика на чистых алмазах</h3>
-                        <p>
-                            Никакой виртуальной валюты из воздуха, админшопов и продажи ресурсов за реальные деньги. 
-                            Экономика Apiary SMP абсолютно органична: валютой выступают обычные добытые в шахтах алмазы.
-                        </p>
-                        <p>
-                            Игроки строят торговые районы, открывают собственные лавки, формируют компании и синдикаты. 
-                            Цены на ресурсы определяются исключительно спросом и предложением: от редких пластинок и книг 
-                            с чарами до тонны строительных блоков для возведения очередного монументального города.
-                        </p>
-                    </div>
-                </section>
-
-                <section class="chapter-block">
-                    <div class="chapter-marker">04</div>
-                    <div class="chapter-body">
-                        <h3 class="chapter-heading">Уникальные события и жизнь комьюнити</h3>
-                        <p>
-                            Сервер не превращается в рутинную афк-стоянку у автоферм. Мы регулярно проводим масштабные события: 
-                            рыболовные турниры с авторскими моделями улова, ярмарки, спортивные состязания, лорные ивенты 
-                            и празднование сезонов.
-                        </p>
-                        <p>
-                            Главное — инициатива идет не только от администрации. Любой игрок может анонсировать собственный 
-                            ивент, собрать людей, построить арену и разыграть призовой фонд. Сервер дает почву — вы создаете историю.
-                        </p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-    </article>
-
-    <!-- СЕКЦИЯ МАГАЗИНА -->
-    <section class="shop-promo-section" id="shop">
-        <div class="site-container">
-            <div class="shop-promo-card">
-                <div class="shop-promo-glow"></div>
-                <div class="shop-promo-badge">Официальный магазин</div>
-                <h2 class="shop-promo-title">Медовая лавка Apiary</h2>
-                <p class="shop-promo-text">
-                    Поддержите проект и выделитесь на сервере. В нашей лавке доступны эксклюзивные визуальные титулы, 
-                    косметические эффекты и авторский мерч. Никаких ресурсов за рубли, креатива и Pay-to-Win механик — 
-                    только честный баланс и стиль.
-                </p>
-                <div class="shop-promo-actions">
-                    <a href="shop.html" class="btn-primary shop-cta-btn">
-                        Открыть магазин товаров
-                    </a>
-                    <span class="shop-promo-note">Отдельная страница каталога с удобной оплатой</span>
                 </div>
             </div>
         </div>
@@ -382,12 +393,12 @@
 
                 <div class="faq-unit">
                     <button class="faq-header-btn">
-                        <span>Действительно ли бесплатная анкета ничем не уступает покупке?</span>
+                        <span>Почему вход на сервер платный и нет бесплатной анкеты?</span>
                         <span class="faq-sign">+</span>
                     </button>
                     <div class="faq-dropdown">
                         <div class="faq-text">
-                            Абсолютно ничем. Права у всех игроков равны. Проходка за 135 рублей — это инструмент экономии времени для тех, кто не хочет ждать проверки своей заявки модераторами.
+                            Платная проходка — наш главный инструмент защиты концепции мира без приватов. Символическая цена в 135 рублей служит естественным барьером: люди, вложившие даже небольшую сумму, относятся к игре осознанно, дорожат своим аккаунтом и уважают чужой труд. Это гарантирует, что на сервере вас окружают взрослые, адекватные и дружелюбные игроки.
                         </div>
                     </div>
                 </div>
@@ -469,7 +480,6 @@
     </section>
 
     <!-- ПОДВАЛ -->
-   <!-- ПОДВАЛ -->
     <footer class="footer-wrap">
         <div class="site-container">
             <div class="footer-grid">
@@ -509,19 +519,19 @@
         </div>
     </footer>
 
-    <!-- ПЛАВАЮЩАЯ НАВИГАЦИЯ -->
+    <!-- ПЛАВАЮЩАЯ НАВИГАЦИЯ (ОБНОВЛЁН ПОРЯДОК СКРОЛЛА) -->
     <nav class="bottom-dock" aria-label="Быстрая навигация">
         <a href="#top" class="dock-action" title="В начало страницы">
             <span class="dock-txt">Главная</span>
-        </a>
-        <a href="#game" class="dock-action" title="Пасека">
-            <span class="dock-txt">Пасека</span>
         </a>
         <a href="#story" class="dock-action" title="Об устройстве">
             <span class="dock-txt">Сервер</span>
         </a>
         <a href="#shop" class="dock-action" title="Магазин">
             <span class="dock-txt">Магазин</span>
+        </a>
+        <a href="#game" class="dock-action" title="Пасека">
+            <span class="dock-txt">Пасека</span>
         </a>
         <a href="rules-main.html" class="dock-action" title="Правила">
             <span class="dock-txt">Правила</span>
@@ -544,7 +554,7 @@
                 
                 <div class="form-row">
                     <label for="nickField">Игровой никнейм Minecraft</label>
-                    <input type="text" id="nickField" name="nickname" class="sheet-input" placeholder="Например: Notch" required autocomplete="off">
+                    <input type="text" id="nickField" name="nickname" class="sheet-input" placeholder="Например: MemASS" required autocomplete="off">
                 </div>
 
                 <div class="form-row">
@@ -559,13 +569,13 @@
                     </span>
                 </label>
 
-                <button type="submit" class="modal-submit-btn">Оплатить и скипнуть анкету</button>
+                <button type="submit" class="modal-submit-btn">Оплатить проходку</button>
             </form>
             <span class="modal-footnote">Доступ выдается автоматически после завершения транзакции.</span>
         </div>
     </div>
 
-<!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
+    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
     <div class="overlay" id="offerModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>

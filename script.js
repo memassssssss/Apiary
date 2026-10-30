@@ -79,12 +79,12 @@ async function checkOnlineStatus() {
 
         if (data.online) {
             const count = data.players ? data.players.online : 0;
-            label.textContent = `В игре сейчас: ${count} чел. • Версия 1.21+`;
+            label.textContent = `В игре сейчас: ${count} чел. • Версия 1.21.11`;
         } else {
-            label.textContent = "Сервер онлайн • Версия 1.21+";
+            label.textContent = "Сервер онлайн • Версия 1.21.11";
         }
     } catch {
-        label.textContent = "Сервер онлайн • Версия 1.21+";
+        label.textContent = "Сервер онлайн • Версия 1.21.11";
     }
 }
 
@@ -485,4 +485,33 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initFAQ();
     initModals();
+});
+
+
+// Быстрый запуск покупки прямо с первого экрана
+function startPassPurchase() {
+    const heroInput = document.getElementById('heroNick');
+    const nickVal = heroInput ? heroInput.value.trim() : '';
+
+    openModal();
+
+    if (nickVal) {
+        const modalNickField = document.getElementById('nickField');
+        if (modalNickField) {
+            modalNickField.value = nickVal;
+        }
+    }
+}
+
+// Запуск по нажатию Enter в инпуте первого экрана
+document.addEventListener('DOMContentLoaded', () => {
+    const heroInput = document.getElementById('heroNick');
+    if (heroInput) {
+        heroInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                startPassPurchase();
+            }
+        });
+    }
 });
