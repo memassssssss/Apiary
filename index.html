@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApiarySMP — Официальный сайт</title>
+    <title>ApiarySMP — Зимний сезон</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,13 +15,13 @@
     <div class="ambient-spot ambient-spot-2"></div>
 
     <!-- ПЕРВЫЙ ЭКРАН -->
-    <!-- ПЕРВЫЙ ЭКРАН -->
     <header class="hero-section" id="top">
         <div class="site-container">
             <div class="hero-grid">
 
-                <!-- ЛЕВАЯ КОЛОНКА: СМЫСЛ И СЕРВЕР -->
+                <!-- ЛЕВАЯ КОЛОНКА -->
                 <div class="hero-content">
+                    <div class="hero-season-badge">❄️ Зимний сезон 2026</div>
                     <div class="server-status-tag" id="statusPill">
                         <span class="status-dot"></span>
                         <span id="statusLabel">Опрашиваем сервер...</span>
@@ -33,15 +33,13 @@
                     </h1>
 
                     <div class="hero-story-text">
-    <p>
-        Здесь нет приватов, регионов и запертых сундуков. Любая база или ферма открыта: можно спокойно зайти к соседям в гости, посмотреть постройки или построить рядом свой город.
-    </p>
-    <p>
-        Платный вход нужен только ради порядка. 135 рублей — мелочь, но она отсекает залётных гриферов и читеров. Человек, который заплатил за доступ, бережёт свой аккаунт и вряд ли пойдёт заливать спавн лавой или воровать чужое.
-    </p>
-</div>
-
-                   
+                        <p>
+                            Здесь нет приватов, регионов и запертых сундуков. Любая база или ферма открыта: можно спокойно зайти к соседям в гости, погреться у камина, посмотреть постройки или построить рядом свой снежный город.
+                        </p>
+                        <p>
+                            Платный вход нужен только ради порядка. 135 рублей — мелочь, но она отсекает залётных гриферов и читеров. Человек, который заплатил за доступ, бережёт свой аккаунт и вряд ли пойдёт заливать спавн лавой или воровать чужое.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- ПРАВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ВХОД И IP -->
@@ -49,7 +47,7 @@
                     
                     <div class="pass-entry-widget">
                         <div class="widget-top">
-                            <span class="widget-kicker">Вход на сервер</span>
+                            <span class="widget-kicker">Зимний доступ</span>
                             <div class="widget-price-tag">
                                 <span class="price-val">135₽</span>
                                 <span class="price-sub">разово на весь сезон</span>
@@ -91,6 +89,7 @@
             </div>
         </div>
     </header>
+
     <!-- О СЕРВЕРЕ -->
     <article class="narrative-section" id="story">
         <div class="site-container">
@@ -186,11 +185,11 @@
         <div class="site-container">
             <div class="shop-promo-card">
                 <div class="shop-promo-glow"></div>
-                <div class="shop-promo-badge">Официальный магазин</div>
-                <h2 class="shop-promo-title">Медовая лавка Apiary</h2>
+                <div class="shop-promo-badge">Зимняя ярмарка</div>
+                <h2 class="shop-promo-title">Северная лавка Apiary</h2>
                 <p class="shop-promo-text">
                     Поддержите проект и выделитесь на сервере. В нашей лавке доступны эксклюзивные визуальные титулы, 
-                    косметические эффекты и авторский мерч. Никаких ресурсов за рубли, креатива и Pay-to-Win механик — 
+                    косметические эффекты, зимняя атмосфера и авторский мерч. Никаких ресурсов за рубли, креатива и Pay-to-Win механик — 
                     только честный баланс и стиль.
                 </p>
                 <div class="shop-promo-actions">
@@ -203,34 +202,34 @@
         </div>
     </section>
 
-    <!-- МИНИ-ИГРА ПАСЕКА (ПЕРЕНЕСЕНА ПОСЛЕ МАГАЗИНА) -->
+    <!-- МИНИ-ИГРА ПАСЕКА -->
     <section class="game-section" id="game">
         <div class="site-container">
             <div class="section-heading text-left">
-                <span class="section-kicker">Интерактивный уголок</span>
-                <h2 class="section-headline">Пасека Apiary: Добыча нектара</h2>
-                <p class="section-subtext">Пока качается ресурспак или настраиваются шейдеры — развивай собственное медовое хозяйство прямо здесь.</p>
+                <span class="section-kicker">Зимний интерактив</span>
+                <h2 class="section-headline">Северная пасека: Кристаллический нектар</h2>
+                <p class="section-subtext">Пока качается ресурспак или настраиваются шейдеры — развивай свое морозное хозяйство прямо здесь.</p>
             </div>
 
             <div class="game-board">
                 <div class="clicker-pane">
                     <div class="honey-counter-box">
-                        <span class="counter-label">Запас мёда</span>
+                        <span class="counter-label">Запас нектара</span>
                         <span class="counter-val" id="honeyCount">0</span>
                         <span class="hps-val" id="hpsDisplay">+0 в секунду</span>
                     </div>
 
                     <div class="clicker-interactive-wrap">
                         <button class="honeycomb-btn" id="hiveClicker" aria-label="Собрать мёд">
-                            <span class="hive-symbol">⬢</span>
-                            <span class="hive-core">МЁД</span>
+                            <span class="hive-symbol">❄</span>
+                            <span class="hive-core">НЕКТАР</span>
                         </button>
                     </div>
 
                     <div class="player-rank-bar">
                         <div class="rank-info">
-                            <span class="rank-name" id="rankName">Ученик бортника</span>
-                            <span class="rank-level" id="rankLevel">1 уровень</span>
+                            <span class="rank-name" id="rankName">Ученик северного бортника</span>
+                            <span class="rank-level" id="rankLevel">1 ранг</span>
                         </div>
                         <div class="progress-track">
                             <div class="progress-fill" id="rankProgress"></div>
@@ -239,50 +238,50 @@
                 </div>
 
                 <div class="shop-pane">
-                    <h3 class="shop-title">Развитие пасеки</h3>
+                    <h3 class="shop-title">Утепление пасеки</h3>
                     <div class="upgrades-stack">
                         
                         <div class="upgrade-row" id="upgClick">
                             <div class="upgrade-info">
-                                <strong>Улучшенный черпак</strong>
-                                <span>+1 мёда за каждый твой клик</span>
-                                <span class="upgrade-owned">Куплено: <b id="lvlClick">0</b></span>
+                                <strong>Утепленный черпак</strong>
+                                <span>+1 нектара за каждый твой клик</span>
+                                <span class="upgrade-owned">Уровень: <b id="lvlClick">0</b></span>
                             </div>
                             <button class="btn-buy" onclick="buyUpgrade('click')">
-                                <span class="buy-cost" id="costClick">15</span> мёда
+                                <span class="buy-cost" id="costClick">15</span> нектара
                             </button>
                         </div>
 
                         <div class="upgrade-row" id="upgBees">
                             <div class="upgrade-info">
-                                <strong>Дикая пчела</strong>
-                                <span>Автоматически собирает +1 мёда/сек</span>
+                                <strong>Северная пчела</strong>
+                                <span>Автоматически собирает +1 нектара/сек</span>
                                 <span class="upgrade-owned">В рою: <b id="lvlBees">0</b></span>
                             </div>
                             <button class="btn-buy" onclick="buyUpgrade('bees')">
-                                <span class="buy-cost" id="costBees">50</span> мёда
+                                <span class="buy-cost" id="costBees">50</span> нектара
                             </button>
                         </div>
 
                         <div class="upgrade-row" id="upgHive">
                             <div class="upgrade-info">
-                                <strong>Улей из тёмного дуба</strong>
-                                <span>Гнездо на несколько семей (+6 мёда/сек)</span>
+                                <strong>Утепленный улей из ели</strong>
+                                <span>Зимнее гнездо (+6 нектара/сек)</span>
                                 <span class="upgrade-owned">Построено: <b id="lvlHive">0</b></span>
                             </div>
                             <button class="btn-buy" onclick="buyUpgrade('hive')">
-                                <span class="buy-cost" id="costHive">220</span> мёда
+                                <span class="buy-cost" id="costHive">220</span> нектара
                             </button>
                         </div>
 
                         <div class="upgrade-row" id="upgField">
                             <div class="upgrade-info">
-                                <strong>Вересковая поляна</strong>
-                                <span>Густые медоносы на спавне (+24 мёда/сек)</span>
+                                <strong>Заснеженная поляна</strong>
+                                <span>Морозные цветы на спавне (+24 нектара/сек)</span>
                                 <span class="upgrade-owned">Полей: <b id="lvlField">0</b></span>
                             </div>
                             <button class="btn-buy" onclick="buyUpgrade('field')">
-                                <span class="buy-cost" id="costField">850</span> мёда
+                                <span class="buy-cost" id="costField">850</span> нектара
                             </button>
                         </div>
 
@@ -479,7 +478,7 @@
         </div>
     </section>
 
-    <!-- ПОДВАЛ -->
+    <!-- ПОДВАЛ (НЕ ТРОНУТ) -->
     <footer class="footer-wrap">
         <div class="site-container">
             <div class="footer-grid">
@@ -519,7 +518,7 @@
         </div>
     </footer>
 
-    <!-- ПЛАВАЮЩАЯ НАВИГАЦИЯ (ОБНОВЛЁН ПОРЯДОК СКРОЛЛА) -->
+    <!-- ПЛАВАЮЩАЯ НАВИГАЦИЯ -->
     <nav class="bottom-dock" aria-label="Быстрая навигация">
         <a href="#top" class="dock-action" title="В начало страницы">
             <span class="dock-txt">Главная</span>
@@ -575,7 +574,7 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
+    <!-- ЮРИДИЧЕСКИЕ МОДАЛКИ (НЕ ТРОНУТЫ) -->
     <div class="overlay" id="offerModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -604,7 +603,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ (152-ФЗ) -->
     <div class="overlay" id="privacyModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -628,7 +626,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ -->
     <div class="overlay" id="termsModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -643,7 +640,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛУЧЕНИЕ УСЛУГИ -->
     <div class="overlay" id="deliveryModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApiarySMP — Медовая лавка</title>
+    <title>ApiarySMP — Зимняя лавка</title>
     <link rel="stylesheet" href="./shop-style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,9 @@
     <div class="shop-notice-bar" id="shopNoticeBar">
         <div class="site-container notice-flex">
             <div class="notice-info">
-                <span class="notice-pill">Моментальная доставка 24/7</span>
+                <span class="notice-pill">❄️ Зимняя ярмарка 24/7</span>
                 <p class="notice-text">
-                    Все косметические позиции и привилегии выдаются сервером автоматически сразу после онлайн-оплаты через ЮKassa. 
+                    Все косметические позиции и права выдаются сервером автоматически сразу после онлайн-оплаты через ЮKassa. 
                     Управление эффектами в игре доступно по команде <strong>/menu</strong>.
                 </p>
             </div>
@@ -40,8 +40,8 @@
             </div>
 
             <h1 class="shop-title">
-                Медовая <span class="text-accent">лавка</span>
-                <span class="shop-subhead">Визуальный кастом, уютные механики и спонсорство</span>
+                Северная <span class="text-accent">лавка</span>
+                <span class="shop-subhead">Визуальный кастом, зимние эффекты и поддержка сервера</span>
             </h1>
 
             <p class="shop-lead">
@@ -52,7 +52,7 @@
             <div class="shop-controls-wrap">
                 <div class="shop-search-box">
                     <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <input type="text" id="shopSearchInput" placeholder="Поиск по товарам и механикам..." autocomplete="off">
+                    <input type="text" id="shopSearchInput" placeholder="Поиск по товарам и эффектам..." autocomplete="off">
                 </div>
 
                 <div class="shop-filters">
@@ -84,16 +84,16 @@
                         </div>
                         <div class="control-group">
                             <label for="previewPrefix">Текст префикса</label>
-                            <input type="text" id="previewPrefix" value="Бортник" maxlength="16">
+                            <input type="text" id="previewPrefix" value="Север" maxlength="16">
                         </div>
                         <div class="control-group">
                             <label>Цвет оформления</label>
                             <div class="color-picker-row">
-                                <button class="color-btn active" data-color="#f2a829" style="background:#f2a829"></button>
-                                <button class="color-btn" data-color="#2ecc71" style="background:#2ecc71"></button>
-                                <button class="color-btn" data-color="#9b59b6" style="background:#9b59b6"></button>
-                                <button class="color-btn" data-color="#3498db" style="background:#3498db"></button>
-                                <button class="color-btn" data-color="#e74c3c" style="background:#e74c3c"></button>
+                                <button class="color-btn active" data-color="#5eead4" style="background:#5eead4" title="Ледяная мята"></button>
+                                <button class="color-btn" data-color="#70e1ff" style="background:#70e1ff" title="Морозный циан"></button>
+                                <button class="color-btn" data-color="#a78bfa" style="background:#a78bfa" title="Сияние"></button>
+                                <button class="color-btn" data-color="#f2a829" style="background:#f2a829" title="Медовый"></button>
+                                <button class="color-btn" data-color="#ef4444" style="background:#ef4444" title="Рубин"></button>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                             <span class="preview-type">Вид в списке игроков (TAB)</span>
                             <div class="tab-preview-item">
                                 <span class="tab-indicator"></span>
-                                <span class="tab-prefix-tag" id="tabPrefixDisplay">[Бортник]</span>
+                                <span class="tab-prefix-tag" id="tabPrefixDisplay">[Север]</span>
                                 <span class="tab-nick-val" id="tabNickDisplay">Notch</span>
                                 <span class="tab-ping">18ms</span>
                             </div>
@@ -112,9 +112,9 @@
                         <div class="preview-box">
                             <span class="preview-type">Вид сообщения в чате</span>
                             <div class="chat-preview-item">
-                                <span class="chat-prefix-tag" id="chatPrefixDisplay">[Бортник]</span>
+                                <span class="chat-prefix-tag" id="chatPrefixDisplay">[Север]</span>
                                 <span class="chat-nick-val" id="chatNickDisplay">Notch</span>: 
-                                <span class="chat-msg-val">Привет улей, заходите на чай в таверну!</span>
+                                <span class="chat-msg-val">Привет улей, заходите греться у камина в таверну!</span>
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
 
                 <!-- 4. СПУТНИКИ: ТЁМНЫЙ ПАК (ДОПОЛНЕНИЕ) -->
                 <div class="product-card" data-category="character">
-                    <div class="card-status-badge" style="background: rgba(155, 89, 182, 0.85); border: 1px solid #9b59b6; color: #ffffff;">DLC • Дополнение</div>
+                    <div class="card-status-badge" style="background: rgba(112, 225, 255, 0.2); border: 1px solid var(--frost-ice); color: var(--frost-ice);">DLC • Дополнение</div>
 
                     <div class="product-media" onclick="openLightbox(this)" 
                          data-images="./assets/products/pets_vex.png,./assets/products/pets_bat.png,./assets/products/pets_warden.png" 
@@ -385,7 +385,7 @@
                         <span class="media-badge-count">2 фото</span>
                         <img src="./assets/products/basesign_1.png" alt="Именная вывеска" loading="lazy" onerror="handleImgError(this)">
                         <div class="media-fallback">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                             <span>Скриншот 3D-вывески</span>
                         </div>
                         <div class="media-overlay">
@@ -539,18 +539,18 @@
                                 <span class="mock-platform-tag">Discord</span>
                                 <div class="discord-pill">
                                     <span class="discord-dot"></span>
-                                    <span class="discord-role-text">@Бортник</span>
+                                    <span class="discord-role-text">@Север</span>
                                 </div>
                             </div>
                             <div class="mock-line mock-mc">
                                 <span class="mock-platform-tag">Minecraft</span>
                                 <div class="mc-pill">
-                                    <span class="mc-prefix-text">[Бортник]</span>
+                                    <span class="mc-prefix-text">[Север]</span>
                                     <span class="mc-nick-text">Notch</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="media-overlay" style="opacity: 1; background: rgba(14, 13, 11, 0.45);">
+                        <div class="media-overlay" style="opacity: 1; background: rgba(8, 12, 18, 0.5);">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                             <span>Примерить свой цвет в симуляторе ↑</span>
                         </div>
@@ -648,8 +648,7 @@
         </div>
     </section>
 
-    <!-- ПОДВАЛ -->
-<!-- ПОДВАЛ -->
+    <!-- ПОДВАЛ (НЕ ТРОНУТ) -->
     <footer class="footer-wrap">
         <div class="site-container">
             <div class="footer-grid">
@@ -721,7 +720,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА 1: ОНЛАЙН-ОПЛАТА ЮKASSA -->
+    <!-- МОДАЛКА ОПЛАТЫ ЮKASSA -->
     <div id="orderModal" class="overlay">
         <div class="sheet-modal">
             <span class="close-button" id="closeOrderModal">&times;</span>
@@ -753,7 +752,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА 2: ОФОРМЛЕНИЕ ЧЕРЕЗ TELEGRAM -->
+    <!-- МОДАЛКА В TELEGRAM -->
     <div id="tgOrderModal" class="overlay">
         <div class="sheet-modal">
             <span class="close-button" id="closeTgOrderModal">&times;</span>
@@ -778,7 +777,7 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПУБЛИЧНАЯ ОФЕРТА -->
+    <!-- ЮРИДИЧЕСКИЕ МОДАЛКИ (НЕ ТРОНУТЫ) -->
     <div class="overlay" id="offerModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -807,7 +806,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ (152-ФЗ) -->
     <div class="overlay" id="privacyModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -831,7 +829,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ -->
     <div class="overlay" id="termsModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>
@@ -846,7 +843,6 @@
         </div>
     </div>
 
-    <!-- ЮРИДИЧЕСКАЯ МОДАЛКА: ПОЛУЧЕНИЕ УСЛУГИ -->
     <div class="overlay" id="deliveryModal">
         <div class="sheet-modal sheet-modal-large">
             <span class="close-button">&times;</span>

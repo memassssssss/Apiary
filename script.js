@@ -1,7 +1,67 @@
 // --- КОНФИГУРАЦИЯ СЕРВЕРА ---
 const SERVER_IP = "play.apiarysmp.online";
 
-// --- ЗВУКОВОЙ СИНТЕЗАТОР (ТОЛЬКО ДЛЯ КЛИКЕРА) ---
+// --- ФОНОВЫЙ СНЕГОПАД НА CANVAS (БЕЗ НАГРУЗКИ НА FPS) ---
+function initWinterSnow() {
+    let canvas = document.getElementById('snowCanvas');
+    if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.id = 'snowCanvas';
+        document.body.prepend(canvas);
+    }
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    const flakeCount = Math.floor(Math.min(width, 1400) / 22);
+    const flakes = [];
+
+    for (let i = 0; i < flakeCount; i++) {
+        flakes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2.2 + 0.8,
+            speedY: Math.random() * 0.9 + 0.4,
+            speedX: Math.random() * 0.5 - 0.25,
+            opacity: Math.random() * 0.55 + 0.25,
+            swing: Math.random() * Math.PI * 2,
+            swingSpeed: Math.random() * 0.02 + 0.01
+        });
+    }
+
+    function renderSnow() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = '#ffffff';
+
+        for (let i = 0; i < flakes.length; i++) {
+            const f = flakes[i];
+            f.swing += f.swingSpeed;
+            f.y += f.speedY;
+            f.x += f.speedX + Math.sin(f.swing) * 0.4;
+
+            if (f.y > height) {
+                f.y = -5;
+                f.x = Math.random() * width;
+            }
+            if (f.x > width) f.x = 0;
+            else if (f.x < 0) f.x = width;
+
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(226, 241, 255, ${f.opacity})`;
+            ctx.fill();
+        }
+        requestAnimationFrame(renderSnow);
+    }
+    requestAnimationFrame(renderSnow);
+}
+
+// --- ЗВУКОВОЙ СИНТЕЗАТОР (ДЛЯ КЛИКЕРА) ---
 let audioCtx = null;
 
 function getAudioContext() {
@@ -17,7 +77,7 @@ function getAudioContext() {
     return audioCtx;
 }
 
-function triggerClickSound(baseFreq = 480) {
+function triggerClickSound(baseFreq = 520) {
     try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -25,18 +85,18 @@ function triggerClickSound(baseFreq = 480) {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        osc.type = 'triangle';
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.45, ctx.currentTime + 0.09);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.5, ctx.currentTime + 0.08);
 
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
 
         osc.connect(gain);
         gain.connect(ctx.destination);
 
         osc.start();
-        osc.stop(ctx.currentTime + 0.09);
+        osc.stop(ctx.currentTime + 0.08);
     } catch {}
 }
 
@@ -79,16 +139,16 @@ async function checkOnlineStatus() {
 
         if (data.online) {
             const count = data.players ? data.players.online : 0;
-            label.textContent = `В игре сейчас: ${count} чел. • Версия 1.21.11`;
+            label.textContent = `Зимний сезон: ${count} в игре • Версия 1.21+`;
         } else {
-            label.textContent = "Сервер онлайн • Версия 1.21.11";
+            label.textContent = "Зимний сезон онлайн • Версия 1.21+";
         }
     } catch {
-        label.textContent = "Сервер онлайн • Версия 1.21.11";
+        label.textContent = "Зимний сезон онлайн • Версия 1.21+";
     }
 }
 
-// --- МИНИ-ИГРА ПАСЕКА ---
+// --- МИНИ-ИГРА: МОРОЗНАЯ ПАСЕКА ---
 const gameState = {
     honey: 0,
     clickPower: 1,
@@ -101,12 +161,12 @@ const gameState = {
 };
 
 const ranks = [
-    { threshold: 0, title: "Ученик бортника" },
-    { threshold: 50, title: "Сборщик пыльцы" },
-    { threshold: 250, title: "Хозяин пасеки" },
-    { threshold: 1000, title: "Старший пчеловод" },
-    { threshold: 5000, title: "Архитектор сот" },
-    { threshold: 20000, title: "Хранитель роя" }
+    { threshold: 0, title: "Ученик северного бортника" },
+    { threshold: 50, title: "Искатель ледяной пыльцы" },
+    { threshold: 250, title: "Хозяин морозного улья" },
+    { threshold: 1000, title: "Старший хранитель пасеки" },
+    { threshold: 5000, title: "Архитектор ледяных сот" },
+    { threshold: 20000, title: "Повелитель метели" }
 ];
 
 function loadGameData() {
@@ -167,7 +227,7 @@ function updateRankBar() {
     const rankProgressEl = document.getElementById('rankProgress');
 
     if (rankNameEl) rankNameEl.textContent = currentRank.title;
-    if (rankLevelEl) rankLevelEl.textContent = `${currentRankIndex + 1} уровень`;
+    if (rankLevelEl) rankLevelEl.textContent = `${currentRankIndex + 1} ранг`;
 
     if (rankProgressEl) {
         if (nextRank) {
@@ -185,7 +245,7 @@ function updateGameInterface() {
     const honeyValEl = document.getElementById('honeyCount');
     const hpsDisplayEl = document.getElementById('hpsDisplay');
     if (honeyValEl) honeyValEl.textContent = Math.floor(gameState.honey).toLocaleString('ru-RU');
-    if (hpsDisplayEl) hpsDisplayEl.textContent = `+${getCalculatedHPS().toLocaleString('ru-RU')} в секунду`;
+    if (hpsDisplayEl) hpsDisplayEl.textContent = `+${getCalculatedHPS().toLocaleString('ru-RU')} в сек.`;
 
     for (const key in gameState.upgrades) {
         const item = gameState.upgrades[key];
@@ -208,7 +268,7 @@ function buyUpgrade(key) {
     if (gameState.honey >= cost) {
         gameState.honey -= cost;
         gameState.upgrades[key].level += 1;
-        triggerClickSound(550 + Math.random() * 150);
+        triggerClickSound(620 + Math.random() * 150);
         updateGameInterface();
         saveGameData();
     }
@@ -235,7 +295,7 @@ function initGameEngine() {
         clickerBtn.addEventListener('click', (e) => {
             const gain = getCalculatedClick();
             gameState.honey += gain;
-            triggerClickSound(420 + Math.random() * 160);
+            triggerClickSound(480 + Math.random() * 140);
             updateGameInterface();
 
             const rect = clickerBtn.getBoundingClientRect();
@@ -358,7 +418,7 @@ function initSmoothScroll() {
 // --- ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ ---
 function initScrollReveal() {
     const elementsToAnimate = document.querySelectorAll(
-        '.access-way-card, .hub-ip-box, .game-board, .narrative-header, .chapter-block, .shop-promo-card, .section-heading, .faq-unit'
+        '.pass-entry-widget, .hero-ip-box, .game-board, .narrative-header, .chapter-block, .shop-promo-card, .section-heading, .faq-unit'
     );
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -419,7 +479,6 @@ function initModals() {
         };
     }
 
-// Открытие любых юридических окон по атрибуту data-modal
     document.querySelectorAll("[data-modal]").forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
@@ -469,26 +528,13 @@ function initModals() {
             } catch {
                 alert("Ошибка соединения с сервером оплаты.");
             } finally {
-                submitBtn.innerText = "Оплатить и скипнуть анкету";
+                submitBtn.innerText = "Оплатить проходку";
                 submitBtn.disabled = false;
             }
         });
     }
 }
 
-// --- ЕДИНАЯ ТОЧКА СТАРТА ---
-document.addEventListener('DOMContentLoaded', () => {
-    checkOnlineStatus();
-    initGameEngine();
-    initDraggableCarousel();
-    initSmoothScroll();
-    initScrollReveal();
-    initFAQ();
-    initModals();
-});
-
-
-// Быстрый запуск покупки прямо с первого экрана
 function startPassPurchase() {
     const heroInput = document.getElementById('heroNick');
     const nickVal = heroInput ? heroInput.value.trim() : '';
@@ -503,8 +549,17 @@ function startPassPurchase() {
     }
 }
 
-// Запуск по нажатию Enter в инпуте первого экрана
+// --- ЕДИНАЯ ТОЧКА СТАРТА ---
 document.addEventListener('DOMContentLoaded', () => {
+    initWinterSnow();
+    checkOnlineStatus();
+    initGameEngine();
+    initDraggableCarousel();
+    initSmoothScroll();
+    initScrollReveal();
+    initFAQ();
+    initModals();
+
     const heroInput = document.getElementById('heroNick');
     if (heroInput) {
         heroInput.addEventListener('keydown', (e) => {
